@@ -1,0 +1,346 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\</OutputPath>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Nuke.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TimeZero.Auction.Bot.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\TimeZero.Auction.Bot.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6D508C82-61F9-4358-8573-1E21204FA36A}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TimeZero.Auction.Bot</RootNamespace>
+    <AssemblyName>TimeZero.Auction.Bot</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.ShockwaveFlashObjects, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Assemblies\AxInterop.ShockwaveFlashObjects.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.ShockwaveFlashObjects">
+      <HintPath>Assemblies\Interop.ShockwaveFlashObjects.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Common\CommandDump.cs" />
+    <Compile Include="Classes\Common\SerializableDictionary.cs" />
+    <Compile Include="Classes\Common\Serializer.cs" />
+    <Compile Include="Classes\Common\Singletone.cs" />
+    <Compile Include="Classes\Game\InventoryItems\InventoryItem.cs" />
+    <Compile Include="Classes\Game\InventoryItems\InventoryItemList.cs" />
+    <Compile Include="Classes\Network\Acitons\Game\GameStep_JoinInventory.cs" />
+    <Compile Include="Classes\Network\Acitons\Game\GameStep_Selling.cs" />
+    <Compile Include="Classes\Network\Acitons\Login\LoginStep5_StartChat.cs" />
+    <Compile Include="Classes\Network\Constants\Locations.cs" />
+    <Compile Include="Classes\Network\Helpers\Helper.cs" />
+    <Compile Include="Controls\Header\Header.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Header\Header.designer.cs">
+      <DependentUpon>Header.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TransparentPanel\TransparentPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TransparentPanel\TransparentPanel.designer.cs">
+      <DependentUpon>TransparentPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TreeViewSearchBox\SearchLevel.cs" />
+    <Compile Include="Controls\TreeViewSearchBox\SearchResultView.cs" />
+    <Compile Include="Controls\TreeViewSearchBox\TreeNodeItem.cs" />
+    <Compile Include="Controls\TreeViewSearchBox\TreeNodeItems.cs" />
+    <Compile Include="Controls\TreeViewSearchBox\TreeViewSearchBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TreeViewSearchBox\TreeViewSearchBox.designer.cs">
+      <DependentUpon>TreeViewSearchBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmLoading.Designer.cs">
+      <DependentUpon>frmLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmSetGameItemsDefaults.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSetGameItemsDefaults.Designer.cs">
+      <DependentUpon>frmSetGameItemsDefaults.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Game\GameItems\GameItemsGroup.cs" />
+    <Compile Include="Classes\Game\GameItems\GameItemsGroupList.cs" />
+    <Compile Include="Classes\Game\GameItems\GameItemsSubGroup.cs" />
+    <Compile Include="Classes\Game\ShopItems\ShopItem.cs" />
+    <Compile Include="Classes\Game\ObjectProperties\ObjectProperty.cs" />
+    <Compile Include="Classes\Game\ObjectProperties\ObjectPropertyList.cs" />
+    <Compile Include="Classes\Game\ObjectProperties\ObjectPropertyName.cs" />
+    <Compile Include="Classes\Game\GameItems\GameItemModificationType.cs" />
+    <Compile Include="Classes\Game\GameItems\GameItem.cs" />
+    <Compile Include="ClassesInstances\Instance.cs" />
+    <Compile Include="Classes\Network\Acitons\GameSystem\GameSystemStep_Errors.cs" />
+    <Compile Include="Classes\Network\Acitons\Game\GameStep_IMS.cs" />
+    <Compile Include="Classes\Network\Acitons\Game\GameStep_GC.cs" />
+    <Compile Include="Classes\Network\Acitons\Login\LoginStep4_GetMe.cs" />
+    <Compile Include="Classes\Network\Acitons\GameSystem\GameSystemStep_Ping.cs" />
+    <Compile Include="Classes\Network\Acitons\Game\GameStep_Shopping.cs" />
+    <Compile Include="Classes\Game\GameItems\GameItemsGroupID.cs" />
+    <Compile Include="Classes\Network\Constants\Errors.cs" />
+    <Compile Include="Classes\Network\ProtoPacket\PacketCommand.cs" />
+    <Compile Include="Classes\Network\ProtoPacket\PacketBuilder.cs" />
+    <Compile Include="Classes\Network\ProtoPacket\PacketsQueue.cs" />
+    <Compile Include="Classes\Network\ProtoPacket\PacketType.cs" />
+    <Compile Include="Classes\Network\ProtoPacket\Packet.cs" />
+    <Compile Include="Classes\Game\Client\GameClient.cs" />
+    <Compile Include="Forms\frmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmMain.Designer.cs">
+      <DependentUpon>frmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Network\Acitons\IActionStep.cs" />
+    <Compile Include="Classes\Network\Acitons\Login\LoginStep1_Greeting.cs" />
+    <Compile Include="Classes\Network\Acitons\Login\LoginStep2_ConnectToGameServer.cs" />
+    <Compile Include="Classes\Network\Acitons\Login\LoginStep3_Authorization.cs" />
+    <Compile Include="Classes\Network\NetworkClient.cs" />
+    <Compile Include="Helpers\PerPixelAlphaForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Classes\MemoryEditor\PageAccessRights.cs" />
+    <Compile Include="Classes\MemoryEditor\ScanResult.cs" />
+    <Compile Include="Classes\MemoryEditor\ProcessAccessRights.cs" />
+    <Compile Include="Classes\MemoryEditor\ProcessMemoryEditor.cs" />
+    <Compile Include="Classes\MemoryEditor\ProcessMemoryScanner.cs" />
+    <Compile Include="Classes\MemoryEditor\SysType.cs" />
+    <Compile Include="Classes\MemoryEditor\SysTypes.cs" />
+    <Compile Include="Classes\TZProcess\TZProcessPatcher.cs" />
+    <EmbeddedResource Include="Controls\Header\Header.resx">
+      <DependentUpon>Header.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TransparentPanel\TransparentPanel.resx">
+      <DependentUpon>TransparentPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TreeViewSearchBox\TreeViewSearchBox.resx">
+      <DependentUpon>TreeViewSearchBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmLoading.resx">
+      <DependentUpon>frmLoading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmMain.resx">
+      <DependentUpon>frmMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSetGameItemsDefaults.resx">
+      <DependentUpon>frmSetGameItemsDefaults.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_ball_glass_red.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bullet_ball_glass_green.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\emoticon_smile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sort_az_descending.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gear_ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document_text.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_from_client.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_to_client.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_from_client_grayed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\server_to_client_grayed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tz.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\buy_item.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ims.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Nuke.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\checks.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\forbidden.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sell_item.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

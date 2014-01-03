@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TimeZero.Auction.Bot.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Server" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">188.93.63.180</Value>
+    </Setting>
+    <Setting Name="Port" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">5190</Value>
+    </Setting>
+    <Setting Name="UserName" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">mexanik</Value>
+    </Setting>
+    <Setting Name="Password" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">21098618</Value>
+    </Setting>
+    <Setting Name="ClientVersion" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">108</Value>
+    </Setting>
+    <Setting Name="ClientVersion2" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">7.0.1 (7.1.2.6)</Value>
+    </Setting>
+    <Setting Name="LocalIP" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.1.57</Value>
+    </Setting>
+    <Setting Name="MainSWFFilePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">c:\Program Files\TimeZero\tz.swf</Value>
+    </Setting>
+    <Setting Name="OutLogs" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="OutDetailedLogs" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="TimeZeroExePath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">c:\Program Files\TimeZero\TimeZero.exe</Value>
+    </Setting>
+    <Setting Name="ChatServerPort" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">5190</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
