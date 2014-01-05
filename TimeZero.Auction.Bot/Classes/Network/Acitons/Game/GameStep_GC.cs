@@ -26,6 +26,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                                                        FromServer.LOL,
                                                                        FromServer.DM,
                                                                        FromServer.LB,
+                                                                       FromServer.ID2,
                                                                        FromServer.CHAT_MESSAGE,
                                                                        FromServer.ITEM_ADD_ONE,
                                                                        FromServer.UPDATE_VER,

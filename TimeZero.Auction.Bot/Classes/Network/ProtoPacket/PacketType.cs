@@ -38,7 +38,7 @@
         public const string LOL             = "LOL"           ;
         public const string IMS             = "IMS"           ;
         public const string LB              = "LB"            ;
-
+        public const string ID2             = "ID2"           ;
     }
 
     public static class FromClient
