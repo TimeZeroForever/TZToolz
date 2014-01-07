@@ -53,11 +53,8 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnGameItemsOrderSubGroups = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.btnGameItemsJumpToUnreviewed = new System.Windows.Forms.ToolStripButton();
-            this.hAttributesList = new TimeZero.Auction.Bot.Controls.Header.Header();
-            this.tvsbItems = new TimeZero.Auction.Bot.Controls.TreeViewSearchBox.TreeViewSearchBox();
             this.tvGameItems = new System.Windows.Forms.TreeView();
             this.pgItems = new System.Windows.Forms.PropertyGrid();
-            this.header1 = new TimeZero.Auction.Bot.Controls.Header.Header();
             this.lblItemIsNotSelected = new System.Windows.Forms.Label();
             this.tpLog = new System.Windows.Forms.TabPage();
             this.pLogInfoBack = new System.Windows.Forms.Panel();
@@ -86,6 +83,9 @@ namespace TimeZero.Auction.Bot.Forms
             this.lblActionInProgress = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerNetworkActivity = new System.Windows.Forms.Timer(this.components);
             this.panel2 = new System.Windows.Forms.Panel();
+            this.hAttributesList = new TimeZero.Auction.Bot.Controls.Header.Header();
+            this.tvsbItems = new TimeZero.Auction.Bot.Controls.TreeViewSearchBox.TreeViewSearchBox();
+            this.header1 = new TimeZero.Auction.Bot.Controls.Header.Header();
             this.tcMain.SuspendLayout();
             this.tpItems.SuspendLayout();
             this.scItems.Panel1.SuspendLayout();
@@ -192,7 +192,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnGameItemsSaveAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGameItemsSaveAll.Name = "btnGameItemsSaveAll";
             this.btnGameItemsSaveAll.Size = new System.Drawing.Size(23, 22);
-            this.btnGameItemsSaveAll.Text = "B";
+            this.btnGameItemsSaveAll.Text = "Save items list";
             this.btnGameItemsSaveAll.Click += new System.EventHandler(this.BtnSaveItemsListClick);
             // 
             // toolStripSeparator4
@@ -243,7 +243,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnGameItemRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGameItemRemove.Name = "btnGameItemRemove";
             this.btnGameItemRemove.Size = new System.Drawing.Size(23, 22);
-            this.btnGameItemRemove.Text = "Delete selected item";
+            this.btnGameItemRemove.Text = "Delete selected object";
             this.btnGameItemRemove.Click += new System.EventHandler(this.BtnGameItemRemoveClick);
             // 
             // toolStripSeparator6
@@ -301,44 +301,6 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnGameItemsJumpToUnreviewed.Text = "Jump to next unreviewed item [Ctrl+N]";
             this.btnGameItemsJumpToUnreviewed.Click += new System.EventHandler(this.BtnGameItemJumpToUnreviewedClick);
             // 
-            // hAttributesList
-            // 
-            this.hAttributesList.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.hAttributesList.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.hAttributesList.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.hAttributesList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.hAttributesList.Caption = "Game items list";
-            this.hAttributesList.Dock = System.Windows.Forms.DockStyle.Top;
-            this.hAttributesList.Font = new System.Drawing.Font("Calibri", 9F);
-            this.hAttributesList.ForeColor = System.Drawing.Color.Black;
-            this.hAttributesList.Location = new System.Drawing.Point(0, 0);
-            this.hAttributesList.Name = "hAttributesList";
-            this.hAttributesList.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.hAttributesList.Size = new System.Drawing.Size(228, 21);
-            this.hAttributesList.TabIndex = 4;
-            this.hAttributesList.TabStop = false;
-            this.hAttributesList.TopGradientColor = System.Drawing.Color.Lavender;
-            // 
-            // tvsbItems
-            // 
-            this.tvsbItems.ActiveColor = System.Drawing.Color.Gray;
-            this.tvsbItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tvsbItems.ClearButtonToolTipToolTip = "";
-            this.tvsbItems.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tvsbItems.InactiveColor = System.Drawing.Color.LightGray;
-            this.tvsbItems.Location = new System.Drawing.Point(-1, 435);
-            this.tvsbItems.MouseOnControl = System.Drawing.Color.Silver;
-            this.tvsbItems.Name = "tvsbItems";
-            this.tvsbItems.Padding = new System.Windows.Forms.Padding(1);
-            this.tvsbItems.Size = new System.Drawing.Size(231, 20);
-            this.tvsbItems.TabIndex = 0;
-            this.tvsbItems.ToolTip = "";
-            this.tvsbItems.TreeView = this.tvGameItems;
-            this.tvsbItems.FilterNode += new TimeZero.Auction.Bot.Controls.TreeViewSearchBox.TreeViewSearchBox.OnFilterNodeEvent(this.TvsbItemsFilterNode);
-            this.tvsbItems.SearchCancelled += new System.EventHandler(this.TvsbItemsSearchCancelled);
-            this.tvsbItems.SearchKeyDown += new System.Windows.Forms.KeyEventHandler(this.TvsbItemsSearchKeyDown);
-            // 
             // tvGameItems
             // 
             this.tvGameItems.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -374,24 +336,6 @@ namespace TimeZero.Auction.Bot.Forms
             this.pgItems.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.PgItemsPropertyValueChanged);
             this.pgItems.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.TvGameItemsPreviewKeyDown);
             // 
-            // header1
-            // 
-            this.header1.AutoScrollMargin = new System.Drawing.Size(0, 0);
-            this.header1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
-            this.header1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.header1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.header1.Caption = "Selected item preferences";
-            this.header1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.header1.Font = new System.Drawing.Font("Calibri", 9F);
-            this.header1.ForeColor = System.Drawing.Color.Black;
-            this.header1.Location = new System.Drawing.Point(0, 0);
-            this.header1.Name = "header1";
-            this.header1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
-            this.header1.Size = new System.Drawing.Size(410, 21);
-            this.header1.TabIndex = 4;
-            this.header1.TabStop = false;
-            this.header1.TopGradientColor = System.Drawing.Color.Lavender;
-            // 
             // lblItemIsNotSelected
             // 
             this.lblItemIsNotSelected.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -421,7 +365,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pLogInfoBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pLogInfoBack.Location = new System.Drawing.Point(3, 3);
             this.pLogInfoBack.Name = "pLogInfoBack";
-            this.pLogInfoBack.Size = new System.Drawing.Size(646, 456);
+            this.pLogInfoBack.Size = new System.Drawing.Size(646, 457);
             this.pLogInfoBack.TabIndex = 0;
             // 
             // tbLog
@@ -435,7 +379,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbLog.Name = "tbLog";
             this.tbLog.ReadOnly = true;
             this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLog.Size = new System.Drawing.Size(644, 454);
+            this.tbLog.Size = new System.Drawing.Size(644, 455);
             this.tbLog.TabIndex = 0;
             this.tbLog.TabStop = false;
             // 
@@ -457,7 +401,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pDetailedLogBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pDetailedLogBack.Location = new System.Drawing.Point(3, 3);
             this.pDetailedLogBack.Name = "pDetailedLogBack";
-            this.pDetailedLogBack.Size = new System.Drawing.Size(646, 456);
+            this.pDetailedLogBack.Size = new System.Drawing.Size(646, 457);
             this.pDetailedLogBack.TabIndex = 1;
             // 
             // tbDetailedLog
@@ -471,7 +415,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbDetailedLog.Name = "tbDetailedLog";
             this.tbDetailedLog.ReadOnly = true;
             this.tbDetailedLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDetailedLog.Size = new System.Drawing.Size(644, 454);
+            this.tbDetailedLog.Size = new System.Drawing.Size(644, 455);
             this.tbDetailedLog.TabIndex = 1;
             this.tbDetailedLog.TabStop = false;
             // 
@@ -654,6 +598,62 @@ namespace TimeZero.Auction.Bot.Forms
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1, 19);
             this.panel2.TabIndex = 6;
+            // 
+            // hAttributesList
+            // 
+            this.hAttributesList.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.hAttributesList.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.hAttributesList.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.hAttributesList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.hAttributesList.Caption = "Game items list";
+            this.hAttributesList.Dock = System.Windows.Forms.DockStyle.Top;
+            this.hAttributesList.Font = new System.Drawing.Font("Calibri", 9F);
+            this.hAttributesList.ForeColor = System.Drawing.Color.Black;
+            this.hAttributesList.Location = new System.Drawing.Point(0, 0);
+            this.hAttributesList.Name = "hAttributesList";
+            this.hAttributesList.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.hAttributesList.Size = new System.Drawing.Size(228, 21);
+            this.hAttributesList.TabIndex = 4;
+            this.hAttributesList.TabStop = false;
+            this.hAttributesList.TopGradientColor = System.Drawing.Color.Lavender;
+            // 
+            // tvsbItems
+            // 
+            this.tvsbItems.ActiveColor = System.Drawing.Color.Gray;
+            this.tvsbItems.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tvsbItems.ClearButtonToolTipToolTip = "";
+            this.tvsbItems.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tvsbItems.InactiveColor = System.Drawing.Color.LightGray;
+            this.tvsbItems.Location = new System.Drawing.Point(-1, 435);
+            this.tvsbItems.MouseOnControl = System.Drawing.Color.Silver;
+            this.tvsbItems.Name = "tvsbItems";
+            this.tvsbItems.Padding = new System.Windows.Forms.Padding(1);
+            this.tvsbItems.Size = new System.Drawing.Size(231, 20);
+            this.tvsbItems.TabIndex = 0;
+            this.tvsbItems.ToolTip = "";
+            this.tvsbItems.TreeView = this.tvGameItems;
+            this.tvsbItems.FilterNode += new TimeZero.Auction.Bot.Controls.TreeViewSearchBox.TreeViewSearchBox.OnFilterNodeEvent(this.TvsbItemsFilterNode);
+            this.tvsbItems.SearchCancelled += new System.EventHandler(this.TvsbItemsSearchCancelled);
+            this.tvsbItems.SearchKeyDown += new System.Windows.Forms.KeyEventHandler(this.TvsbItemsSearchKeyDown);
+            // 
+            // header1
+            // 
+            this.header1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.header1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.header1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.header1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.header1.Caption = "Selected item preferences";
+            this.header1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.header1.Font = new System.Drawing.Font("Calibri", 9F);
+            this.header1.ForeColor = System.Drawing.Color.Black;
+            this.header1.Location = new System.Drawing.Point(0, 0);
+            this.header1.Name = "header1";
+            this.header1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
+            this.header1.Size = new System.Drawing.Size(410, 21);
+            this.header1.TabIndex = 4;
+            this.header1.TabStop = false;
+            this.header1.TopGradientColor = System.Drawing.Color.Lavender;
             // 
             // frmMain
             // 
