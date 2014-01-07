@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using TimeZero.Auction.Bot.Classes.Common;
+using TimeZero.Auction.Bot.Helpers;
 
 namespace TimeZero.Auction.Bot.Forms
 {
@@ -53,7 +54,9 @@ namespace TimeZero.Auction.Bot.Forms
             tbClientVer1.Text = AppSettings.Instance["ClientVersion"];
             tbClientVer2.Text = AppSettings.Instance["ClientVersion2"];
             tbLogin.Text = AppSettings.Instance["Login"];
-            tbPassword.Text = AppSettings.Instance["Password"];
+
+            string password = AppSettings.Instance["Password"];
+            tbPassword.Text = Helper.DecryptStringByHardwareID(password);
 
             //Main windows settings
             cbOutLogInfo.Checked = AppSettings.Instance.GetBool("OutLogs");
@@ -191,7 +194,9 @@ namespace TimeZero.Auction.Bot.Forms
                 AppSettings.Instance["ClientVersion"] = clientVer1;
                 AppSettings.Instance["ClientVersion2"] = clientVer2;
                 AppSettings.Instance["Login"] = login;
-                AppSettings.Instance["Password"] = password;
+
+                string encPassword = Helper.EncryptStringByHardwareID(password);
+                AppSettings.Instance["Password"] = encPassword;
 
                 //2. Main windows settings
                 AppSettings.Instance["OutLogs"] = cbOutLogInfo.Checked.ToString();

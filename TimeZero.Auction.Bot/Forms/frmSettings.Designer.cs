@@ -168,7 +168,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPassword.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbPassword.Location = new System.Drawing.Point(114, 194);
-            this.tbPassword.MaxLength = 0;
+            this.tbPassword.MaxLength = 50;
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '•';
             this.tbPassword.Size = new System.Drawing.Size(243, 22);
@@ -189,7 +189,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbLogin.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbLogin.Location = new System.Drawing.Point(114, 166);
-            this.tbLogin.MaxLength = 0;
+            this.tbLogin.MaxLength = 16;
             this.tbLogin.Name = "tbLogin";
             this.tbLogin.Size = new System.Drawing.Size(243, 22);
             this.tbLogin.TabIndex = 107;
@@ -230,7 +230,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbGameFolder.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbGameFolder.Location = new System.Drawing.Point(114, 111);
-            this.tbGameFolder.MaxLength = 0;
+            this.tbGameFolder.MaxLength = 500;
             this.tbGameFolder.Name = "tbGameFolder";
             this.tbGameFolder.Size = new System.Drawing.Size(217, 22);
             this.tbGameFolder.TabIndex = 103;
@@ -250,7 +250,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbClientVer2.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbClientVer2.Location = new System.Drawing.Point(267, 83);
-            this.tbClientVer2.MaxLength = 0;
+            this.tbClientVer2.MaxLength = 20;
             this.tbClientVer2.Name = "tbClientVer2";
             this.tbClientVer2.Size = new System.Drawing.Size(90, 22);
             this.tbClientVer2.TabIndex = 101;
@@ -268,7 +268,7 @@
             // 
             this.tbClientVer1.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbClientVer1.Location = new System.Drawing.Point(114, 83);
-            this.tbClientVer1.MaxLength = 0;
+            this.tbClientVer1.MaxLength = 3;
             this.tbClientVer1.Name = "tbClientVer1";
             this.tbClientVer1.Size = new System.Drawing.Size(46, 22);
             this.tbClientVer1.TabIndex = 99;
@@ -390,7 +390,7 @@
             this.cbOutDetailedLogInfo.AutoSize = true;
             this.cbOutDetailedLogInfo.Location = new System.Drawing.Point(15, 53);
             this.cbOutDetailedLogInfo.Name = "cbOutDetailedLogInfo";
-            this.cbOutDetailedLogInfo.Size = new System.Drawing.Size(182, 19);
+            this.cbOutDetailedLogInfo.Size = new System.Drawing.Size(154, 17);
             this.cbOutDetailedLogInfo.TabIndex = 91;
             this.cbOutDetailedLogInfo.Text = "Out detailed log information";
             this.cbOutDetailedLogInfo.UseVisualStyleBackColor = true;
@@ -400,7 +400,7 @@
             this.cbOutLogInfo.AutoSize = true;
             this.cbOutLogInfo.Location = new System.Drawing.Point(15, 30);
             this.cbOutLogInfo.Name = "cbOutLogInfo";
-            this.cbOutLogInfo.Size = new System.Drawing.Size(134, 19);
+            this.cbOutLogInfo.Size = new System.Drawing.Size(114, 17);
             this.cbOutLogInfo.TabIndex = 90;
             this.cbOutLogInfo.Text = "Out log information";
             this.cbOutLogInfo.UseVisualStyleBackColor = true;
@@ -452,8 +452,7 @@
             // fbdGameFolder
             // 
             this.fbdGameFolder.Description = "Please select TimeZero game folder. Some of the game resources will be used to ma" +
-    "ke authorization on a game server. Privacy all of your personal data is guarante" +
-    "ed!";
+    "ke authorization on a game server.";
             this.fbdGameFolder.RootFolder = System.Environment.SpecialFolder.MyComputer;
             this.fbdGameFolder.ShowNewFolderButton = false;
             // 

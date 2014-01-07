@@ -19,7 +19,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                 //Connect to the game server
                 while (gameServersList.Count > 0)
                 {
-                    //Pop a first game serve in the list
+                    //Pop a first game server in the list
                     string server = (string) gameServersList[0];
                     gameServersList.Remove(server);
 
@@ -39,7 +39,6 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
             }
 
             //Connection failed
-            networkClient.ThrowError("Connection to game server wasn`t established");
             return false;
         }
 

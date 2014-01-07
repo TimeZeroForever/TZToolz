@@ -95,7 +95,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         private string _server;
         private int _port;
-        private int _chatServerPort;
+        private int _chatPort;
 
         private GameClient _client;
 
@@ -153,11 +153,11 @@ namespace TimeZero.Auction.Bot.Classes.Network
             Init(server, port, chatServerPort);
         }
 
-        public void Init(string server, int port, int chatServerPort)
+        public void Init(string server, int port, int chatPort)
         {
             _server = server;
             _port = port;
-            _chatServerPort = chatServerPort;
+            _chatPort = chatPort;
         }
 
         public void SendLogMessage(string message)
@@ -201,7 +201,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 Disconnect();
 
                 //Establish TCP connection
-                _tcpClient = new TcpClient { ReceiveBufferSize = 100000 };
+                _tcpClient = new TcpClient();
                 _tcpClient.Connect(_server, _port);
                 _networkStream = _tcpClient.GetStream();
 
@@ -223,8 +223,8 @@ namespace TimeZero.Auction.Bot.Classes.Network
             }
             catch (Exception ex)
             {
-                SendLogMessage(string.Format("CONNECTION ERROR: {0}\r\n", ex));
                 _connected = 0;
+                SendLogMessage(string.Format("CONNECTION ERROR: {0}\r\n", ex));
             }
 
             //Done
@@ -339,8 +339,14 @@ namespace TimeZero.Auction.Bot.Classes.Network
                             OnDisconnected();
                         }
 
+                        //Out log message
                         SendLogMessage(string.Format("Disconnected from the server\r\n{0}\r\n",
                             LogSeparator2));
+                    }
+                    else
+                    {
+                        //Restore connected state
+                        _connected = 1;
                     }
                 }
             }
@@ -517,8 +523,8 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 try
                 {
                     //Establish TCP connection
-                    _chatTcpClient = new TcpClient { ReceiveBufferSize = 100000 };
-                    _chatTcpClient.Connect(chatServer, _chatServerPort);
+                    _chatTcpClient = new TcpClient();
+                    _chatTcpClient.Connect(chatServer, _chatPort);
                     _chatNetworkStream = _chatTcpClient.GetStream();
 
                     //Create data thread
@@ -530,7 +536,6 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 catch (Exception ex)
                 {
                     SendLogMessage(string.Format("CHAT ERROR: {0}\r\n", ex));
-                    _connected = 0;
                 }
             }
             return false;
@@ -645,7 +650,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
         {
             StringBuilder dataPart = new StringBuilder();
             StringBuilder bufferedDataPart = new StringBuilder();
-            byte[] buffer = new byte[tcpClient.ReceiveBufferSize * 2];
+            byte[] buffer = new byte[tcpClient.ReceiveBufferSize];
 
             while (!_terminated && tcpClient.Connected)
             {
