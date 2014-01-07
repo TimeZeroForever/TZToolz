@@ -70,6 +70,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnOutDetailedLogs = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRunGame = new System.Windows.Forms.ToolStripButton();
+            this.btnSettings = new System.Windows.Forms.ToolStripButton();
             this.flashPlayer = new AxShockwaveFlashObjects.AxShockwaveFlash();
             this.timerReconnect = new System.Windows.Forms.Timer(this.components);
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -453,7 +454,8 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnOutLogs,
             this.btnOutDetailedLogs,
             this.toolStripSeparator5,
-            this.btnRunGame});
+            this.btnRunGame,
+            this.btnSettings});
             this.tsMain.Location = new System.Drawing.Point(0, 0);
             this.tsMain.Name = "tsMain";
             this.tsMain.Size = new System.Drawing.Size(684, 25);
@@ -523,6 +525,17 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnRunGame.Size = new System.Drawing.Size(23, 22);
             this.btnRunGame.Text = "Run the game";
             this.btnRunGame.Click += new System.EventHandler(this.BtnRunGameClick);
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.btnSettings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnSettings.Image = global::TimeZero.Auction.Bot.Properties.Resources.wrench;
+            this.btnSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new System.Drawing.Size(23, 22);
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // flashPlayer
             // 
@@ -705,6 +718,7 @@ namespace TimeZero.Auction.Bot.Forms
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripStatusLabel toolStripStatusLabel2;
         private ToolStripStatusLabel lblActionInProgress;
+        private ToolStripButton btnSettings;
     }
 }
 

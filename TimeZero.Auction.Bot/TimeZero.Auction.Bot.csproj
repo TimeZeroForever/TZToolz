@@ -119,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Common\CommandDump.cs" />
+    <Compile Include="Classes\Common\AppSettings.cs" />
     <Compile Include="Classes\Common\SerializableDictionary.cs" />
     <Compile Include="Classes\Common\Serializer.cs" />
     <Compile Include="Classes\Common\Singletone.cs" />
@@ -134,6 +135,9 @@
     </Compile>
     <Compile Include="Controls\Header\Header.designer.cs">
       <DependentUpon>Header.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SettingsListView\SettingsListView.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\TransparentPanel\TransparentPanel.cs">
       <SubType>Component</SubType>
@@ -156,6 +160,12 @@
     </Compile>
     <Compile Include="Forms\frmLoading.Designer.cs">
       <DependentUpon>frmLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\frmSetGameItemsDefaults.cs">
       <SubType>Form</SubType>
@@ -198,7 +208,8 @@
     <Compile Include="Classes\Network\Acitons\Login\LoginStep2_ConnectToGameServer.cs" />
     <Compile Include="Classes\Network\Acitons\Login\LoginStep3_Authorization.cs" />
     <Compile Include="Classes\Network\NetworkClient.cs" />
-    <Compile Include="Helpers\PerPixelAlphaForm.cs">
+    <Compile Include="Helpers\Helper.cs" />
+    <Compile Include="Controls\PerPixelAlphaForm\PerPixelAlphaForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
@@ -211,6 +222,11 @@
     <Compile Include="Classes\MemoryEditor\SysType.cs" />
     <Compile Include="Classes\MemoryEditor\SysTypes.cs" />
     <Compile Include="Classes\TZProcess\TZProcessPatcher.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Controls\Header\Header.resx">
       <DependentUpon>Header.cs</DependentUpon>
     </EmbeddedResource>
@@ -227,6 +243,9 @@
       <DependentUpon>frmMain.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\frmSetGameItemsDefaults.resx">
       <DependentUpon>frmSetGameItemsDefaults.cs</DependentUpon>
     </EmbeddedResource>
@@ -240,19 +259,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\App.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -267,7 +273,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Resources\bullet_ball_glass_red.png" />
+    <None Include="TimeZero.Auction.Bot.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bullet_ball_glass_green.png" />
@@ -334,6 +347,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_explore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

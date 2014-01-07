@@ -1,7 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Threading;
 using System.Windows.Forms;
+using AxShockwaveFlashObjects;
 using TimeZero.Auction.Bot.Classes.Common;
 using TimeZero.Auction.Bot.Classes.Game.Client;
 using TimeZero.Auction.Bot.Classes.Game.GameItems;
@@ -10,25 +14,14 @@ using TimeZero.Auction.Bot.Classes.Network.Acitons;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Game;
 using TimeZero.Auction.Bot.Classes.TZProcess;
 using TimeZero.Auction.Bot.ClassesInstances;
+using TimeZero.Auction.Bot.Helpers;
 using TimeZero.Auction.Bot.Properties;
-using AxShockwaveFlashObjects;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Drawing;
-using System.Threading;
+using Voice2Dox.LocalSettings;
 
 namespace TimeZero.Auction.Bot.Forms
 {
     public partial class frmMain : Form
     {
-
-#region P/Invoke
-
-        [DllImport("User32.dll")]
-        public static extern IntPtr SendMessage(IntPtr hWnd, uint msg, IntPtr wParam,
-                                                IntPtr lParam);
-
-#endregion
 
 #region Delegates
 
@@ -53,7 +46,7 @@ namespace TimeZero.Auction.Bot.Forms
 
         private List<TreeNode> _gameItemsCheckedNodes;
 
-        private readonly frmLoading _formLoading;
+        private frmLoading _formLoading;
 
 #endregion
 
@@ -100,85 +93,97 @@ namespace TimeZero.Auction.Bot.Forms
 
         public frmMain()
         {
-            Opacity = 0;
-            _formLoading = new frmLoading().Show();
-
+            BeginLoading();
             InitializeComponent();
             InitializeEnvironment();
             UpdateInterface();
-
-            flashPlayer.Base = Settings.Default.MainSWFFilePath;
-            flashPlayer.Movie = Settings.Default.MainSWFFilePath;
-            flashPlayer.OnReadyStateChange += player_OnReadyStateChange;
         }
 
-        private void player_OnReadyStateChange(object sender, _IShockwaveFlashEvents_OnReadyStateChangeEvent e)
+        private void BeginLoading()
         {
-            lock (_syncObject)
-            {
-                if (e.newState == 4 && !_tzProcessHasPatched)
-                {
-                    try
-                    {
-                        string vGlobal = flashPlayer.GetVariable("_root.container_connection");
-                        if (vGlobal != "<undefined/>")
-                        {
-                            _tzProcessHasPatched = true;
-                            TZProcessPatch.PatchCurrentProcess();
-                            UpdateInterface();
+            Opacity = 0;
+            _formLoading = new frmLoading().Show();
+        }
 
-                            _formLoading.Dispose();
-                            Opacity = 100;
-                            Focus();
-                        }
-                    }
-                    catch { }
-                }
+        private void HideLoadingForm()
+        {
+            if (_formLoading != null)
+            {
+                _formLoading.Hide();
             }
         }
 
-        private void LockUpdate(Control parentCtrl)
+        private void ShowLoadingForm()
         {
-            SendMessage(parentCtrl.Handle, 0x000B, (IntPtr)0, (IntPtr)0);
-        }
-
-        private void UnlockUpdate(Control parentCtrl)
-        {
-            SendMessage(parentCtrl.Handle, 0x000B, (IntPtr)1, (IntPtr)0);
-            parentCtrl.Invalidate(true);
-        }
-
-        private void OutLogMessage(string message)
-        {
-            lock (_syncObject)
+            if (_formLoading != null)
             {
-                tbLog.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+                _formLoading.Show();
             }
         }
 
-        private void OutFullLogMessage(string message)
+        private void EndLoading()
         {
-            lock (_syncObject)
-            {
-                tbDetailedLog.AppendText(string.Format("{0}{1}{1}", message, Environment.NewLine));
-                Thread.Sleep(0);
-            }
+            _formLoading.Dispose();
+            _formLoading = null;
+            Opacity = 100;
+            Focus();
         }
 
         private void InitializeEnvironment()
         {
+            //Init application settings
+            AppSettings.FileName = "TimeZero.Auction.Bot.cfg";
+
+            //Get the game folder path
+            string mainSwfFile = Path.Combine(AppSettings.Instance["GameFolder"] ?? "", "tz.swf");
+
+            //Is it first start of the application?
+            if (!File.Exists(mainSwfFile))
+            {
+                //Hide the loading form
+                HideLoadingForm();
+
+                MessageBox.Show(@"Game folder is not configured.
+Possible this is the first launch of the application, so you should define the game folder first.
+Some of the game resources will be used to make authorization on a game server. 
+Privacy all of your personal data is guaranteed!",
+                                "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //Show application settings window
+                if (!ChangeSettings(true))
+                {
+                    //If the user presses cancel button, terminate the application
+                    MessageBox.Show(@"To continue you should define the game folder.
+Application terminated.",
+                                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Process.GetCurrentProcess().Kill();
+                    return;
+                }
+
+                //Get the game folder path
+                mainSwfFile = Path.Combine(AppSettings.Instance["GameFolder"] ?? "", "tz.swf");
+
+                //Show the loading form
+                ShowLoadingForm();
+            }
+
+            //Prepare flash player
+            flashPlayer.Base = mainSwfFile;
+            flashPlayer.Movie = mainSwfFile;
+            flashPlayer.OnReadyStateChange += player_OnReadyStateChange;
+
             //Init game client
-            _gameClient.Init(Settings.Default.LocalIP,
-                             Settings.Default.UserName,
-                             Settings.Default.Password,
-                             Settings.Default.ClientVersion,
-                             Settings.Default.ClientVersion2,
+            _gameClient.Init(Helper.GetLocalIP(),
+                             AppSettings.Instance["Login"],
+                             AppSettings.Instance["Password"],
+                             AppSettings.Instance["ClientVersion"],
+                             AppSettings.Instance["ClientVersion2"],
                              flashPlayer);
 
             //Init network client
-            _networkClient.Init(Settings.Default.Server,
-                                Settings.Default.Port,
-                                Settings.Default.ChatServerPort);
+            _networkClient.Init(AppSettings.Instance["Server"],
+                                AppSettings.Instance.GetInt("Port"),
+                                AppSettings.Instance.GetInt("Port"));
             _networkClient.OnDataReceived += DataReceived;
             _networkClient.OnDataSended += DataSended;
             _networkClient.OnLogMessage += LogMessage;
@@ -199,7 +204,7 @@ namespace TimeZero.Auction.Bot.Forms
                     _gameItemsGroups = Instance.GameItemsGroups;
                 }
             }
-            catch {}
+            catch { }
 
             if (_gameItemsGroups.Empty)
             {
@@ -208,9 +213,9 @@ namespace TimeZero.Auction.Bot.Forms
             RefreshGameItemsTreeView();
 
             //Init tool buttons
-            btnOutLogs.Checked = Settings.Default.OutLogs;
+            btnOutLogs.Checked = AppSettings.Instance.GetBool("OutLogs");
             BtnOutLogsClick(null, null);
-            btnOutDetailedLogs.Checked = Settings.Default.OutDetailedLogs;
+            btnOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
             BtnOutDetailedLogsClick(null, null);
         }
 
@@ -231,6 +236,45 @@ namespace TimeZero.Auction.Bot.Forms
             btnConnect.Enabled = !_networkClient.Connected && _tzProcessHasPatched;
             btnDisconnect.Enabled = _networkClient.Connected && _tzProcessHasPatched;
             tcMain.Enabled = _tzProcessHasPatched;
+        }
+
+        private void player_OnReadyStateChange(object sender, _IShockwaveFlashEvents_OnReadyStateChangeEvent e)
+        {
+            lock (_syncObject)
+            {
+                if (e.newState == 4 && !_tzProcessHasPatched)
+                {
+                    try
+                    {
+                        string vGlobal = flashPlayer.GetVariable("_root.container_connection");
+                        if (vGlobal != "<undefined/>")
+                        {
+                            _tzProcessHasPatched = true;
+                            TZProcessPatch.PatchCurrentProcess();
+                            UpdateInterface();
+                            EndLoading();
+                        }
+                    }
+                    catch { }
+                }
+            }
+        }
+
+        private void OutLogMessage(string message)
+        {
+            lock (_syncObject)
+            {
+                tbLog.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+            }
+        }
+
+        private void OutFullLogMessage(string message)
+        {
+            lock (_syncObject)
+            {
+                tbDetailedLog.AppendText(string.Format("{0}{1}{1}", message, Environment.NewLine));
+                Thread.Sleep(0);
+            }
         }
 
         private void FrmMainFormClosing(object sender, FormClosingEventArgs e)
@@ -313,21 +357,21 @@ namespace TimeZero.Auction.Bot.Forms
 
         private void OnNetworkActivityOut(int dataLength)
         {
-            slNetworkOut.ToolTipText = BytesToString(_networkDataOutLength += dataLength) +
+            slNetworkOut.ToolTipText = Helper.BytesToString(_networkDataOutLength += dataLength) +
                 " sended";
             slNetworkOut.Tag = Environment.TickCount;
         }
 
         private void OnNetworkActivityIn(int dataLength)
         {
-            slNetworkIn.ToolTipText = BytesToString(_networkDataInLength += dataLength) +
+            slNetworkIn.ToolTipText = Helper.BytesToString(_networkDataInLength += dataLength) +
                 " received";
             slNetworkIn.Tag = Environment.TickCount;
         }
 
         private void BtnRunGameClick(object sender, EventArgs e)
         {
-            string filePath = Settings.Default.TimeZeroExePath; 
+            string filePath = Path.Combine(AppSettings.Instance["GameFolder"], "TimeZero.exe"); 
             if (File.Exists(filePath))
             {
                 Process.Start(filePath);
@@ -355,6 +399,12 @@ namespace TimeZero.Auction.Bot.Forms
             {
                 _networkClient.Disconnect();
             }
+        }
+
+        private void Reconnect()
+        {
+            Disconnect();
+            Connect();
         }
 
         private void DataReceived(string data)
@@ -455,13 +505,13 @@ namespace TimeZero.Auction.Bot.Forms
 
         private void LockGameItemsTreeViewUpdate()
         {
-            LockUpdate(tvGameItems);
+            Helper.LockUpdate(tvGameItems);
             tvGameItems.DrawMode = TreeViewDrawMode.Normal;
         }
 
         private void UnlockGameItemsTreeViewUpdate()
         {
-            UnlockUpdate(tvGameItems);
+            Helper.UnlockUpdate(tvGameItems);
             tvGameItems.DrawMode = TreeViewDrawMode.OwnerDrawText;
         }
 
@@ -598,7 +648,7 @@ namespace TimeZero.Auction.Bot.Forms
 
         private void UpdateGameItemsInterface()
         {
-            LockUpdate(scItems.Panel2);
+            Helper.LockUpdate(scItems.Panel2);
 
             List<TreeNode> nodes = GameItemsSelectedNodes;
 
@@ -619,11 +669,11 @@ namespace TimeZero.Auction.Bot.Forms
             if (gameItem != null && !gameItem.HasReviewed)
             {
                 gameItem.HasReviewed = true;
-                RepaintTreeNode(tvGameItems.SelectedNode.Parent);
-                RepaintTreeNode(tvGameItems.SelectedNode.Parent.Parent);
+                Helper.RepaintTreeNode(tvGameItems.SelectedNode.Parent);
+                Helper.RepaintTreeNode(tvGameItems.SelectedNode.Parent.Parent);
             }
 
-            UnlockUpdate(scItems.Panel2);
+            Helper.UnlockUpdate(scItems.Panel2);
         }
 
         private void GameItemGroupsSetDefaults()
@@ -883,10 +933,10 @@ namespace TimeZero.Auction.Bot.Forms
                         gameItem.IgnoreForShopping = false;
                         subGroup.IgnoreForShopping = false;
                     }
-                    RepaintTreeNode(node);
+                    Helper.RepaintTreeNode(node);
                 }
             }
-            RepaintTreeNode(tvGameItems.SelectedNode);
+            Helper.RepaintTreeNode(tvGameItems.SelectedNode);
         }
 
         private TreeNode JumpToUnreviewedItem(TreeNode currentNode,
@@ -1069,27 +1119,51 @@ namespace TimeZero.Auction.Bot.Forms
 
 #endregion
 
-#region Helpers
+#region Settings
 
-        private void RepaintTreeNode(TreeNode treeNode)
+        private bool ChangeSettings(bool firstRun)
         {
-            if (treeNode != null)
+            bool result;
+            Cursor = Cursors.WaitCursor;
+            try
             {
-                treeNode.TreeView.Invalidate(treeNode.Bounds);
+                using (frmSettings form = new frmSettings())
+                {
+                    result = form.Execute(firstRun);
+                    if (!firstRun && result && form.IsGameSettingsChanged && _networkClient.Connected)
+                    {
+                        //Reinit game client
+                        _gameClient.Init(Helper.GetLocalIP(),
+                                         AppSettings.Instance["Login"],
+                                         AppSettings.Instance["Password"],
+                                         AppSettings.Instance["ClientVersion"],
+                                         AppSettings.Instance["ClientVersion2"],
+                                         flashPlayer);
+
+                        //Reinit network client
+                        _networkClient.Init(AppSettings.Instance["Server"],
+                                            AppSettings.Instance.GetInt("Port"),
+                                            AppSettings.Instance.GetInt("Port"));
+
+                        //Checking reconnect
+                        if (MessageBox.Show(@"Some changes will applied after reconnection to the game server.
+Reconnect right now?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            Reconnect();
+                        }
+                    }
+                }
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
+            return result;
         }
 
-        private string BytesToString(long byteCount)
+        private void btnSettings_Click(object sender, EventArgs e)
         {
-            string[] suf = { " bytes", " KB", " MB", " GB" };
-            if (byteCount == 0)
-            {
-                return "0" + suf[0];
-            }
-            long bytes = Math.Abs(byteCount);
-            int place = Convert.ToInt32(Math.Floor(Math.Log(bytes, 1024)));
-            double num = Math.Round(bytes / Math.Pow(1024, place), 1);
-            return (Math.Sign(byteCount) * num) + suf[place];
+            ChangeSettings(false);
         }
 
 #endregion
