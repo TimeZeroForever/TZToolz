@@ -122,6 +122,13 @@ namespace TimeZero.Auction.Bot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap folder_explore {
+            get {
+                object obj = ResourceManager.GetObject("folder_explore", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap forbidden {
             get {
                 object obj = ResourceManager.GetObject("forbidden", resourceCulture);
@@ -214,6 +221,13 @@ namespace TimeZero.Auction.Bot.Properties {
         internal static System.Drawing.Bitmap tz {
             get {
                 object obj = ResourceManager.GetObject("tz", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap wrench {
+            get {
+                object obj = ResourceManager.GetObject("wrench", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

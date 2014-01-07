@@ -77,6 +77,10 @@ build/
 *.pidb
 *.log
 *.scc
+<<<<<<< HEAD
+=======
+*.suo
+>>>>>>> origin/branch_PsychoTeras
 
 # Visual C++ cache files
 ipch/
@@ -213,3 +217,12 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+<<<<<<< HEAD
+=======
+
+#############
+## Other
+#############
+
+*.7z
+>>>>>>> origin/branch_PsychoTeras

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Media;
 using TimeZero.Auction.Bot.Classes.Game.Client;
-using TimeZero.Auction.Bot.Classes.Network.Constants;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using TimeZero.Auction.Bot.Classes.Game.Client;
-using TimeZero.Auction.Bot.Classes.Network.Constants;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
@@ -26,6 +25,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                                                        FromServer.LOL,
                                                                        FromServer.DM,
                                                                        FromServer.LB,
+                                                                       FromServer.ID2,
                                                                        FromServer.CHAT_MESSAGE,
                                                                        FromServer.ITEM_ADD_ONE,
                                                                        FromServer.UPDATE_VER,
