@@ -16,7 +16,6 @@ using TimeZero.Auction.Bot.Classes.TZProcess;
 using TimeZero.Auction.Bot.ClassesInstances;
 using TimeZero.Auction.Bot.Helpers;
 using TimeZero.Auction.Bot.Properties;
-using Voice2Dox.LocalSettings;
 
 namespace TimeZero.Auction.Bot.Forms
 {
@@ -1161,7 +1160,7 @@ Reconnect right now?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Q
             return result;
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private void BtnSettingsClick(object sender, EventArgs e)
         {
             ChangeSettings(false);
         }

@@ -160,7 +160,7 @@
             this.btnBrowseGameFolder.TabIndex = 110;
             this.btnBrowseGameFolder.TabStop = false;
             this.btnBrowseGameFolder.UseVisualStyleBackColor = true;
-            this.btnBrowseGameFolder.Click += new System.EventHandler(this.btnBrowseGameFolder_Click);
+            this.btnBrowseGameFolder.Click += new System.EventHandler(this.BtnBrowseGameFolderClick);
             // 
             // tbPassword
             // 
@@ -447,7 +447,7 @@
             this.btnApply.TabIndex = 7;
             this.btnApply.Text = "Save settings";
             this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            this.btnApply.Click += new System.EventHandler(this.BtnApplyClick);
             // 
             // fbdGameFolder
             // 
@@ -486,7 +486,7 @@
             this.lvSettings.TabIndex = 4;
             this.lvSettings.UseCompatibleStateImageBehavior = false;
             this.lvSettings.View = System.Windows.Forms.View.Details;
-            this.lvSettings.SelectedIndexChanged += new System.EventHandler(this.lvSettings_SelectedIndexChanged);
+            this.lvSettings.SelectedIndexChanged += new System.EventHandler(this.LvSettingsSelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -511,7 +511,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.frmSettings_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmSettingsKeyDown);
             this.pSettings.ResumeLayout(false);
             this.tbSettings.ResumeLayout(false);
             this.tpGeneral.ResumeLayout(false);

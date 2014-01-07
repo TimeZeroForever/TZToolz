@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
-using Voice2Dox.LocalSettings;
 using System.Text.RegularExpressions;
+using TimeZero.Auction.Bot.Classes.Common;
 
 namespace TimeZero.Auction.Bot.Forms
 {
@@ -74,7 +74,7 @@ namespace TimeZero.Auction.Bot.Forms
             PopulateSettings();
             if (firstRun)
             {
-                btnBrowseGameFolder_Click(null, null);
+                BtnBrowseGameFolderClick(null, null);
             }
             return ShowDialog() == DialogResult.OK;
         }
@@ -93,7 +93,7 @@ namespace TimeZero.Auction.Bot.Forms
             return tabIdx;
         }
 
-        private void lvSettings_SelectedIndexChanged(object sender, EventArgs e)
+        private void LvSettingsSelectedIndexChanged(object sender, EventArgs e)
         {
             if (lvSettings.SelectedIndices.Count > 0 && lvSettings.SelectedIndices[0] != -1)
             {
@@ -102,7 +102,7 @@ namespace TimeZero.Auction.Bot.Forms
             }
         }
 
-        private void btnBrowseGameFolder_Click(object sender, EventArgs e)
+        private void BtnBrowseGameFolderClick(object sender, EventArgs e)
         {
             if (fbdGameFolder.ShowDialog() == DialogResult.OK)
             {
@@ -231,12 +231,12 @@ namespace TimeZero.Auction.Bot.Forms
             }
         }
 
-        private void btnApply_Click(object sender, EventArgs e)
+        private void BtnApplyClick(object sender, EventArgs e)
         {
             SaveSettings();
         }
 
-        private void frmSettings_KeyDown(object sender, KeyEventArgs e)
+        private void FrmSettingsKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {

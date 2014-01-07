@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Voice2Dox.LocalSettings
+namespace TimeZero.Auction.Bot.Classes.Common
 {
     public class AppSettings
     {
@@ -60,12 +60,12 @@ namespace Voice2Dox.LocalSettings
         {
             get
             {
-                string skey = key.ToString().Trim().ToLower();
+                string skey = key.Trim().ToLower();
                 return Values.ContainsKey(skey) ? Values[skey].ToString() : null;
             }
             set
             {
-                string skey = key.ToString().Trim().ToLower();
+                string skey = key.Trim().ToLower();
                 Values[skey] = value;
             }
         }
@@ -73,7 +73,7 @@ namespace Voice2Dox.LocalSettings
         public int GetInt(string key)
         {
             int result;
-            string value = (this[key] ?? "").ToString();
+            string value = (this[key] ?? "");
             if (Int32.TryParse(value, out result))
             {
                 return result;
@@ -83,14 +83,14 @@ namespace Voice2Dox.LocalSettings
 
         public string GetString(string key)
         {
-            string value = (this[key] ?? "").ToString();
+            string value = (this[key] ?? "");
             return value;
         }
 
         public bool GetBool(string key)
         {
             bool result;
-            string value = (this[key] ?? "").ToString();
+            string value = (this[key] ?? "");
             if (bool.TryParse(value, out result))
             {
                 return result;
