@@ -85,7 +85,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                             int iCount = int.Parse(count.InnerText);
 
                             //Out log message
-                            int totalCost = (int) Math.Floor(iCount * fCost);
+                            int totalCost = (int) Math.Ceiling(iCount * fCost);
                             string groupName = _gameItemsGroups[groupId].Name;
                             string message = 
                                 string.Format("Trying to buy: {0}, group: {1}, page: {2}, count: {3}, cost: {4}, total cost: {5}...",
@@ -538,7 +538,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     //Check on auction
                     bool isAuction = Locations.Auctions.Contains(locationIdent);
 
-                    //Go a little shopping :)
+                    //Make a little shopping :)
                     DoShopping(networkClient, client, locationIdent, isAuction, fullUpdate);
                 }
 

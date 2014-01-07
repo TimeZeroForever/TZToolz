@@ -661,8 +661,9 @@ Application terminated.",
             btnGameItemRemove.Enabled = (IsGameItemsInMultiSelectionMode && nodes.Count > 0) || 
                 (selectedObject != null && !(selectedObject is GameItemsGroup));
 
-            btnGameItemsJumpToUnreviewed.Enabled = btnGameItemsOrderSubGroups.Enabled =
-                btnGameItemsRefresh.Enabled = !IsGameItemsInMultiSelectionMode;
+            btnGameItemsActions.Enabled = btnGameItemsJumpToUnreviewed.Enabled = 
+                btnGameItemsOrderSubGroups.Enabled = btnGameItemsRefresh.Enabled = 
+                !IsGameItemsInMultiSelectionMode;
 
             GameItem gameItem = selectedObject as GameItem;
             if (gameItem != null && !gameItem.HasReviewed)
@@ -1115,6 +1116,58 @@ Application terminated.",
                 GameItemsToggleMultiSelectionMode();
             }
         }
+
+        #region Actions
+
+        private void removeAllUnreviewedItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            foreach (GameItemsGroup gig in _gameItemsGroups.Groups)
+            {
+                foreach (GameItemsSubGroup sg in gig.SubGroups)
+                {
+                    List<GameItem> toRemove = new List<GameItem>();
+                    foreach (GameItem gi in sg.Items)
+                    {
+                        if (!gi.HasReviewed)
+                        {
+                            toRemove.Add(gi);
+                        }
+                    }
+                    foreach (GameItem gi in toRemove)
+                    {
+                        sg.RemoveItem(gi);
+                    }
+                }
+            }
+            RefreshGameItemsTreeView();
+        }
+
+        private void removeAllZerocostItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            foreach (GameItemsGroup gig in _gameItemsGroups.Groups)
+            {
+                foreach (GameItemsSubGroup sg in gig.SubGroups)
+                {
+                    List<GameItem> toRemove = new List<GameItem>();
+                    foreach (GameItem gi in sg.Items)
+                    {
+                        if (!gi.HasReviewed)
+                        {
+                            toRemove.Add(gi);
+                        }
+                    }
+                    foreach (GameItem gi in toRemove)
+                    {
+                        sg.RemoveItem(gi);
+                    }
+                }
+            }
+            RefreshGameItemsTreeView();
+        }
+
+        #endregion
 
 #endregion
 

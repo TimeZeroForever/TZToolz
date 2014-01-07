@@ -42,6 +42,9 @@ namespace TimeZero.Auction.Bot.Forms
             this.tsGameItems = new System.Windows.Forms.ToolStrip();
             this.btnGameItemsSaveAll = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnGameItemsActions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.removeAllUnreviewedItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeAllZerocostItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnGameItemsSetDefaults = new System.Windows.Forms.ToolStripButton();
             this.btnGameItemRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -168,6 +171,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tsGameItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnGameItemsSaveAll,
             this.toolStripSeparator4,
+            this.btnGameItemsActions,
             this.btnGameItemsSetDefaults,
             this.btnGameItemRemove,
             this.toolStripSeparator6,
@@ -195,6 +199,32 @@ namespace TimeZero.Auction.Bot.Forms
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnGameItemsActions
+            // 
+            this.btnGameItemsActions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnGameItemsActions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeAllUnreviewedItemsToolStripMenuItem,
+            this.removeAllZerocostItemsToolStripMenuItem});
+            this.btnGameItemsActions.Image = global::TimeZero.Auction.Bot.Properties.Resources.lightning;
+            this.btnGameItemsActions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnGameItemsActions.Name = "btnGameItemsActions";
+            this.btnGameItemsActions.Size = new System.Drawing.Size(29, 22);
+            this.btnGameItemsActions.Text = "Actions";
+            // 
+            // removeAllUnreviewedItemsToolStripMenuItem
+            // 
+            this.removeAllUnreviewedItemsToolStripMenuItem.Name = "removeAllUnreviewedItemsToolStripMenuItem";
+            this.removeAllUnreviewedItemsToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.removeAllUnreviewedItemsToolStripMenuItem.Text = "Remove all unreviewed items";
+            this.removeAllUnreviewedItemsToolStripMenuItem.Click += new System.EventHandler(this.removeAllUnreviewedItemsToolStripMenuItem_Click);
+            // 
+            // removeAllZerocostItemsToolStripMenuItem
+            // 
+            this.removeAllZerocostItemsToolStripMenuItem.Name = "removeAllZerocostItemsToolStripMenuItem";
+            this.removeAllZerocostItemsToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.removeAllZerocostItemsToolStripMenuItem.Text = "Remove all zero-cost items";
+            this.removeAllZerocostItemsToolStripMenuItem.Click += new System.EventHandler(this.removeAllZerocostItemsToolStripMenuItem_Click);
             // 
             // btnGameItemsSetDefaults
             // 
@@ -719,6 +749,9 @@ namespace TimeZero.Auction.Bot.Forms
         private ToolStripStatusLabel toolStripStatusLabel2;
         private ToolStripStatusLabel lblActionInProgress;
         private ToolStripButton btnSettings;
+        private ToolStripDropDownButton btnGameItemsActions;
+        private ToolStripMenuItem removeAllUnreviewedItemsToolStripMenuItem;
+        private ToolStripMenuItem removeAllZerocostItemsToolStripMenuItem;
     }
 }
 

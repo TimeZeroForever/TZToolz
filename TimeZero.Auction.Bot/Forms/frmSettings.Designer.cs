@@ -390,7 +390,7 @@
             this.cbOutDetailedLogInfo.AutoSize = true;
             this.cbOutDetailedLogInfo.Location = new System.Drawing.Point(15, 53);
             this.cbOutDetailedLogInfo.Name = "cbOutDetailedLogInfo";
-            this.cbOutDetailedLogInfo.Size = new System.Drawing.Size(182, 19);
+            this.cbOutDetailedLogInfo.Size = new System.Drawing.Size(154, 17);
             this.cbOutDetailedLogInfo.TabIndex = 91;
             this.cbOutDetailedLogInfo.Text = "Out detailed log information";
             this.cbOutDetailedLogInfo.UseVisualStyleBackColor = true;
@@ -400,7 +400,7 @@
             this.cbOutLogInfo.AutoSize = true;
             this.cbOutLogInfo.Location = new System.Drawing.Point(15, 30);
             this.cbOutLogInfo.Name = "cbOutLogInfo";
-            this.cbOutLogInfo.Size = new System.Drawing.Size(134, 19);
+            this.cbOutLogInfo.Size = new System.Drawing.Size(114, 17);
             this.cbOutLogInfo.TabIndex = 90;
             this.cbOutLogInfo.Text = "Out log information";
             this.cbOutLogInfo.UseVisualStyleBackColor = true;
@@ -452,8 +452,7 @@
             // fbdGameFolder
             // 
             this.fbdGameFolder.Description = "Please select TimeZero game folder. Some of the game resources will be used to ma" +
-    "ke authorization on a game server. Privacy all of your personal data is guarante" +
-    "ed!";
+    "ke authorization on a game server.";
             this.fbdGameFolder.RootFolder = System.Environment.SpecialFolder.MyComputer;
             this.fbdGameFolder.ShowNewFolderButton = false;
             // 
