@@ -33,7 +33,8 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                                                        FromServer.SHOP_OK,
                                                                        FromServer.CHAT,
                                                                        FromServer.EXCHANGE,
-                                                                       FromServer.EXCHANGE_CANCEL
+                                                                       FromServer.EXCHANGE_CANCEL,
+                                                                       FromServer.RELOADL
                                                                    };
 
         private const int GC_COLLECT_DELAY_MS = 10000; //In milliseconds, 10 sec

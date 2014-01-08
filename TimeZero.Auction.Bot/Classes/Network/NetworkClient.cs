@@ -16,6 +16,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
     public delegate void OnData(string data);
     public delegate void OnNetworkActivity(int dataLength);
     public delegate void OnLogMessage(string message);
+    public delegate void OnActionLogMessage(IActionStep actionStep, string message);
     
     public delegate void OnActionStepStarted(IActionStep actionStep);
     public delegate void OnActionStepCompleted(IActionStep actionStep, bool done);
@@ -31,7 +32,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
 #region Static private fields
 
-        private static readonly string LogSeparator1 = new string('-', 155);
+        private static readonly string LogSeparator1 = new string('-', 151);
         private static readonly string LogSeparator2 = new string('=', 77);
 
         private static readonly IActionStep[] LoginSteps = new IActionStep[]
@@ -76,7 +77,8 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
 #region Events
 
-        public OnLogMessage OnLogMessage { get; set; }
+        public OnLogMessage OnGeneralLogMessage { get; set; }
+        public OnActionLogMessage OnActionLogMessage { get; set; }
 
         public OnData OnDataReceived { get; set; }
         public OnData OnDataSended { get; set; }
@@ -133,9 +135,11 @@ namespace TimeZero.Auction.Bot.Classes.Network
             get { return _inputQueue; }
         }
 
-        public bool OutLogs { get; set; }
+        public bool OutGeneralLogs { get; set; }
 
         public bool OutDetailedLogs { get; set; }
+
+        public bool OutActionsLogs { get; set; }
 
         public string LocalIPAddress
         {
@@ -153,7 +157,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         public NetworkClient()
         {
-            OutLogs = true;
+            OutGeneralLogs = true;
         }
 
         public NetworkClient(string server, int port, int chatServerPort)
@@ -171,9 +175,17 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         public void SendLogMessage(string message)
         {
-            if (OutLogs && OnLogMessage != null)
+            if (OutGeneralLogs && OnGeneralLogMessage != null)
             {
-                OnLogMessage(message);
+                OnGeneralLogMessage(message);
+            }
+        }
+
+        public void SendActionLogMessage(IActionStep actionStep, string message)
+        {
+            if (OutActionsLogs && OnActionLogMessage != null)
+            {
+                OnActionLogMessage(actionStep, message);
             }
         }
 

@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("General", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Main window", 1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Application", 1);
             this.ilHelp = new System.Windows.Forms.ImageList(this.components);
             this.pSettings = new System.Windows.Forms.Panel();
             this.tbSettings = new System.Windows.Forms.TabControl();
@@ -58,9 +58,9 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.lblServerSettings = new System.Windows.Forms.Label();
             this.chkSendHotkeyAfterSubmit = new System.Windows.Forms.CheckBox();
-            this.tpMainWindow = new System.Windows.Forms.TabPage();
-            this.cbOutDetailedLogInfo = new System.Windows.Forms.CheckBox();
-            this.cbOutLogInfo = new System.Windows.Forms.CheckBox();
+            this.tpApplication = new System.Windows.Forms.TabPage();
+            this.cbOutDetailedLogs = new System.Windows.Forms.CheckBox();
+            this.cbOutGeneralLogs = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -69,10 +69,11 @@
             this.ilSettings = new System.Windows.Forms.ImageList(this.components);
             this.lvSettings = new TimeZero.Auction.Bot.Controls.SettingsListView.SettingsListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cbOutActionsLogs = new System.Windows.Forms.CheckBox();
             this.pSettings.SuspendLayout();
             this.tbSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
-            this.tpMainWindow.SuspendLayout();
+            this.tpApplication.SuspendLayout();
             this.SuspendLayout();
             // 
             // ilHelp
@@ -100,7 +101,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSettings.Controls.Add(this.tpGeneral);
-            this.tbSettings.Controls.Add(this.tpMainWindow);
+            this.tbSettings.Controls.Add(this.tpApplication);
             this.tbSettings.Location = new System.Drawing.Point(-1, -1);
             this.tbSettings.Name = "tbSettings";
             this.tbSettings.SelectedIndex = 0;
@@ -372,39 +373,40 @@
             this.chkSendHotkeyAfterSubmit.UseVisualStyleBackColor = false;
             this.chkSendHotkeyAfterSubmit.Visible = false;
             // 
-            // tpMainWindow
+            // tpApplication
             // 
-            this.tpMainWindow.Controls.Add(this.cbOutDetailedLogInfo);
-            this.tpMainWindow.Controls.Add(this.cbOutLogInfo);
-            this.tpMainWindow.Controls.Add(this.panel3);
-            this.tpMainWindow.Controls.Add(this.label5);
-            this.tpMainWindow.Location = new System.Drawing.Point(4, 24);
-            this.tpMainWindow.Name = "tpMainWindow";
-            this.tpMainWindow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMainWindow.Size = new System.Drawing.Size(368, 354);
-            this.tpMainWindow.TabIndex = 2;
-            this.tpMainWindow.Text = "Main window";
-            this.tpMainWindow.UseVisualStyleBackColor = true;
+            this.tpApplication.Controls.Add(this.cbOutActionsLogs);
+            this.tpApplication.Controls.Add(this.cbOutDetailedLogs);
+            this.tpApplication.Controls.Add(this.cbOutGeneralLogs);
+            this.tpApplication.Controls.Add(this.panel3);
+            this.tpApplication.Controls.Add(this.label5);
+            this.tpApplication.Location = new System.Drawing.Point(4, 24);
+            this.tpApplication.Name = "tpApplication";
+            this.tpApplication.Padding = new System.Windows.Forms.Padding(3);
+            this.tpApplication.Size = new System.Drawing.Size(368, 354);
+            this.tpApplication.TabIndex = 2;
+            this.tpApplication.Text = "Application";
+            this.tpApplication.UseVisualStyleBackColor = true;
             // 
-            // cbOutDetailedLogInfo
+            // cbOutDetailedLogs
             // 
-            this.cbOutDetailedLogInfo.AutoSize = true;
-            this.cbOutDetailedLogInfo.Location = new System.Drawing.Point(15, 53);
-            this.cbOutDetailedLogInfo.Name = "cbOutDetailedLogInfo";
-            this.cbOutDetailedLogInfo.Size = new System.Drawing.Size(154, 17);
-            this.cbOutDetailedLogInfo.TabIndex = 91;
-            this.cbOutDetailedLogInfo.Text = "Out detailed log information";
-            this.cbOutDetailedLogInfo.UseVisualStyleBackColor = true;
+            this.cbOutDetailedLogs.AutoSize = true;
+            this.cbOutDetailedLogs.Location = new System.Drawing.Point(15, 53);
+            this.cbOutDetailedLogs.Name = "cbOutDetailedLogs";
+            this.cbOutDetailedLogs.Size = new System.Drawing.Size(120, 19);
+            this.cbOutDetailedLogs.TabIndex = 91;
+            this.cbOutDetailedLogs.Text = "Out detailed logs";
+            this.cbOutDetailedLogs.UseVisualStyleBackColor = true;
             // 
-            // cbOutLogInfo
+            // cbOutGeneralLogs
             // 
-            this.cbOutLogInfo.AutoSize = true;
-            this.cbOutLogInfo.Location = new System.Drawing.Point(15, 30);
-            this.cbOutLogInfo.Name = "cbOutLogInfo";
-            this.cbOutLogInfo.Size = new System.Drawing.Size(114, 17);
-            this.cbOutLogInfo.TabIndex = 90;
-            this.cbOutLogInfo.Text = "Out log information";
-            this.cbOutLogInfo.UseVisualStyleBackColor = true;
+            this.cbOutGeneralLogs.AutoSize = true;
+            this.cbOutGeneralLogs.Location = new System.Drawing.Point(15, 30);
+            this.cbOutGeneralLogs.Name = "cbOutGeneralLogs";
+            this.cbOutGeneralLogs.Size = new System.Drawing.Size(116, 19);
+            this.cbOutGeneralLogs.TabIndex = 90;
+            this.cbOutGeneralLogs.Text = "Out general logs";
+            this.cbOutGeneralLogs.UseVisualStyleBackColor = true;
             // 
             // panel3
             // 
@@ -493,6 +495,16 @@
             this.columnHeader1.Text = "Settings";
             this.columnHeader1.Width = 500;
             // 
+            // cbOutActionsLogs
+            // 
+            this.cbOutActionsLogs.AutoSize = true;
+            this.cbOutActionsLogs.Location = new System.Drawing.Point(15, 76);
+            this.cbOutActionsLogs.Name = "cbOutActionsLogs";
+            this.cbOutActionsLogs.Size = new System.Drawing.Size(115, 19);
+            this.cbOutActionsLogs.TabIndex = 92;
+            this.cbOutActionsLogs.Text = "Out actions logs";
+            this.cbOutActionsLogs.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -516,8 +528,8 @@
             this.tbSettings.ResumeLayout(false);
             this.tpGeneral.ResumeLayout(false);
             this.tpGeneral.PerformLayout();
-            this.tpMainWindow.ResumeLayout(false);
-            this.tpMainWindow.PerformLayout();
+            this.tpApplication.ResumeLayout(false);
+            this.tpApplication.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -555,11 +567,12 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.FolderBrowserDialog fbdGameFolder;
         private System.Windows.Forms.ImageList ilSettings;
-        private System.Windows.Forms.TabPage tpMainWindow;
+        private System.Windows.Forms.TabPage tpApplication;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox cbOutLogInfo;
-        private System.Windows.Forms.CheckBox cbOutDetailedLogInfo;
+        private System.Windows.Forms.CheckBox cbOutGeneralLogs;
+        private System.Windows.Forms.CheckBox cbOutDetailedLogs;
         public System.Windows.Forms.TextBox tbGamePort;
+        private System.Windows.Forms.CheckBox cbOutActionsLogs;
     }
 }

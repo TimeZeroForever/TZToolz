@@ -41,8 +41,6 @@ namespace TimeZero.Auction.Bot.Forms
         private long _networkDataOutLength;
         private long _networkDataInLength;
 
-        private DateTime _startShoppingTime;
-
         private List<TreeNode> _gameItemsCheckedNodes;
 
         private frmLoading _formLoading;
@@ -185,7 +183,8 @@ Application terminated.",
                                 AppSettings.Instance.GetInt("Port"));
             _networkClient.OnDataReceived += DataReceived;
             _networkClient.OnDataSended += DataSended;
-            _networkClient.OnLogMessage += LogMessage;
+            _networkClient.OnGeneralLogMessage += GeneralLogMessage;
+            _networkClient.OnActionLogMessage += ActionLogMessage;
             _networkClient.OnNetworkActivityOut += NetworkActivityOut;
             _networkClient.OnNetworkActivityIn += NetworkActivityIn;
             _networkClient.OnConnected += Connected;
@@ -212,10 +211,12 @@ Application terminated.",
             RefreshGameItemsTreeView();
 
             //Init tool buttons
-            btnOutLogs.Checked = AppSettings.Instance.GetBool("OutLogs");
-            BtnOutLogsClick(null, null);
+            btnOutGeneralLogs.Checked = AppSettings.Instance.GetBool("OutGeneralLogs");
+            BtnOutGeneralLogsClick(null, null);
             btnOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
             BtnOutDetailedLogsClick(null, null);
+            btnOutActionsLogs.Checked = AppSettings.Instance.GetBool("OutActionsLogs");
+            BtnOutActionsLogsClick(null, null);
         }
 
         private void DeinitializeEnvironment()
@@ -259,20 +260,28 @@ Application terminated.",
             }
         }
 
-        private void OutLogMessage(string message)
+        private void OutGeneralLogMessage(string message)
         {
             lock (_syncObject)
             {
-                tbLog.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+                tbGeneralLogs.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
             }
         }
 
-        private void OutFullLogMessage(string message)
+        private void OutDetailedLogMessage(string message)
         {
             lock (_syncObject)
             {
-                tbDetailedLog.AppendText(string.Format("{0}{1}{1}", message, Environment.NewLine));
+                tbDetailedLogs.AppendText(string.Format("{0}{1}{1}", message, Environment.NewLine));
                 Thread.Sleep(0);
+            }
+        }
+
+        private void OutActionLogMessage(string message)
+        {
+            lock (_syncObject)
+            {
+                tbActionsLogs.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
             }
         }
 
@@ -317,14 +326,19 @@ Application terminated.",
             }
         }
 
-        private void BtnOutLogsClick(object sender, EventArgs e)
+        private void BtnOutGeneralLogsClick(object sender, EventArgs e)
         {
-            _networkClient.OutLogs = btnOutLogs.Checked;
+            _networkClient.OutGeneralLogs = btnOutGeneralLogs.Checked;
         }
 
         private void BtnOutDetailedLogsClick(object sender, EventArgs e)
         {
             _networkClient.OutDetailedLogs = btnOutDetailedLogs.Checked;
+        }
+
+        private void BtnOutActionsLogsClick(object sender, EventArgs e)
+        {
+            _networkClient.OutActionsLogs = btnOutActionsLogs.Checked;
         }
 
         private void TimerNetworkActivityTick(object sender, EventArgs e)
@@ -409,40 +423,41 @@ Application terminated.",
         private void DataReceived(string data)
         {
             data = string.Format(">>> {1}:{0}{2}", Environment.NewLine, DateTime.Now, data);
-            tbDetailedLog.BeginInvoke(new OutLogData(OutFullLogMessage), new object[] { data });
+            tbDetailedLogs.BeginInvoke(new OutLogData(OutDetailedLogMessage), new object[] { data });
         }
 
         private void DataSended(string data)
         {
             data = string.Format("<<< {1}:{0}{2}", Environment.NewLine, DateTime.Now, data);
-            tbDetailedLog.BeginInvoke(new OutLogData(OutFullLogMessage), new object[] { data });
+            tbDetailedLogs.BeginInvoke(new OutLogData(OutDetailedLogMessage), new object[] { data });
         }
 
         private void NetworkActivityOut(int dataLength)
         {
-            tbDetailedLog.BeginInvoke(new OnNetworkActivity(OnNetworkActivityOut), 
+            tbDetailedLogs.BeginInvoke(new OnNetworkActivity(OnNetworkActivityOut), 
                 new object[] { dataLength });
         }
 
         private void NetworkActivityIn(int dataLength)
         {
-            tbDetailedLog.BeginInvoke(new OnNetworkActivity(OnNetworkActivityIn),
+            tbDetailedLogs.BeginInvoke(new OnNetworkActivity(OnNetworkActivityIn),
                 new object[] { dataLength });
         }
 
-        private void LogMessage(string message)
+        private void GeneralLogMessage(string message)
         {
             bool woDateTime = !string.IsNullOrEmpty(message) && 
                 (message[0] == '-' || message[0] == '=' || message[0] == '\t');
             message = string.Format("{0}{1}", woDateTime ? "" : DateTime.Now + ": ", message);
-            tbLog.BeginInvoke(new OutLogData(OutLogMessage), new object[] { message });
+            tbGeneralLogs.BeginInvoke(new OutLogData(OutGeneralLogMessage), new object[] { message });
         }
 
-        private void UpdateLastShoppingTime()
+        private void ActionLogMessage(IActionStep actionStep, string message)
         {
-            string time = DateTime.Now.Subtract(_startShoppingTime).ToString();
-            lblLastShoppingTime.Text = time.Remove(time.IndexOf('.'));
-            lblLastShoppingTime.ToolTipText = DateTime.Now.ToString();
+            string stepType = actionStep.GetType().ToString();
+            string stepName = stepType.Substring(stepType.IndexOf('_') + 1);
+            message = string.Format("{0}: {1}", stepName, message);
+            tbGeneralLogs.BeginInvoke(new OutLogData(OutActionLogMessage), new object[] { message });
         }
 
         private void SyncActionStepStarted(IActionStep actionStep)
@@ -454,10 +469,6 @@ Application terminated.",
 
         private void OnActionStepStarted(IActionStep actionStep) 
         {
-            if (actionStep is GameStep_Shopping)
-            {
-                _startShoppingTime = DateTime.Now;
-            }
             BeginInvoke(new OnActionStepStarted(SyncActionStepStarted), new[] { actionStep });
         }
 
@@ -471,9 +482,7 @@ Application terminated.",
         {
             if (actionStep is GameStep_Shopping && done)
             {
-                BeginInvoke(new Action(UpdateLastShoppingTime));
                 BeginInvoke(new Action(SaveGameItemsList));
-                BeginInvoke(new Action(tbDetailedLog.Clear));
             }
             BeginInvoke(new OnActionStepStarted(SyncActionStepCompleted), new[] { actionStep });
         }
@@ -489,8 +498,6 @@ Application terminated.",
             timerReconnect.Enabled = true;
             lblActionInProgress.Text = "---";
             lblActionInProgress.ToolTipText = string.Empty;
-            lblLastShoppingTime.Text = "---";
-            lblLastShoppingTime.ToolTipText = string.Empty;
         }
 
         private void Disconnected()
@@ -1138,7 +1145,7 @@ Application terminated.",
             }
         }
 
-        private void removeAllUnreviewedItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RemoveAllUnreviewedItemsToolStripMenuItemClick(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
             foreach (GameItemsGroup gig in _gameItemsGroups.Groups)
@@ -1163,7 +1170,7 @@ Application terminated.",
             RefreshGameItemsTreeView();
         }
 
-        private void removeAllZerocostItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RemoveAllZerocostItemsToolStripMenuItemClick(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
             foreach (GameItemsGroup gig in _gameItemsGroups.Groups)

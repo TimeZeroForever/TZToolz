@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Management;
-using System.Net;
-using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
@@ -23,8 +21,8 @@ namespace TimeZero.Auction.Bot.Helpers
 
 #region Static private fields
 
-        private static byte[] _salt = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
-        private static byte[] _uniqueHardwareID = GetUniqueHardwareID();
+        private static readonly byte[] _salt = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+        private static readonly byte[] _uniqueHardwareID = GetUniqueHardwareID();
 
 #endregion
 

@@ -507,6 +507,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     ProcessGroupPagesFull(networkClient, client, locationIdent, isAuction, fullList);
                 }
             }
+
             //or lets use cached group pages
             else
             {
@@ -526,20 +527,43 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
             if (IsReadyForAction)
             {
                 _gameItemsGroups = Instance.GameItemsGroups;
+                DateTime startShoppingTime = DateTime.Now;
 
                 //Check full update requirement
                 bool fullUpdate = _prewFullUpdateTime == 0 || 
                      Environment.TickCount - _prewFullUpdateTime >= SHOPPING_FULL_UPDATE_MIN * 60000;
 
-                //Current location must be a shop, check it
+                //Get location ident
                 string locationIdent = Helper.GetCurrentLocationIdent(client);
-                if (Locations.Shops.Contains(locationIdent))
-                {
-                    //Check on auction
-                    bool isAuction = Locations.Auctions.Contains(locationIdent);
 
+                //Check on shop
+                bool isShop = Locations.Shops.Contains(locationIdent);
+
+                //Check on auction
+                bool isAuction = Locations.Auctions.Contains(locationIdent);
+
+                //Out action message
+                string message = string.Format(@"started, {0}
+    • in a shop: {1}
+    • is it an auction: {2}
+    • full update: {3}
+", DateTime.Now, 
+   isShop ? "YES" : "NO", 
+   isAuction ? "YES" : "NO",
+   fullUpdate ? "YES" : "NO").TrimEnd();
+                networkClient.SendActionLogMessage(this, message);
+
+                //Current location must be a shop, check it
+                if (isShop)
+                {
                     //Make a little shopping :)
                     DoShopping(networkClient, client, locationIdent, isAuction, fullUpdate);
+                }
+                else
+                {
+                    //Out action message
+                    message = "You are not inside a shop. Shopping unavailable.";
+                    networkClient.SendActionLogMessage(this, message);                    
                 }
 
                 //Store last time of full update
@@ -548,6 +572,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                 {
                     _prewFullUpdateTime = _prewShoppingnTime;
                 }
+
+                //Out action message
+                string shoppingTime = DateTime.Now.Subtract(startShoppingTime).ToString();
+                shoppingTime = shoppingTime.Remove(shoppingTime.IndexOf('.'));
+                message = string.Format("completed. Duration: {0}", shoppingTime);
+                networkClient.SendActionLogMessage(this, message);  
 
                 return true;
             }

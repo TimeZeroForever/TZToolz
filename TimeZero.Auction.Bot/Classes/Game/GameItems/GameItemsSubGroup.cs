@@ -35,7 +35,7 @@ namespace TimeZero.Auction.Bot.Classes.Game.GameItems
         [Category("Shopping"), DisplayName(@"Ignore for shopping")]
         public bool IgnoreForShopping { get; set; }
 
-        [Category("Items"), DisplayName(@"Count"), ReadOnly(true)]
+        [Browsable(false)]
         public int ItemsCount { get { return _gameItems.Count; } }
 
         [Browsable(false)]
@@ -44,10 +44,7 @@ namespace TimeZero.Auction.Bot.Classes.Game.GameItems
         [Browsable(false)]
         public string Ident
         {
-            get
-            {
-                return GetSubGroupIdent(ID, Type);
-            }
+            get { return GetSubGroupIdent(ID, Type); }
         }
 
         [Browsable(false)]

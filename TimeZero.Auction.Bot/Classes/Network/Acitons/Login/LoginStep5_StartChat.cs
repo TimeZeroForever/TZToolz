@@ -33,14 +33,9 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                 }
             }
 
-            if (!chatStarted)
-            {
-                networkClient.SendLogMessage("WARNING: chat wasn`t started");
-            }
-            else
-            {
-                networkClient.SendLogMessage("Chat was successfully started");
-            }
+            networkClient.SendLogMessage(!chatStarted 
+                ? "WARNING: chat wasn`t started" 
+                : "Chat was successfully started");
 
             return true;
         }

@@ -39,6 +39,8 @@
         public const string IMS             = "IMS"           ;
         public const string LB              = "LB"            ;
         public const string ID2             = "ID2"           ;
+        public const string RELOADL         = "RELOADL"       ;
+        
     }
 
     public static class FromClient
