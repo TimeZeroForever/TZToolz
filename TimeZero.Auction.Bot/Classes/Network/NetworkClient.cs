@@ -667,7 +667,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                     if (networkStream.DataAvailable)
                     {
                         //Read received data from network buffer
-                        int dataSize = _tcpClient.Available;
+                        int dataSize = tcpClient.Available;
                         if (dataSize == 0)
                         {
                             Thread.Sleep(1);
