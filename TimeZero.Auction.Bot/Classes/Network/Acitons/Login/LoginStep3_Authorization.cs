@@ -29,7 +29,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
 
                 //Do login
                 string login = Packet.BuildPacket(FromClient.LOGIN_DATA,
-                    client.LocalIP, client.Version2, client.Version, passwordHash, client.Login);
+                    networkClient.LocalIPAddress, client.Version2, client.Version, passwordHash, client.Login);
                 networkClient.SendData(login);
 
                 //Get login result

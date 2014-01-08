@@ -9,6 +9,7 @@ using TimeZero.Auction.Bot.Classes.Network.Acitons.Game;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Login;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
+using System.Net;
 
 namespace TimeZero.Auction.Bot.Classes.Network
 {
@@ -136,7 +137,15 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         public bool OutDetailedLogs { get; set; }
 
-        internal int LastSendDataTime { get; private set; } 
+        public string LocalIPAddress
+        {
+            get
+            {
+                return _tcpClient != null
+                  ? ((IPEndPoint)_tcpClient.Client.LocalEndPoint).Address.ToString()
+                  : string.Empty;
+            }
+        }
 
 #endregion
 
@@ -602,7 +611,6 @@ namespace TimeZero.Auction.Bot.Classes.Network
                     byte[] byteBuffer = Encoding.UTF8.GetBytes(data);
                     int dataLength = byteBuffer.Length;
                     networkStream.Write(byteBuffer, 0, dataLength);
-                    LastSendDataTime = Environment.TickCount;
 
                     //Fire OnDataSended event
                     if (OutDetailedLogs && OnDataSended != null)
@@ -658,10 +666,11 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 {
                     if (networkStream.DataAvailable)
                     {
-                        //Read received data from net. buffer
+                        //Read received data from network buffer
                         int dataSize = _tcpClient.Available;
                         if (dataSize == 0)
                         {
+                            Thread.Sleep(1);
                             continue;
                         }
 

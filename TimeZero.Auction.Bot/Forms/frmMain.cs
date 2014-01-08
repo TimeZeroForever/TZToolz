@@ -173,8 +173,7 @@ Application terminated.",
 
             //Init game client
             string password = AppSettings.Instance["Password"];
-            _gameClient.Init(Helper.GetLocalIP(),
-                             AppSettings.Instance["Login"],
+            _gameClient.Init(AppSettings.Instance["Login"],
                              Helper.DecryptStringByHardwareID(password),
                              AppSettings.Instance["ClientVersion"],
                              AppSettings.Instance["ClientVersion2"],
@@ -1208,8 +1207,7 @@ Application terminated.",
                     {
                         //Reinit game client
                         string password = AppSettings.Instance["Password"];
-                        _gameClient.Init(Helper.GetLocalIP(),
-                                         AppSettings.Instance["Login"],
+                        _gameClient.Init(AppSettings.Instance["Login"],
                                          Helper.DecryptStringByHardwareID(password),
                                          AppSettings.Instance["ClientVersion"],
                                          AppSettings.Instance["ClientVersion2"],

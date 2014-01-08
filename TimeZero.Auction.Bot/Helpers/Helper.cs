@@ -30,19 +30,6 @@ namespace TimeZero.Auction.Bot.Helpers
 
 #region Static methods
 
-        public static string GetLocalIP()
-        {
-            IPAddress[] localIPs = Dns.GetHostAddresses(Environment.MachineName);
-            foreach (IPAddress addr in localIPs)
-            {
-                if (addr.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    return addr.ToString();
-                }
-            }
-            return "192.168.1.1";
-        }
-
         public static string BytesToString(long byteCount)
         {
             string[] suf = { " bytes", " KB", " MB", " GB" };
