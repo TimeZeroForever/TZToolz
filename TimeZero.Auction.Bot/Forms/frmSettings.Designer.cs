@@ -59,6 +59,7 @@
             this.lblServerSettings = new System.Windows.Forms.Label();
             this.chkSendHotkeyAfterSubmit = new System.Windows.Forms.CheckBox();
             this.tpApplication = new System.Windows.Forms.TabPage();
+            this.cbOutActionsLogs = new System.Windows.Forms.CheckBox();
             this.cbOutDetailedLogs = new System.Windows.Forms.CheckBox();
             this.cbOutGeneralLogs = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -69,7 +70,6 @@
             this.ilSettings = new System.Windows.Forms.ImageList(this.components);
             this.lvSettings = new TimeZero.Auction.Bot.Controls.SettingsListView.SettingsListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.cbOutActionsLogs = new System.Windows.Forms.CheckBox();
             this.pSettings.SuspendLayout();
             this.tbSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
@@ -388,13 +388,23 @@
             this.tpApplication.Text = "Application";
             this.tpApplication.UseVisualStyleBackColor = true;
             // 
+            // cbOutActionsLogs
+            // 
+            this.cbOutActionsLogs.AutoSize = true;
+            this.cbOutActionsLogs.Location = new System.Drawing.Point(15, 53);
+            this.cbOutActionsLogs.Name = "cbOutActionsLogs";
+            this.cbOutActionsLogs.Size = new System.Drawing.Size(115, 19);
+            this.cbOutActionsLogs.TabIndex = 91;
+            this.cbOutActionsLogs.Text = "Out actions logs";
+            this.cbOutActionsLogs.UseVisualStyleBackColor = true;
+            // 
             // cbOutDetailedLogs
             // 
             this.cbOutDetailedLogs.AutoSize = true;
-            this.cbOutDetailedLogs.Location = new System.Drawing.Point(15, 53);
+            this.cbOutDetailedLogs.Location = new System.Drawing.Point(15, 76);
             this.cbOutDetailedLogs.Name = "cbOutDetailedLogs";
             this.cbOutDetailedLogs.Size = new System.Drawing.Size(120, 19);
-            this.cbOutDetailedLogs.TabIndex = 91;
+            this.cbOutDetailedLogs.TabIndex = 92;
             this.cbOutDetailedLogs.Text = "Out detailed logs";
             this.cbOutDetailedLogs.UseVisualStyleBackColor = true;
             // 
@@ -494,16 +504,6 @@
             // 
             this.columnHeader1.Text = "Settings";
             this.columnHeader1.Width = 500;
-            // 
-            // cbOutActionsLogs
-            // 
-            this.cbOutActionsLogs.AutoSize = true;
-            this.cbOutActionsLogs.Location = new System.Drawing.Point(15, 76);
-            this.cbOutActionsLogs.Name = "cbOutActionsLogs";
-            this.cbOutActionsLogs.Size = new System.Drawing.Size(115, 19);
-            this.cbOutActionsLogs.TabIndex = 92;
-            this.cbOutActionsLogs.Text = "Out actions logs";
-            this.cbOutActionsLogs.UseVisualStyleBackColor = true;
             // 
             // frmSettings
             // 

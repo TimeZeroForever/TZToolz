@@ -33,7 +33,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 #region Static private fields
 
         private static readonly string LogSeparator1 = new string('-', 151);
-        private static readonly string LogSeparator2 = new string('=', 77);
+        private static readonly string LogSeparator2 = new string('=', 76);
 
         private static readonly IActionStep[] LoginSteps = new IActionStep[]
             {

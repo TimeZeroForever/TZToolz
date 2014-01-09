@@ -17,7 +17,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
 #region Constants
 
-        private const int SHOPPING_DELAY_SEC       = 600 ; //In seconds, 10 min
+        private const int SHOPPING_DELAY_SEC       = 10  ; //In seconds, 10 sec
         private const int SHOPPING_FULL_UPDATE_MIN = 60  ; //In minutes, 1 hour
 
 #endregion

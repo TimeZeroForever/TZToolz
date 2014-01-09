@@ -424,8 +424,8 @@ namespace TimeZero.Auction.Bot.Forms
             // tcLogs
             // 
             this.tcLogs.Controls.Add(this.tpGeneralLogs);
-            this.tcLogs.Controls.Add(this.tpDetailedLogs);
             this.tcLogs.Controls.Add(this.tpActionsLogs);
+            this.tcLogs.Controls.Add(this.tpDetailedLogs);
             this.tcLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tcLogs.Location = new System.Drawing.Point(3, 3);
             this.tcLogs.Name = "tcLogs";
@@ -548,8 +548,8 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnDisconnect,
             this.toolStripSeparator2,
             this.btnOutGeneralLogs,
-            this.btnOutDetailedLogs,
             this.btnOutActionsLogs,
+            this.btnOutDetailedLogs,
             this.toolStripSeparator5,
             this.btnRunGame,
             this.btnSettings});
@@ -610,7 +610,9 @@ namespace TimeZero.Auction.Bot.Forms
             // 
             // btnOutActionsLogs
             // 
+            this.btnOutActionsLogs.Checked = true;
             this.btnOutActionsLogs.CheckOnClick = true;
+            this.btnOutActionsLogs.CheckState = System.Windows.Forms.CheckState.Checked;
             this.btnOutActionsLogs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.btnOutActionsLogs.Image = global::TimeZero.Auction.Bot.Properties.Resources.document_gear;
             this.btnOutActionsLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
