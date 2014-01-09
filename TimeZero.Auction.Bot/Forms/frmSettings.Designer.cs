@@ -394,7 +394,7 @@
             this.cbOutActionsLogs.Location = new System.Drawing.Point(15, 53);
             this.cbOutActionsLogs.Name = "cbOutActionsLogs";
             this.cbOutActionsLogs.Size = new System.Drawing.Size(115, 19);
-            this.cbOutActionsLogs.TabIndex = 91;
+            this.cbOutActionsLogs.TabIndex = 92;
             this.cbOutActionsLogs.Text = "Out actions logs";
             this.cbOutActionsLogs.UseVisualStyleBackColor = true;
             // 
@@ -404,7 +404,7 @@
             this.cbOutDetailedLogs.Location = new System.Drawing.Point(15, 76);
             this.cbOutDetailedLogs.Name = "cbOutDetailedLogs";
             this.cbOutDetailedLogs.Size = new System.Drawing.Size(120, 19);
-            this.cbOutDetailedLogs.TabIndex = 92;
+            this.cbOutDetailedLogs.TabIndex = 91;
             this.cbOutDetailedLogs.Text = "Out detailed logs";
             this.cbOutDetailedLogs.UseVisualStyleBackColor = true;
             // 

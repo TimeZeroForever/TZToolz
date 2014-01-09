@@ -23,6 +23,9 @@ namespace TimeZero.Auction.Bot.Classes.Game.GameItems
         [Category("Common settings"), DisplayName("Name"), ReadOnly(true)]
         public string Name { get; set; }
 
+        [Category("Common settings"), DisplayName(@"Subgroups count")]
+        public int SubGroupsCount { get { return _subGroups.Count; } }
+
         [Category("Shopping"), DisplayName(@"Ignore for shopping")]
         public bool IgnoreForShopping { get; set; }
 

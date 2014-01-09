@@ -60,23 +60,25 @@ namespace TimeZero.Auction.Bot.Forms
             this.header1 = new TimeZero.Auction.Bot.Controls.Header.Header();
             this.lblItemIsNotSelected = new System.Windows.Forms.Label();
             this.tpLogs = new System.Windows.Forms.TabPage();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.btnClearLogs = new System.Windows.Forms.Button();
             this.tcLogs = new System.Windows.Forms.TabControl();
             this.tpGeneralLogs = new System.Windows.Forms.TabPage();
             this.pGeneralLogsBack = new System.Windows.Forms.Panel();
             this.tbGeneralLogs = new System.Windows.Forms.TextBox();
-            this.tpDetailedLogs = new System.Windows.Forms.TabPage();
-            this.pDetailedLogsBack = new System.Windows.Forms.Panel();
-            this.tbDetailedLogs = new System.Windows.Forms.TextBox();
             this.tpActionsLogs = new System.Windows.Forms.TabPage();
             this.pActionsLogsBack = new System.Windows.Forms.Panel();
             this.tbActionsLogs = new System.Windows.Forms.TextBox();
+            this.tpDetailedLogs = new System.Windows.Forms.TabPage();
+            this.pDetailedLogsBack = new System.Windows.Forms.Panel();
+            this.tbDetailedLogs = new System.Windows.Forms.TextBox();
             this.tsMain = new System.Windows.Forms.ToolStrip();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnOutGeneralLogs = new System.Windows.Forms.ToolStripButton();
-            this.btnOutDetailedLogs = new System.Windows.Forms.ToolStripButton();
             this.btnOutActionsLogs = new System.Windows.Forms.ToolStripButton();
+            this.btnOutDetailedLogs = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRunGame = new System.Windows.Forms.ToolStripButton();
             this.btnSettings = new System.Windows.Forms.ToolStripButton();
@@ -98,13 +100,14 @@ namespace TimeZero.Auction.Bot.Forms
             this.panel1.SuspendLayout();
             this.tsGameItems.SuspendLayout();
             this.tpLogs.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.tcLogs.SuspendLayout();
             this.tpGeneralLogs.SuspendLayout();
             this.pGeneralLogsBack.SuspendLayout();
-            this.tpDetailedLogs.SuspendLayout();
-            this.pDetailedLogsBack.SuspendLayout();
             this.tpActionsLogs.SuspendLayout();
             this.pActionsLogsBack.SuspendLayout();
+            this.tpDetailedLogs.SuspendLayout();
+            this.pDetailedLogsBack.SuspendLayout();
             this.tsMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flashPlayer)).BeginInit();
             this.ssMain.SuspendLayout();
@@ -412,6 +415,7 @@ namespace TimeZero.Auction.Bot.Forms
             // 
             // tpLogs
             // 
+            this.tpLogs.Controls.Add(this.panel3);
             this.tpLogs.Controls.Add(this.tcLogs);
             this.tpLogs.Location = new System.Drawing.Point(4, 23);
             this.tpLogs.Name = "tpLogs";
@@ -420,6 +424,27 @@ namespace TimeZero.Auction.Bot.Forms
             this.tpLogs.TabIndex = 1;
             this.tpLogs.Text = "Application logs";
             this.tpLogs.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.Transparent;
+            this.panel3.Controls.Add(this.btnClearLogs);
+            this.panel3.Location = new System.Drawing.Point(624, 0);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(24, 23);
+            this.panel3.TabIndex = 10;
+            // 
+            // btnClearLogs
+            // 
+            this.btnClearLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnClearLogs.Image = global::TimeZero.Auction.Bot.Properties.Resources.eraser;
+            this.btnClearLogs.Location = new System.Drawing.Point(0, 0);
+            this.btnClearLogs.Name = "btnClearLogs";
+            this.btnClearLogs.Size = new System.Drawing.Size(24, 23);
+            this.btnClearLogs.TabIndex = 0;
+            this.btnClearLogs.TabStop = false;
+            this.btnClearLogs.UseVisualStyleBackColor = true;
+            this.btnClearLogs.Click += new System.EventHandler(this.BtnClearLogsClick);
             // 
             // tcLogs
             // 
@@ -469,42 +494,6 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbGeneralLogs.TabIndex = 0;
             this.tbGeneralLogs.TabStop = false;
             // 
-            // tpDetailedLogs
-            // 
-            this.tpDetailedLogs.Controls.Add(this.pDetailedLogsBack);
-            this.tpDetailedLogs.Location = new System.Drawing.Point(4, 23);
-            this.tpDetailedLogs.Name = "tpDetailedLogs";
-            this.tpDetailedLogs.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDetailedLogs.Size = new System.Drawing.Size(638, 429);
-            this.tpDetailedLogs.TabIndex = 1;
-            this.tpDetailedLogs.Text = "Detailed logs";
-            this.tpDetailedLogs.UseVisualStyleBackColor = true;
-            // 
-            // pDetailedLogsBack
-            // 
-            this.pDetailedLogsBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pDetailedLogsBack.Controls.Add(this.tbDetailedLogs);
-            this.pDetailedLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pDetailedLogsBack.Location = new System.Drawing.Point(3, 3);
-            this.pDetailedLogsBack.Name = "pDetailedLogsBack";
-            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 423);
-            this.pDetailedLogsBack.TabIndex = 2;
-            // 
-            // tbDetailedLogs
-            // 
-            this.tbDetailedLogs.BackColor = System.Drawing.Color.White;
-            this.tbDetailedLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbDetailedLogs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDetailedLogs.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.tbDetailedLogs.Location = new System.Drawing.Point(0, 0);
-            this.tbDetailedLogs.Multiline = true;
-            this.tbDetailedLogs.Name = "tbDetailedLogs";
-            this.tbDetailedLogs.ReadOnly = true;
-            this.tbDetailedLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 421);
-            this.tbDetailedLogs.TabIndex = 1;
-            this.tbDetailedLogs.TabStop = false;
-            // 
             // tpActionsLogs
             // 
             this.tpActionsLogs.Controls.Add(this.pActionsLogsBack);
@@ -540,6 +529,42 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbActionsLogs.Size = new System.Drawing.Size(630, 421);
             this.tbActionsLogs.TabIndex = 1;
             this.tbActionsLogs.TabStop = false;
+            // 
+            // tpDetailedLogs
+            // 
+            this.tpDetailedLogs.Controls.Add(this.pDetailedLogsBack);
+            this.tpDetailedLogs.Location = new System.Drawing.Point(4, 23);
+            this.tpDetailedLogs.Name = "tpDetailedLogs";
+            this.tpDetailedLogs.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDetailedLogs.Size = new System.Drawing.Size(638, 429);
+            this.tpDetailedLogs.TabIndex = 1;
+            this.tpDetailedLogs.Text = "Detailed logs";
+            this.tpDetailedLogs.UseVisualStyleBackColor = true;
+            // 
+            // pDetailedLogsBack
+            // 
+            this.pDetailedLogsBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pDetailedLogsBack.Controls.Add(this.tbDetailedLogs);
+            this.pDetailedLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pDetailedLogsBack.Location = new System.Drawing.Point(3, 3);
+            this.pDetailedLogsBack.Name = "pDetailedLogsBack";
+            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 423);
+            this.pDetailedLogsBack.TabIndex = 2;
+            // 
+            // tbDetailedLogs
+            // 
+            this.tbDetailedLogs.BackColor = System.Drawing.Color.White;
+            this.tbDetailedLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbDetailedLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDetailedLogs.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.tbDetailedLogs.Location = new System.Drawing.Point(0, 0);
+            this.tbDetailedLogs.Multiline = true;
+            this.tbDetailedLogs.Name = "tbDetailedLogs";
+            this.tbDetailedLogs.ReadOnly = true;
+            this.tbDetailedLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 421);
+            this.tbDetailedLogs.TabIndex = 1;
+            this.tbDetailedLogs.TabStop = false;
             // 
             // tsMain
             // 
@@ -597,6 +622,17 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnOutGeneralLogs.Text = "Out general logs";
             this.btnOutGeneralLogs.Click += new System.EventHandler(this.BtnOutGeneralLogsClick);
             // 
+            // btnOutActionsLogs
+            // 
+            this.btnOutActionsLogs.CheckOnClick = true;
+            this.btnOutActionsLogs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOutActionsLogs.Image = global::TimeZero.Auction.Bot.Properties.Resources.document_gear;
+            this.btnOutActionsLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOutActionsLogs.Name = "btnOutActionsLogs";
+            this.btnOutActionsLogs.Size = new System.Drawing.Size(23, 22);
+            this.btnOutActionsLogs.Text = "Out actions logs";
+            this.btnOutActionsLogs.Click += new System.EventHandler(this.BtnOutActionsLogsClick);
+            // 
             // btnOutDetailedLogs
             // 
             this.btnOutDetailedLogs.CheckOnClick = true;
@@ -607,19 +643,6 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnOutDetailedLogs.Size = new System.Drawing.Size(23, 22);
             this.btnOutDetailedLogs.Text = "Out detailed logs";
             this.btnOutDetailedLogs.Click += new System.EventHandler(this.BtnOutDetailedLogsClick);
-            // 
-            // btnOutActionsLogs
-            // 
-            this.btnOutActionsLogs.Checked = true;
-            this.btnOutActionsLogs.CheckOnClick = true;
-            this.btnOutActionsLogs.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnOutActionsLogs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOutActionsLogs.Image = global::TimeZero.Auction.Bot.Properties.Resources.document_gear;
-            this.btnOutActionsLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOutActionsLogs.Name = "btnOutActionsLogs";
-            this.btnOutActionsLogs.Size = new System.Drawing.Size(23, 22);
-            this.btnOutActionsLogs.Text = "Out actions logs";
-            this.btnOutActionsLogs.Click += new System.EventHandler(this.BtnOutActionsLogsClick);
             // 
             // toolStripSeparator5
             // 
@@ -750,16 +773,17 @@ namespace TimeZero.Auction.Bot.Forms
             this.tsGameItems.ResumeLayout(false);
             this.tsGameItems.PerformLayout();
             this.tpLogs.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
             this.tcLogs.ResumeLayout(false);
             this.tpGeneralLogs.ResumeLayout(false);
             this.pGeneralLogsBack.ResumeLayout(false);
             this.pGeneralLogsBack.PerformLayout();
-            this.tpDetailedLogs.ResumeLayout(false);
-            this.pDetailedLogsBack.ResumeLayout(false);
-            this.pDetailedLogsBack.PerformLayout();
             this.tpActionsLogs.ResumeLayout(false);
             this.pActionsLogsBack.ResumeLayout(false);
             this.pActionsLogsBack.PerformLayout();
+            this.tpDetailedLogs.ResumeLayout(false);
+            this.pDetailedLogsBack.ResumeLayout(false);
+            this.pDetailedLogsBack.PerformLayout();
             this.tsMain.ResumeLayout(false);
             this.tsMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flashPlayer)).EndInit();
@@ -827,6 +851,8 @@ namespace TimeZero.Auction.Bot.Forms
         private Panel pActionsLogsBack;
         private TextBox tbActionsLogs;
         private ToolStripButton btnOutActionsLogs;
+        private Panel panel3;
+        private Button btnClearLogs;
     }
 }
 

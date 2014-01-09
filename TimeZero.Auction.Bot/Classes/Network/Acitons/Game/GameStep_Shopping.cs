@@ -17,7 +17,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
 #region Constants
 
-        private const int SHOPPING_DELAY_SEC       = 10  ; //In seconds, 10 sec
+        private const int SHOPPING_DELAY_SEC       = 5   ; //In seconds, 5 sec
         private const int SHOPPING_FULL_UPDATE_MIN = 60  ; //In minutes, 1 hour
 
 #endregion
@@ -391,6 +391,10 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                 //If number of items is more than 0
                 if (int.Parse(item.Value) > 0)
                 {
+                    DateTime startTime = DateTime.Now;
+                    string groupName = group.Name;
+                    int subGroupsCount = group.SubGroupsCount;
+                    
                     List<string> subGroupsOrderList = new List<string>();
 
                     //Get cached group page ident
@@ -444,6 +448,13 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
                     //Reorder subgroups
                     group.ReorderSubGroups(subGroupsOrderList);
+
+                    //Out action message
+                    string endTime = DateTime.Now.Subtract(startTime).ToString();
+                    endTime = endTime.Remove(endTime.IndexOf('.'));
+                    string message = string.Format("'{0}' processed. Subgroups count: {1}, duration: {2}",
+                        groupName, subGroupsCount, endTime);
+                    networkClient.SendActionLogMessage(this, message);  
                 }
             }
         }
@@ -458,11 +469,15 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
             string locationIdent, bool isAuction, GameItemsGroup gameItemsGroup)
         {
             string groupId = gameItemsGroup.ID;
+            string groupName = gameItemsGroup.Name;
+            int subGroupsCount = gameItemsGroup.SubGroupsCount;
             string cachedGroupPageIdent = GetCachedGroupPageIdent(locationIdent, groupId);
 
             //If group pages were cached for the location
             if (_cachedGroupPages.ContainsKey(cachedGroupPageIdent))
             {
+                DateTime startTime = DateTime.Now;
+
                 //Get cached group pages
                 List<Packet> cachedGroupPages = _cachedGroupPages[cachedGroupPageIdent];
 
@@ -474,6 +489,13 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     ProcessSubGroupsList(networkClient, client, groupId, groupPage, isAuction,
                                          groups, null);
                 }
+
+                //Out action message
+                string endTime = DateTime.Now.Subtract(startTime).ToString();
+                endTime = endTime.Remove(endTime.IndexOf('.'));
+                string message = string.Format("'{0}' processed. Subgroups count: {1}, duration: {2}",
+                    groupName, subGroupsCount, endTime);
+                networkClient.SendActionLogMessage(this, message);  
             }
         }
 

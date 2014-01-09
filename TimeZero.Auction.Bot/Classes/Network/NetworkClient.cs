@@ -447,7 +447,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         public void PlayGame()
         {
-            SendLogMessage(string.Format("{0}", LogSeparator1));
+            SendLogMessage(LogSeparator1);
 
             //Create client thread
             _sysThread = new Thread(DoSysCommands);

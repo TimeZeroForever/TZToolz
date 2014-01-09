@@ -391,6 +391,28 @@ Application terminated.",
             }
         }
 
+        private void ClearSelectedLogsWindow()
+        {
+            switch (tcLogs.SelectedIndex)
+            {
+                case 0:
+                    tbGeneralLogs.Clear();
+                    break;
+                case 1:
+                    tbActionsLogs.Clear();
+                    break;
+                case 2:
+                    tbDetailedLogs.Clear();
+                    break;
+            }
+            tcLogs.SelectedTab.Focus();
+        }
+
+        private void BtnClearLogsClick(object sender, EventArgs e)
+        {
+            ClearSelectedLogsWindow();
+        }
+
 #endregion
 
 #region Network connection methods
