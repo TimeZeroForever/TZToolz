@@ -214,9 +214,9 @@ Application terminated.",
 
             //Init tool buttons
             btnOutInstantMessages.Checked = AppSettings.Instance.GetBool("OutInstantMessages");
-            btnOutInstantMessages_Click(null, null);
+            BtnOutInstantMessagesClick(null, null);
             btnOutChatMessages.Checked = AppSettings.Instance.GetBool("OutChatMessages");
-            btnOutChatMessages_Click(null, null);
+            BtnOutChatMessagesClick(null, null);
             btnOutGeneralLogs.Checked = AppSettings.Instance.GetBool("OutGeneralLogs");
             BtnOutGeneralLogsClick(null, null);
             btnOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
@@ -348,12 +348,12 @@ Application terminated.",
             }
         }
 
-        private void btnOutInstantMessages_Click(object sender, EventArgs e)
+        private void BtnOutInstantMessagesClick(object sender, EventArgs e)
         {
             _networkClient.OutInstantMessages = btnOutInstantMessages.Checked;
         }
 
-        private void btnOutChatMessages_Click(object sender, EventArgs e)
+        private void BtnOutChatMessagesClick(object sender, EventArgs e)
         {
             _networkClient.OutChatMessages = btnOutChatMessages.Checked;
         }

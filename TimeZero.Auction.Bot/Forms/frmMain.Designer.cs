@@ -709,7 +709,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnOutInstantMessages.Name = "btnOutInstantMessages";
             this.btnOutInstantMessages.Size = new System.Drawing.Size(23, 22);
             this.btnOutInstantMessages.Text = "Out instant messages";
-            this.btnOutInstantMessages.Click += new System.EventHandler(this.btnOutInstantMessages_Click);
+            this.btnOutInstantMessages.Click += new System.EventHandler(this.BtnOutInstantMessagesClick);
             // 
             // btnOutChatMessages
             // 
@@ -722,7 +722,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnOutChatMessages.Name = "btnOutChatMessages";
             this.btnOutChatMessages.Size = new System.Drawing.Size(23, 22);
             this.btnOutChatMessages.Text = "Out chat messages";
-            this.btnOutChatMessages.Click += new System.EventHandler(this.btnOutChatMessages_Click);
+            this.btnOutChatMessages.Click += new System.EventHandler(this.BtnOutChatMessagesClick);
             // 
             // toolStripSeparator7
             // 

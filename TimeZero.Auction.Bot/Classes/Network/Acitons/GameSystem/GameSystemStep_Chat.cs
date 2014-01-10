@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TimeZero.Auction.Bot.Classes.Game.Client;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 using System.Text.RegularExpressions;

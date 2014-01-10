@@ -1,12 +1,12 @@
 ﻿using System;
+using System.Xml;
+using System.Media;
 using System.Collections.Generic;
 using TimeZero.Auction.Bot.Classes.Game.Client;
 using TimeZero.Auction.Bot.Classes.Game.GameItems;
 using TimeZero.Auction.Bot.Classes.Network.Constants;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 using TimeZero.Auction.Bot.ClassesInstances;
-using System.Xml;
-using System.Media;
 using TimeZero.Auction.Bot.Classes.Network.Helpers;
 using TimeZero.Auction.Bot.Classes.Game.InventoryItems;
 
@@ -27,8 +27,13 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
         private int _prewShoppingnTime;
         private int _prewFullUpdateTime;
         private GameItemsGroupList _gameItemsGroups;
+
         private readonly Dictionary<string, List<Packet>> _cachedGroupPages =
             new Dictionary<string, List<Packet>>();
+
+        private readonly Dictionary<string, DateTime> _listOfPurchasedItemsWithOwners =
+            new Dictionary<string, DateTime>();
+
         private readonly SoundPlayer _soundPlayer = new SoundPlayer(Properties.Resources.buy_item);
 
 #endregion
@@ -46,10 +51,61 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
 #endregion
 
+#region Antibot maneuvers detection methods
+
+        private bool IsPossibleAntiBotManeuvers(GameItem gameItem, int count)
+        {
+            return gameItem.FactoryCost > 0f &&
+                   gameItem.FactoryCost * count < 30f;
+        }
+
+        private void RefreshListOfPurchasedItemsWithOwners()
+        {
+            DateTime now = DateTime.Now;
+            List<string> toRemove = new List<string>();
+            
+            //Searching for old records, that older than 60 min
+            foreach (string key in _listOfPurchasedItemsWithOwners.Keys)
+            {
+                DateTime itemAddTime = _listOfPurchasedItemsWithOwners[key];
+                TimeSpan timeDiff = now.Subtract(itemAddTime);
+                if (timeDiff.TotalMinutes >= 60)
+                {
+                    toRemove.Add(key);
+                }
+            }
+
+            //Remove old records
+            foreach (string key in toRemove)
+            {
+                _listOfPurchasedItemsWithOwners.Remove(key);
+            }
+        }
+
+        private string GetItemPlusOwnerUniqueId(GameItem gameItem, string owner)
+        {
+            return string.Format("{0}|{1}", gameItem, owner).ToLower();
+        }
+
+        private bool VerifyAbilityToBuyItem(GameItem gameItem, string owner)
+        {
+            string uniqueId = GetItemPlusOwnerUniqueId(gameItem, owner);
+            if (_listOfPurchasedItemsWithOwners.ContainsKey(uniqueId))
+            {
+                return false;
+            }
+
+            _listOfPurchasedItemsWithOwners.Add(uniqueId, DateTime.Now);
+            return true;
+        }
+
+#endregion
+
 #region Class methods
 
         private void InstantBuyItem(NetworkClient networkClient, GameClient client,
-            string groupId, int groupPage, XmlNode item, GameItem gameItem)
+            string groupId, int groupPage, XmlNode item, GameItem gameItem, 
+            string owner)
         {
             if (item != null && item.Attributes != null)
             {
@@ -81,13 +137,30 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                         XmlAttribute count = item.Attributes["count"];
                         if (id != null && count != null)
                         {
+                            string message;
                             string sId = id.InnerText;
                             int iCount = int.Parse(count.InnerText);
+
+                            //Check on antibot maneuvers, 1
+                            if (IsPossibleAntiBotManeuvers(gameItem, iCount))
+                            {
+                                return;
+                            }
+
+                            //Check on antibot maneuvers, 2
+                            if (!VerifyAbilityToBuyItem(gameItem, owner))
+                            {
+                                /*message = 
+                                    string.Format("!Ingored to buy: {0}, owner: {1}, page: {2}, count: {3}, cost: {4}...",
+                                    gameItem, owner, groupPage + 1, iCount, fCost);
+                                networkClient.SendLogMessage(message);*/
+                                return;
+                            }
 
                             //Out log message
                             int totalCost = (int) Math.Ceiling(iCount * fCost);
                             string groupName = _gameItemsGroups[groupId].Name;
-                            string message = 
+                            message = 
                                 string.Format("Trying to buy: {0}, group: {1}, page: {2}, count: {3}, cost: {4}, total cost: {5}...",
                                 gameItem, groupName, groupPage + 1, iCount, fCost, totalCost);
                             networkClient.SendLogMessage(message);
@@ -150,13 +223,25 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
             }
         }
 
-        private void ProcessItem(NetworkClient networkClient, GameClient client, 
+        private bool ProcessItem(NetworkClient networkClient, GameClient client, 
             string groupId, int groupPage, string subGroupId, string subGroupName,
             string subGroupType, string subGroupLevel, XmlNode item)
         {
             //If it`s valid node
             if (item.Attributes != null)
             {
+                //Ingore own item
+                string sOwner = string.Empty;
+                XmlAttribute owner = item.Attributes["owner"];
+                if (owner != null)
+                {
+                    sOwner = owner.InnerText;
+                    if (client.Login.Equals(sOwner, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        return false;
+                    }
+                }
+
                 XmlAttribute txt = item.Attributes["txt"];
                 XmlAttribute lvl = item.Attributes["lvl"];
                 if (txt != null)
@@ -204,10 +289,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                         }
 
                         //Instant buy the item
-                        InstantBuyItem(networkClient, client, groupId, groupPage, item, gameItem);
+                        InstantBuyItem(networkClient, client, groupId, groupPage, item, gameItem, 
+                                       sOwner);
                     }
                 }
             }
+            return true;
         }
 
         private void ProcessItemsList(NetworkClient networkClient, GameClient client,
@@ -221,8 +308,11 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                 //For each node of items
                 foreach (XmlNode item in items)
                 {
-                    ProcessItem(networkClient, client, groupId, groupPage, subGroupId,
-                                subGroupName, subGroupType, subGroupLevel, item);
+                    if (!ProcessItem(networkClient, client, groupId, groupPage, subGroupId,
+                                     subGroupName, subGroupType, subGroupLevel, item))
+                    {
+                        return;
+                    }
                 }
             }
         }
@@ -549,6 +639,9 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                 _gameItemsGroups = Instance.GameItemsGroups;
                 DateTime startShoppingTime = DateTime.Now;
 
+                //Refresh list of purchased items with their owners
+                RefreshListOfPurchasedItemsWithOwners();
+
                 //Check full update requirement
                 bool fullUpdate = _prewFullUpdateTime == 0 || 
                      Environment.TickCount - _prewFullUpdateTime >= SHOPPING_FULL_UPDATE_MIN * 60000;
@@ -608,6 +701,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
         {
             _prewShoppingnTime = 0;
             _prewFullUpdateTime = 0;
+            _listOfPurchasedItemsWithOwners.Clear();
         }
 
 #endregion
