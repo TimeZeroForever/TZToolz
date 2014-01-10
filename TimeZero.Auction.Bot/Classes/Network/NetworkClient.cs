@@ -33,7 +33,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 #region Static private fields
 
         private static readonly string LogSeparator1 = new string('-', 151);
-        private static readonly string LogSeparator2 = new string('=', 76);
+        private static readonly string LogSeparator2 = new string('=', 75);
 
         private static readonly IActionStep[] LoginSteps = new IActionStep[]
             {
@@ -52,12 +52,13 @@ namespace TimeZero.Auction.Bot.Classes.Network
             {
                  new GameSystemStep_Ping()
                 ,new GameSystemStep_Errors()
+                ,new GameSystemStep_IMS()
+                ,new GameSystemStep_Chat(),
             };
 
         private static readonly IActionStep[] GameSteps = new IActionStep[]
             {
-                 new GameStep_IMS()
-                ,new GameStep_GC()
+                 new GameStep_GC()
                 ,new GameStep_JoinInventory()
                 ,new GameStep_Shopping()
                 ,new GameStep_Selling()
@@ -78,6 +79,8 @@ namespace TimeZero.Auction.Bot.Classes.Network
 #region Events
 
         public OnLogMessage OnGeneralLogMessage { get; set; }
+        public OnLogMessage OnInstantMessage { get; set; }
+        public OnLogMessage OnChatMessage { get; set; }
         public OnActionLogMessage OnActionLogMessage { get; set; }
 
         public OnData OnDataReceived { get; set; }
@@ -141,6 +144,10 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         public bool OutActionsLogs { get; set; }
 
+        public bool OutInstantMessages { get; set; }
+
+        public bool OutChatMessages { get; set; }
+
         public string LocalIPAddress
         {
             get
@@ -186,6 +193,22 @@ namespace TimeZero.Auction.Bot.Classes.Network
             if (OutActionsLogs && OnActionLogMessage != null)
             {
                 OnActionLogMessage(actionStep, message);
+            }
+        }
+
+        public void SendInstantMessage(string message)
+        {
+            if (OutInstantMessages && OnInstantMessage != null)
+            {
+                OnInstantMessage(message);
+            }
+        }
+
+        public void SendChatMessage(string message)
+        {
+            if (OutChatMessages && OnChatMessage != null)
+            {
+                OnChatMessage(message);
             }
         }
 
@@ -670,7 +693,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
         {
             StringBuilder dataPart = new StringBuilder();
             StringBuilder bufferedDataPart = new StringBuilder();
-            byte[] buffer = new byte[tcpClient.ReceiveBufferSize];
+            byte[] buffer = new byte[tcpClient.ReceiveBufferSize * 2];
 
             while (!_terminated && tcpClient.Connected)
             {
@@ -688,19 +711,46 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
                         networkStream.Read(buffer, 0, dataSize);
 
-                        //Ingnore 'players in the room' packets
-                        if (buffer[0] == '\x4')
+                        switch (buffer[0]) 
                         {
-                            continue;
+                            //Ingnore 'players in the room' packets
+                            //0x2 - enter, 0x3 - my info, 0x4 - leave
+                            case 2:
+                            case 3:
+                            case 4:
+                                {
+                                    continue;
+                                }
                         }
 
-                        //Received data to string and trim junk data
-                        string data = Encoding.UTF8.GetString(buffer, 0, dataSize).
-                            Replace("\0",       "").    //Extra zero
-                            Replace("\x1",      "\" "). //0x1   -> " 
-                            Replace("\x4",      ">").   //0x4   -> >
-                            Replace("\x6",      "\" "). //0x6   -> " 
-                            Replace("\x1\x46",  "=");   //0x1+F -> =
+                        //Received data to string and remove all zero chars
+                        string data = Encoding.UTF8.GetString(buffer, 0, dataSize).Replace("\x0", "");
+
+                        switch (buffer[0])
+                        {
+                            //Chat message
+                            case 5:
+                                {
+                                    data = data.
+                                        Replace("\x5", "\"").               //0x5   -> "
+                                        Remove (data.IndexOf('\x9') + 1).
+                                        Replace("\x9", "\"");               //0x9   -> "
+                                    data = string.Format("<{0} text={1} />", FromServer.CHAT_MESSAGE, data);
+                                    break;
+                                }
+                            //Game data
+                            default:
+                                {
+                                    //Trim junk data
+                                    data = data.
+                                        Replace("\x1",      "\" "). //0x1   -> " 
+                                        Replace("\x4",      ">"  ). //0x4   -> >
+                                        Replace("\x6",      "\" "). //0x6   -> " 
+                                        Replace("\x1\x46",  "="  ); //0x1+F -> =
+                                    break;
+                                }
+                        }
+
                         dataPart.Append(data);
 
                         //Process packet

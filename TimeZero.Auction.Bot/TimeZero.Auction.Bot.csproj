@@ -126,6 +126,7 @@
     <Compile Include="Classes\Common\Singletone.cs" />
     <Compile Include="Classes\Game\InventoryItems\InventoryItem.cs" />
     <Compile Include="Classes\Game\InventoryItems\InventoryItemList.cs" />
+    <Compile Include="Classes\Network\Acitons\GameSystem\GameSystemStep_Chat.cs" />
     <Compile Include="Classes\Network\Acitons\Game\GameStep_JoinInventory.cs" />
     <Compile Include="Classes\Network\Acitons\Game\GameStep_Selling.cs" />
     <Compile Include="Classes\Network\Acitons\Login\LoginStep5_StartChat.cs" />
@@ -185,7 +186,7 @@
     <Compile Include="Classes\Game\GameItems\GameItem.cs" />
     <Compile Include="ClassesInstances\Instance.cs" />
     <Compile Include="Classes\Network\Acitons\GameSystem\GameSystemStep_Errors.cs" />
-    <Compile Include="Classes\Network\Acitons\Game\GameStep_IMS.cs" />
+    <Compile Include="Classes\Network\Acitons\GameSystem\GameSystemStep_IMS.cs" />
     <Compile Include="Classes\Network\Acitons\Game\GameStep_GC.cs" />
     <Compile Include="Classes\Network\Acitons\Login\LoginStep4_GetMe.cs" />
     <Compile Include="Classes\Network\Acitons\GameSystem\GameSystemStep_Ping.cs" />
@@ -363,6 +364,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\eraser.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\mail2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\message.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\messages.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\private_message.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

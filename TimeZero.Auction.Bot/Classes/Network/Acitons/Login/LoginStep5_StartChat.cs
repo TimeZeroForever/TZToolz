@@ -14,11 +14,11 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
             networkClient.SendLogMessage("Starting chat...");
 
             //Get chat info
-            string getInfo = Packet.BuildPacket(FromClient.CHAT, Chat.START);
+            string getInfo = Packet.BuildPacket(FromClient.CHAT_CTRL, Chat.START);
             networkClient.SendData(getInfo);
 
             //Start chat
-            Packet chat = networkClient.InputQueue.Pop(FromServer.CHAT);
+            Packet chat = networkClient.InputQueue.Pop(FromServer.CHAT_CTRL);
             if (chat != null)
             {
                 string chatServer = chat["@server"];
@@ -27,7 +27,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                 if (chatStarted)
                 {
                     //1: Session ID, 2: Login
-                    string chatAuth = Packet.BuildPacket(FromClient.CHAT, Chat.AUTH, 
+                    string chatAuth = Packet.BuildPacket(FromClient.CHAT_CTRL, Chat.AUTH, 
                         sessionId, client.Login);
                     networkClient.SendChatData(chatAuth);
                 }

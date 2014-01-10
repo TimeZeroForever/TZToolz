@@ -9,7 +9,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
     public sealed class LoginStep4_GetMe : IActionStep
     {
         private static readonly Regex _regexLocationInfo =
-            new Regex(@"^.((hz=""(?<B>\d+)"")|.)+?(X=""(?<X>\d+)"").+(Y=""(?<Y>\d+)"").+Ploc_time=.+[ ](id1=""(?<ID1>[\d|\.]+)"").+(id2=""(?<ID2>[\d|\.]+)"")");
+            new Regex(@"(?s)^.((hz=""(?<B>\d+)"")|.)+?(X=""(?<X>\d+)"") (Y=""(?<Y>\d+)"").+?(id1=""(?<ID1>[\d|\.]+)"") (id2=""(?<ID2>[\d|\.]+)"") ((i1=""(?<I1>[\d|\.]+)"")*)");
 
         public bool IsReadyForAction { get { return true; } }
 
@@ -39,7 +39,10 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                     locationInfo.Groups["ID1"].Value);
                 client.AdditionalData.Add(ObjectPropertyName.ID2,
                     locationInfo.Groups["ID2"].Value);
-                client.AdditionalData.Add(ObjectPropertyName.I1, "0");
+                client.AdditionalData.Add(ObjectPropertyName.I1, 
+                    locationInfo.Groups["I1"].Success
+                        ? locationInfo.Groups["I1"].Value
+                        : "0");
 
                 //Update inventory
                 client.InventoryItems = Helper.ParseInventoryItems(data);

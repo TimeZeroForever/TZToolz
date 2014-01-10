@@ -59,6 +59,9 @@ namespace TimeZero.Auction.Bot.Forms
             tbPassword.Text = Helper.DecryptStringByHardwareID(password);
 
             //Main windows settings
+            cbOutInstantMessages.Checked = AppSettings.Instance.GetBool("OutInstantMessages");
+            cbOutChatMessages.Checked = AppSettings.Instance.GetBool("OutChatMessages");
+
             cbOutGeneralLogs.Checked = AppSettings.Instance.GetBool("OutGeneralLogs");
             cbOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
             cbOutActionsLogs.Checked = AppSettings.Instance.GetBool("OutActionsLogs");
@@ -200,6 +203,9 @@ namespace TimeZero.Auction.Bot.Forms
                 AppSettings.Instance["Password"] = encPassword;
 
                 //2. Main windows settings
+                AppSettings.Instance["OutInstantMessages"] = cbOutInstantMessages.Checked.ToString();
+                AppSettings.Instance["OutChatMessages"] = cbOutChatMessages.Checked.ToString();
+
                 AppSettings.Instance["OutGeneralLogs"] = cbOutGeneralLogs.Checked.ToString();
                 AppSettings.Instance["OutDetailedLogs"] = cbOutDetailedLogs.Checked.ToString();
                 AppSettings.Instance["OutActionsLogs"] = cbOutActionsLogs.Checked.ToString();

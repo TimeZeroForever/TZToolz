@@ -68,6 +68,10 @@
             this.btnApply = new System.Windows.Forms.Button();
             this.fbdGameFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.ilSettings = new System.Windows.Forms.ImageList(this.components);
+            this.cbOutChatMessages = new System.Windows.Forms.CheckBox();
+            this.cbOutInstantMessages = new System.Windows.Forms.CheckBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
             this.lvSettings = new TimeZero.Auction.Bot.Controls.SettingsListView.SettingsListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pSettings.SuspendLayout();
@@ -375,6 +379,10 @@
             // 
             // tpApplication
             // 
+            this.tpApplication.Controls.Add(this.cbOutChatMessages);
+            this.tpApplication.Controls.Add(this.cbOutInstantMessages);
+            this.tpApplication.Controls.Add(this.panel4);
+            this.tpApplication.Controls.Add(this.label10);
             this.tpApplication.Controls.Add(this.cbOutActionsLogs);
             this.tpApplication.Controls.Add(this.cbOutDetailedLogs);
             this.tpApplication.Controls.Add(this.cbOutGeneralLogs);
@@ -391,30 +399,30 @@
             // cbOutActionsLogs
             // 
             this.cbOutActionsLogs.AutoSize = true;
-            this.cbOutActionsLogs.Location = new System.Drawing.Point(15, 53);
+            this.cbOutActionsLogs.Location = new System.Drawing.Point(15, 128);
             this.cbOutActionsLogs.Name = "cbOutActionsLogs";
             this.cbOutActionsLogs.Size = new System.Drawing.Size(115, 19);
-            this.cbOutActionsLogs.TabIndex = 92;
+            this.cbOutActionsLogs.TabIndex = 4;
             this.cbOutActionsLogs.Text = "Out actions logs";
             this.cbOutActionsLogs.UseVisualStyleBackColor = true;
             // 
             // cbOutDetailedLogs
             // 
             this.cbOutDetailedLogs.AutoSize = true;
-            this.cbOutDetailedLogs.Location = new System.Drawing.Point(15, 76);
+            this.cbOutDetailedLogs.Location = new System.Drawing.Point(15, 151);
             this.cbOutDetailedLogs.Name = "cbOutDetailedLogs";
             this.cbOutDetailedLogs.Size = new System.Drawing.Size(120, 19);
-            this.cbOutDetailedLogs.TabIndex = 91;
+            this.cbOutDetailedLogs.TabIndex = 5;
             this.cbOutDetailedLogs.Text = "Out detailed logs";
             this.cbOutDetailedLogs.UseVisualStyleBackColor = true;
             // 
             // cbOutGeneralLogs
             // 
             this.cbOutGeneralLogs.AutoSize = true;
-            this.cbOutGeneralLogs.Location = new System.Drawing.Point(15, 30);
+            this.cbOutGeneralLogs.Location = new System.Drawing.Point(15, 105);
             this.cbOutGeneralLogs.Name = "cbOutGeneralLogs";
             this.cbOutGeneralLogs.Size = new System.Drawing.Size(116, 19);
-            this.cbOutGeneralLogs.TabIndex = 90;
+            this.cbOutGeneralLogs.TabIndex = 3;
             this.cbOutGeneralLogs.Text = "Out general logs";
             this.cbOutGeneralLogs.UseVisualStyleBackColor = true;
             // 
@@ -423,7 +431,7 @@
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Location = new System.Drawing.Point(7, 21);
+            this.panel3.Location = new System.Drawing.Point(7, 96);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(350, 1);
             this.panel3.TabIndex = 89;
@@ -433,7 +441,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.label5.Location = new System.Drawing.Point(3, 3);
+            this.label5.Location = new System.Drawing.Point(3, 78);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 15);
             this.label5.TabIndex = 88;
@@ -478,6 +486,47 @@
             this.ilSettings.Images.SetKeyName(2, "text_tree.png");
             this.ilSettings.Images.SetKeyName(3, "window_edit.png");
             this.ilSettings.Images.SetKeyName(4, "star_blue.png");
+            // 
+            // cbOutChatMessages
+            // 
+            this.cbOutChatMessages.AutoSize = true;
+            this.cbOutChatMessages.Location = new System.Drawing.Point(15, 53);
+            this.cbOutChatMessages.Name = "cbOutChatMessages";
+            this.cbOutChatMessages.Size = new System.Drawing.Size(129, 19);
+            this.cbOutChatMessages.TabIndex = 2;
+            this.cbOutChatMessages.Text = "Out chat messages";
+            this.cbOutChatMessages.UseVisualStyleBackColor = true;
+            // 
+            // cbOutInstantMessages
+            // 
+            this.cbOutInstantMessages.AutoSize = true;
+            this.cbOutInstantMessages.Location = new System.Drawing.Point(15, 30);
+            this.cbOutInstantMessages.Name = "cbOutInstantMessages";
+            this.cbOutInstantMessages.Size = new System.Drawing.Size(144, 19);
+            this.cbOutInstantMessages.TabIndex = 1;
+            this.cbOutInstantMessages.Text = "Out instant messages";
+            this.cbOutInstantMessages.UseVisualStyleBackColor = true;
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Location = new System.Drawing.Point(7, 21);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(350, 1);
+            this.panel4.TabIndex = 94;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label10.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.label10.Location = new System.Drawing.Point(3, 3);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(59, 15);
+            this.label10.TabIndex = 93;
+            this.label10.Text = "Messages";
             // 
             // lvSettings
             // 
@@ -574,5 +623,9 @@
         private System.Windows.Forms.CheckBox cbOutDetailedLogs;
         public System.Windows.Forms.TextBox tbGamePort;
         private System.Windows.Forms.CheckBox cbOutActionsLogs;
+        private System.Windows.Forms.CheckBox cbOutChatMessages;
+        private System.Windows.Forms.CheckBox cbOutInstantMessages;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label10;
     }
 }

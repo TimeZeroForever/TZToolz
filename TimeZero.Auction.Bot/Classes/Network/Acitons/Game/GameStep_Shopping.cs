@@ -451,9 +451,8 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
                     //Out action message
                     string endTime = DateTime.Now.Subtract(startTime).ToString();
-                    endTime = endTime.Remove(endTime.IndexOf('.'));
                     string message = string.Format("'{0}' processed. Subgroups count: {1}, duration: {2}",
-                        groupName, subGroupsCount, endTime);
+                        groupName, subGroupsCount, Helper.RemoveMilliseconds(endTime));
                     networkClient.SendActionLogMessage(this, message);  
                 }
             }
@@ -492,9 +491,8 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
                 //Out action message
                 string endTime = DateTime.Now.Subtract(startTime).ToString();
-                endTime = endTime.Remove(endTime.IndexOf('.'));
                 string message = string.Format("'{0}' processed. Subgroups count: {1}, duration: {2}",
-                    groupName, subGroupsCount, endTime);
+                    groupName, subGroupsCount, Helper.RemoveMilliseconds(endTime));
                 networkClient.SendActionLogMessage(this, message);  
             }
         }
@@ -597,8 +595,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
                 //Out action message
                 string shoppingTime = DateTime.Now.Subtract(startShoppingTime).ToString();
-                shoppingTime = shoppingTime.Remove(shoppingTime.IndexOf('.'));
-                message = string.Format("completed. Duration: {0}", shoppingTime);
+                message = string.Format("completed. Duration: {0}", Helper.RemoveMilliseconds(shoppingTime));
                 networkClient.SendActionLogMessage(this, message);  
 
                 return true;

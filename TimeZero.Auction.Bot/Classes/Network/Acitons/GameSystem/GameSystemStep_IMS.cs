@@ -6,7 +6,7 @@ using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 {
-    public sealed class GameStep_IMS : IActionStep
+    public sealed class GameSystemStep_IMS : IActionStep
     {
         private readonly SoundPlayer _soundPlayer = new SoundPlayer(Properties.Resources.ims);
 
@@ -17,6 +17,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
             List<string> messages = new List<string>();
 
             Packet[] packets = networkClient.InputQueue.PopAll(FromServer.IMS);
+
+            if (!networkClient.OutInstantMessages || packets.Length == 0)
+            {
+                return false;
+            }
+
             foreach (Packet packet in packets)
             {
                 string sMessages = packet["@m"];
@@ -25,7 +31,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
             if (messages.Count > 0)
             {
-                networkClient.OnGeneralLogMessage(string.Format("Instant message(s), {0} received:", messages.Count));
+                networkClient.SendInstantMessage(string.Format("Instant message(s), {0} received:", messages.Count));
                 foreach (string message in messages)
                 {
                     string logMessage;
@@ -59,7 +65,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     //Play alert
                     _soundPlayer.Play();
 
-                    networkClient.OnGeneralLogMessage(logMessage);
+                    networkClient.SendInstantMessage(logMessage);
                 }
 
                 //Clear all IMS on server
@@ -68,6 +74,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
                 return true;
             }
+
             return false;
         }
 

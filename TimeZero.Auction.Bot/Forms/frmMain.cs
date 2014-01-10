@@ -184,6 +184,8 @@ Application terminated.",
             _networkClient.OnDataReceived += DataReceived;
             _networkClient.OnDataSended += DataSended;
             _networkClient.OnGeneralLogMessage += GeneralLogMessage;
+            _networkClient.OnInstantMessage += InstantMessage;
+            _networkClient.OnChatMessage += ChatMessage;
             _networkClient.OnActionLogMessage += ActionLogMessage;
             _networkClient.OnNetworkActivityOut += NetworkActivityOut;
             _networkClient.OnNetworkActivityIn += NetworkActivityIn;
@@ -211,6 +213,10 @@ Application terminated.",
             RefreshGameItemsTreeView();
 
             //Init tool buttons
+            btnOutInstantMessages.Checked = AppSettings.Instance.GetBool("OutInstantMessages");
+            btnOutInstantMessages_Click(null, null);
+            btnOutChatMessages.Checked = AppSettings.Instance.GetBool("OutChatMessages");
+            btnOutChatMessages_Click(null, null);
             btnOutGeneralLogs.Checked = AppSettings.Instance.GetBool("OutGeneralLogs");
             BtnOutGeneralLogsClick(null, null);
             btnOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
@@ -285,6 +291,22 @@ Application terminated.",
             }
         }
 
+        private void OutInstantMessage(string message)
+        {
+            lock (_syncObject)
+            {
+                tbIMS.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+            }
+        }
+
+        private void OutChatMessage(string message)
+        {
+            lock (_syncObject)
+            {
+                tbChat.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+            }
+        }
+
         private void FrmMainFormClosing(object sender, FormClosingEventArgs e)
         {
             DeinitializeEnvironment();
@@ -324,6 +346,16 @@ Application terminated.",
             {
                 Connect();
             }
+        }
+
+        private void btnOutInstantMessages_Click(object sender, EventArgs e)
+        {
+            _networkClient.OutInstantMessages = btnOutInstantMessages.Checked;
+        }
+
+        private void btnOutChatMessages_Click(object sender, EventArgs e)
+        {
+            _networkClient.OutChatMessages = btnOutChatMessages.Checked;
         }
 
         private void BtnOutGeneralLogsClick(object sender, EventArgs e)
@@ -480,6 +512,18 @@ Application terminated.",
             string stepName = stepType.Substring(stepType.IndexOf('_') + 1);
             message = string.Format("{0}: {1}", stepName, message);
             tbGeneralLogs.BeginInvoke(new OutLogData(OutActionLogMessage), new object[] { message });
+        }
+
+        private void InstantMessage(string message)
+        {
+            message = string.Format("{0}{1}", DateTime.Now + ": ", message);
+            tbGeneralLogs.BeginInvoke(new OutLogData(OutInstantMessage), new object[] { message });
+        }
+
+        private void ChatMessage(string message)
+        {
+            message = string.Format("{0}{1}", DateTime.Now + ": ", message);
+            tbGeneralLogs.BeginInvoke(new OutLogData(OutChatMessage), new object[] { message });
         }
 
         private void SyncActionStepStarted(IActionStep actionStep)

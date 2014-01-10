@@ -13,7 +13,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                                                    {
                                                                        FromServer.BOT_INFO,
                                                                        FromServer.MY_INFO,
-                                                                       FromServer.CHANGE_ONE,
+                                                                       FromServer.ITEM_CHANGE_ONE,
                                                                        FromServer.DIALOG_DATA,
                                                                        FromServer.MY_SKILLS,
                                                                        FromServer.MY_BAFFS,
@@ -26,12 +26,11 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                                                        FromServer.DM,
                                                                        FromServer.LB,
                                                                        FromServer.ID2,
-                                                                       FromServer.CHAT_MESSAGE,
                                                                        FromServer.ITEM_ADD_ONE,
                                                                        FromServer.UPDATE_VER,
                                                                        FromServer.SHOP_ERROR,
                                                                        FromServer.SHOP_OK,
-                                                                       FromServer.CHAT,
+                                                                       FromServer.CHAT_CTRL,
                                                                        FromServer.EXCHANGE,
                                                                        FromServer.EXCHANGE_CANCEL,
                                                                        FromServer.RELOADL
