@@ -95,9 +95,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
             return true;
         }
 
-        public void Reset()
-        {
-        }
+        public void Reset() {}
 
 #endregion
 

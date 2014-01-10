@@ -245,7 +245,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 Disconnect();
 
                 //Establish TCP connection
-                _tcpClient = new TcpClient();
+                _tcpClient = new TcpClient { ReceiveBufferSize = 100000 };
                 _tcpClient.Connect(_server, _port);
                 _networkStream = _tcpClient.GetStream();
 
@@ -567,7 +567,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 try
                 {
                     //Establish TCP connection
-                    _chatTcpClient = new TcpClient();
+                    _chatTcpClient = new TcpClient { ReceiveBufferSize = 100000 };
                     _chatTcpClient.Connect(chatServer, _chatPort);
                     _chatNetworkStream = _chatTcpClient.GetStream();
 
@@ -705,12 +705,6 @@ namespace TimeZero.Auction.Bot.Classes.Network
                     {
                         //Read received data from network buffer
                         int dataSize = tcpClient.Available;
-                        if (dataSize == 0)
-                        {
-                            Thread.Sleep(1);
-                            continue;
-                        }
-
                         networkStream.Read(buffer, 0, dataSize);
 
                         switch (buffer[0]) 
