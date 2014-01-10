@@ -72,7 +72,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 GameSteps
             };
 
-        private static readonly Regex _regexPacketData = new Regex(@"(?s+)^(?:<(.*?)[ |>].*?</(\1)>|<(.(?!<))+?/>)");
+        private static readonly Regex _regexPacketData = new Regex(@"(?s)^(?:<(.*?)[ |>].*?</(\1)>|<(.(?!<))+?/>)");
 
 #endregion
 
@@ -695,6 +695,8 @@ namespace TimeZero.Auction.Bot.Classes.Network
             StringBuilder bufferedDataPart = new StringBuilder();
             byte[] buffer = new byte[tcpClient.ReceiveBufferSize * 2];
 
+            bool ignoreInitCharsList = tcpClient == _chatTcpClient;
+
             while (!_terminated && tcpClient.Connected)
             {
                 try
@@ -725,6 +727,13 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
                         //Received data to string and remove all zero chars
                         string data = Encoding.UTF8.GetString(buffer, 0, dataSize).Replace("\x0", "");
+
+                        //Ingore initial chars list for chat window
+                        if (ignoreInitCharsList)
+                        {
+                            ignoreInitCharsList = false;
+                            continue;
+                        }
 
                         switch (buffer[0])
                         {

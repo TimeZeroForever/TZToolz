@@ -137,7 +137,6 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                         XmlAttribute count = item.Attributes["count"];
                         if (id != null && count != null)
                         {
-                            string message;
                             string sId = id.InnerText;
                             int iCount = int.Parse(count.InnerText);
 
@@ -160,7 +159,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                             //Out log message
                             int totalCost = (int) Math.Ceiling(iCount * fCost);
                             string groupName = _gameItemsGroups[groupId].Name;
-                            message = 
+                            string message = 
                                 string.Format("Trying to buy: {0}, group: {1}, page: {2}, count: {3}, cost: {4}, total cost: {5}...",
                                 gameItem, groupName, groupPage + 1, iCount, fCost, totalCost);
                             networkClient.SendLogMessage(message);

@@ -50,6 +50,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
             {
                 //Get chat message data
                 string messageData = packet["@text"];
+
                 if (string.IsNullOrEmpty(messageData) || packet["@html"] == "1")
                 {
                     continue;

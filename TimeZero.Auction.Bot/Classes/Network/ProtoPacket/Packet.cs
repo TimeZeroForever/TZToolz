@@ -14,7 +14,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.ProtoPacket
         private static readonly Regex _regexPacketType = new Regex("(?<=^\\<).*?(?=\\W)|(?<=^\\<).*?(?=\\>)", 
             RegexOptions.ExplicitCapture);
 
-        private static readonly Regex _regexXmlEncode = new Regex("(?s+)(?<==\".?)&(?!amp;)",
+        private static readonly Regex _regexXmlEncode = new Regex("(?s)(?<==\".?)&(?!amp;)",
             RegexOptions.ExplicitCapture);
 
         private static readonly Dictionary<string, string> _xmlEncodeReplacements = new Dictionary<string, string>
