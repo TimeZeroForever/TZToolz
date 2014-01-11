@@ -280,9 +280,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="Resources\bullet_ball_glass_red.png" />
-    <None Include="TimeZero.Auction.Bot.cfg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="TimeZero.Auction.Bot.cfg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bullet_ball_glass_green.png" />

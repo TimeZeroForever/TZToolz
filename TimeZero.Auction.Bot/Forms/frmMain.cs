@@ -194,6 +194,12 @@ Application terminated.",
             _networkClient.OnActionStepStarted += OnActionStepStarted;
             _networkClient.OnActionStepCompleted += OnActionStepCompleted;
 
+            _networkClient.OutInstantMessages = AppSettings.Instance.GetBool("OutInstantMessages");
+            _networkClient.OutChatMessages = AppSettings.Instance.GetBool("OutChatMessages");
+            _networkClient.OutGeneralLogs = AppSettings.Instance.GetBool("OutGeneralLogs");
+            _networkClient.OutDetailedLogs = AppSettings.Instance.GetBool("OutDetailedLogs");
+            _networkClient.OutActionsLogs = AppSettings.Instance.GetBool("OutActionsLogs");
+
             //Init game items groups
             try
             {
@@ -211,18 +217,6 @@ Application terminated.",
                 _gameItemsGroups.InitializeDefaults();
             }
             RefreshGameItemsTreeView();
-
-            //Init tool buttons
-            btnOutInstantMessages.Checked = AppSettings.Instance.GetBool("OutInstantMessages");
-            BtnOutInstantMessagesClick(null, null);
-            btnOutChatMessages.Checked = AppSettings.Instance.GetBool("OutChatMessages");
-            BtnOutChatMessagesClick(null, null);
-            btnOutGeneralLogs.Checked = AppSettings.Instance.GetBool("OutGeneralLogs");
-            BtnOutGeneralLogsClick(null, null);
-            btnOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
-            BtnOutDetailedLogsClick(null, null);
-            btnOutActionsLogs.Checked = AppSettings.Instance.GetBool("OutActionsLogs");
-            BtnOutActionsLogsClick(null, null);
         }
 
         private void DeinitializeEnvironment()
@@ -242,6 +236,12 @@ Application terminated.",
             btnConnect.Enabled = !_networkClient.Connected && _tzProcessHasPatched;
             btnDisconnect.Enabled = _networkClient.Connected && _tzProcessHasPatched;
             tcMain.Enabled = _tzProcessHasPatched;
+
+            btnOutInstantMessages.Checked = AppSettings.Instance.GetBool("OutInstantMessages");
+            btnOutChatMessages.Checked = AppSettings.Instance.GetBool("OutChatMessages");
+            btnOutGeneralLogs.Checked = AppSettings.Instance.GetBool("OutGeneralLogs");
+            btnOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
+            btnOutActionsLogs.Checked = AppSettings.Instance.GetBool("OutActionsLogs");
         }
 
         private void player_OnReadyStateChange(object sender, _IShockwaveFlashEvents_OnReadyStateChangeEvent e)
@@ -351,26 +351,36 @@ Application terminated.",
         private void BtnOutInstantMessagesClick(object sender, EventArgs e)
         {
             _networkClient.OutInstantMessages = btnOutInstantMessages.Checked;
+            AppSettings.Instance["OutInstantMessages"] = btnOutInstantMessages.Checked.ToString();
+            AppSettings.Instance.Save();
         }
 
         private void BtnOutChatMessagesClick(object sender, EventArgs e)
         {
             _networkClient.OutChatMessages = btnOutChatMessages.Checked;
+            AppSettings.Instance["OutChatMessages"] = btnOutChatMessages.Checked.ToString();
+            AppSettings.Instance.Save();
         }
 
         private void BtnOutGeneralLogsClick(object sender, EventArgs e)
         {
             _networkClient.OutGeneralLogs = btnOutGeneralLogs.Checked;
+            AppSettings.Instance["OutGeneralLogs"] = btnOutGeneralLogs.Checked.ToString();
+            AppSettings.Instance.Save();
         }
 
         private void BtnOutDetailedLogsClick(object sender, EventArgs e)
         {
             _networkClient.OutDetailedLogs = btnOutDetailedLogs.Checked;
+            AppSettings.Instance["OutDetailedLogs"] = btnOutDetailedLogs.Checked.ToString();
+            AppSettings.Instance.Save();
         }
 
         private void BtnOutActionsLogsClick(object sender, EventArgs e)
         {
             _networkClient.OutActionsLogs = btnOutActionsLogs.Checked;
+            AppSettings.Instance["OutActionsLogs"] = btnOutActionsLogs.Checked.ToString();
+            AppSettings.Instance.Save();
         }
 
         private void TimerNetworkActivityTick(object sender, EventArgs e)
@@ -510,13 +520,15 @@ Application terminated.",
         {
             string stepType = actionStep.GetType().ToString();
             string stepName = stepType.Substring(stepType.IndexOf('_') + 1);
-            message = string.Format("{0}: {1}", stepName, message);
+            bool woStepName = !string.IsNullOrEmpty(message) && message[0] == '\t';
+            message = string.Format("{0}{1}", woStepName ? "" : stepName + ": ", message);
             tbGeneralLogs.BeginInvoke(new OutLogData(OutActionLogMessage), new object[] { message });
         }
 
         private void InstantMessage(string message)
         {
-            message = string.Format("{0}{1}", DateTime.Now + ": ", message);
+            bool woDateTime = !string.IsNullOrEmpty(message) && message[0] == '\t';
+            message = string.Format("{0}{1}", woDateTime ? "" : DateTime.Now + ": ", message);
             tbGeneralLogs.BeginInvoke(new OutLogData(OutInstantMessage), new object[] { message });
         }
 

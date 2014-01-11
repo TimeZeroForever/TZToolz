@@ -490,6 +490,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbChat.BackColor = System.Drawing.SystemColors.Window;
             this.tbChat.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tbChat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbChat.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.tbChat.Location = new System.Drawing.Point(0, 0);
             this.tbChat.Name = "tbChat";
             this.tbChat.ReadOnly = true;
@@ -562,7 +563,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pGeneralLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pGeneralLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pGeneralLogsBack.Name = "pGeneralLogsBack";
-            this.pGeneralLogsBack.Size = new System.Drawing.Size(632, 424);
+            this.pGeneralLogsBack.Size = new System.Drawing.Size(632, 423);
             this.pGeneralLogsBack.TabIndex = 2;
             // 
             // tbGeneralLogs
@@ -576,7 +577,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbGeneralLogs.Name = "tbGeneralLogs";
             this.tbGeneralLogs.ReadOnly = true;
             this.tbGeneralLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbGeneralLogs.Size = new System.Drawing.Size(630, 422);
+            this.tbGeneralLogs.Size = new System.Drawing.Size(630, 421);
             this.tbGeneralLogs.TabIndex = 0;
             this.tbGeneralLogs.TabStop = false;
             // 
@@ -598,7 +599,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pActionsLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pActionsLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pActionsLogsBack.Name = "pActionsLogsBack";
-            this.pActionsLogsBack.Size = new System.Drawing.Size(632, 424);
+            this.pActionsLogsBack.Size = new System.Drawing.Size(632, 423);
             this.pActionsLogsBack.TabIndex = 3;
             // 
             // tbActionsLogs
@@ -612,7 +613,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbActionsLogs.Name = "tbActionsLogs";
             this.tbActionsLogs.ReadOnly = true;
             this.tbActionsLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbActionsLogs.Size = new System.Drawing.Size(630, 422);
+            this.tbActionsLogs.Size = new System.Drawing.Size(630, 421);
             this.tbActionsLogs.TabIndex = 1;
             this.tbActionsLogs.TabStop = false;
             // 
@@ -634,7 +635,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pDetailedLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pDetailedLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pDetailedLogsBack.Name = "pDetailedLogsBack";
-            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 424);
+            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 423);
             this.pDetailedLogsBack.TabIndex = 2;
             // 
             // tbDetailedLogs
@@ -648,7 +649,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbDetailedLogs.Name = "tbDetailedLogs";
             this.tbDetailedLogs.ReadOnly = true;
             this.tbDetailedLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 422);
+            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 421);
             this.tbDetailedLogs.TabIndex = 1;
             this.tbDetailedLogs.TabStop = false;
             // 

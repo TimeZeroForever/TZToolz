@@ -59,6 +59,10 @@
             this.lblServerSettings = new System.Windows.Forms.Label();
             this.chkSendHotkeyAfterSubmit = new System.Windows.Forms.CheckBox();
             this.tpApplication = new System.Windows.Forms.TabPage();
+            this.cbOutChatMessages = new System.Windows.Forms.CheckBox();
+            this.cbOutInstantMessages = new System.Windows.Forms.CheckBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
             this.cbOutActionsLogs = new System.Windows.Forms.CheckBox();
             this.cbOutDetailedLogs = new System.Windows.Forms.CheckBox();
             this.cbOutGeneralLogs = new System.Windows.Forms.CheckBox();
@@ -68,10 +72,6 @@
             this.btnApply = new System.Windows.Forms.Button();
             this.fbdGameFolder = new System.Windows.Forms.FolderBrowserDialog();
             this.ilSettings = new System.Windows.Forms.ImageList(this.components);
-            this.cbOutChatMessages = new System.Windows.Forms.CheckBox();
-            this.cbOutInstantMessages = new System.Windows.Forms.CheckBox();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
             this.lvSettings = new TimeZero.Auction.Bot.Controls.SettingsListView.SettingsListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pSettings.SuspendLayout();
@@ -396,6 +396,51 @@
             this.tpApplication.Text = "Application";
             this.tpApplication.UseVisualStyleBackColor = true;
             // 
+            // cbOutChatMessages
+            // 
+            this.cbOutChatMessages.AutoSize = true;
+            this.cbOutChatMessages.Location = new System.Drawing.Point(15, 53);
+            this.cbOutChatMessages.Name = "cbOutChatMessages";
+            this.cbOutChatMessages.Size = new System.Drawing.Size(129, 19);
+            this.cbOutChatMessages.TabIndex = 2;
+            this.cbOutChatMessages.Text = "Out chat messages";
+            this.cbOutChatMessages.UseVisualStyleBackColor = true;
+            this.cbOutChatMessages.Visible = false;
+            // 
+            // cbOutInstantMessages
+            // 
+            this.cbOutInstantMessages.AutoSize = true;
+            this.cbOutInstantMessages.Location = new System.Drawing.Point(15, 30);
+            this.cbOutInstantMessages.Name = "cbOutInstantMessages";
+            this.cbOutInstantMessages.Size = new System.Drawing.Size(144, 19);
+            this.cbOutInstantMessages.TabIndex = 1;
+            this.cbOutInstantMessages.Text = "Out instant messages";
+            this.cbOutInstantMessages.UseVisualStyleBackColor = true;
+            this.cbOutInstantMessages.Visible = false;
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Location = new System.Drawing.Point(7, 21);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(350, 1);
+            this.panel4.TabIndex = 94;
+            this.panel4.Visible = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label10.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.label10.Location = new System.Drawing.Point(3, 3);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(59, 15);
+            this.label10.TabIndex = 93;
+            this.label10.Text = "Messages";
+            this.label10.Visible = false;
+            // 
             // cbOutActionsLogs
             // 
             this.cbOutActionsLogs.AutoSize = true;
@@ -405,6 +450,7 @@
             this.cbOutActionsLogs.TabIndex = 4;
             this.cbOutActionsLogs.Text = "Out actions logs";
             this.cbOutActionsLogs.UseVisualStyleBackColor = true;
+            this.cbOutActionsLogs.Visible = false;
             // 
             // cbOutDetailedLogs
             // 
@@ -415,6 +461,7 @@
             this.cbOutDetailedLogs.TabIndex = 5;
             this.cbOutDetailedLogs.Text = "Out detailed logs";
             this.cbOutDetailedLogs.UseVisualStyleBackColor = true;
+            this.cbOutDetailedLogs.Visible = false;
             // 
             // cbOutGeneralLogs
             // 
@@ -425,6 +472,7 @@
             this.cbOutGeneralLogs.TabIndex = 3;
             this.cbOutGeneralLogs.Text = "Out general logs";
             this.cbOutGeneralLogs.UseVisualStyleBackColor = true;
+            this.cbOutGeneralLogs.Visible = false;
             // 
             // panel3
             // 
@@ -435,6 +483,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(350, 1);
             this.panel3.TabIndex = 89;
+            this.panel3.Visible = false;
             // 
             // label5
             // 
@@ -446,6 +495,7 @@
             this.label5.Size = new System.Drawing.Size(48, 15);
             this.label5.TabIndex = 88;
             this.label5.Text = "Logging";
+            this.label5.Visible = false;
             // 
             // btnCancel
             // 
@@ -486,47 +536,6 @@
             this.ilSettings.Images.SetKeyName(2, "text_tree.png");
             this.ilSettings.Images.SetKeyName(3, "window_edit.png");
             this.ilSettings.Images.SetKeyName(4, "star_blue.png");
-            // 
-            // cbOutChatMessages
-            // 
-            this.cbOutChatMessages.AutoSize = true;
-            this.cbOutChatMessages.Location = new System.Drawing.Point(15, 53);
-            this.cbOutChatMessages.Name = "cbOutChatMessages";
-            this.cbOutChatMessages.Size = new System.Drawing.Size(129, 19);
-            this.cbOutChatMessages.TabIndex = 2;
-            this.cbOutChatMessages.Text = "Out chat messages";
-            this.cbOutChatMessages.UseVisualStyleBackColor = true;
-            // 
-            // cbOutInstantMessages
-            // 
-            this.cbOutInstantMessages.AutoSize = true;
-            this.cbOutInstantMessages.Location = new System.Drawing.Point(15, 30);
-            this.cbOutInstantMessages.Name = "cbOutInstantMessages";
-            this.cbOutInstantMessages.Size = new System.Drawing.Size(144, 19);
-            this.cbOutInstantMessages.TabIndex = 1;
-            this.cbOutInstantMessages.Text = "Out instant messages";
-            this.cbOutInstantMessages.UseVisualStyleBackColor = true;
-            // 
-            // panel4
-            // 
-            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel4.Location = new System.Drawing.Point(7, 21);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(350, 1);
-            this.panel4.TabIndex = 94;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label10.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.label10.Location = new System.Drawing.Point(3, 3);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(59, 15);
-            this.label10.TabIndex = 93;
-            this.label10.Text = "Messages";
             // 
             // lvSettings
             // 
