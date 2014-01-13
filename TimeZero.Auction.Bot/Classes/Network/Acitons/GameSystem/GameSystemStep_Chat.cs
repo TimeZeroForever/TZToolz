@@ -75,6 +75,9 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
                 //Out only private or personal messages
                 if (isPrivateMessage || isPersonalMessage)
                 {
+                    //Check if the message has more than one recipients
+                    bool isMultiUserMessage = matchesUsers.Count > 1;
+
                     //Play notification for private message
                     if (isPrivateMessage)
                     {
@@ -87,8 +90,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
                     //Get full chat message content
                     string fullMessage = _regexChatFullMessage.Match(messageData).Groups["MESSAGE"].Value;
 
-                    //Out full chat message
-                    networkClient.SendChatMessage(fullMessage);
+                    //Out full incoming chat message
+                    networkClient.OutChatMessage(fullMessage);
+
+                    //Post this message to the chat bot
+                    GameSystemStep_ChatBot.AppendIncomingMessage(sender, isPrivateMessage, isPersonalMessage,
+                                                                  isMultiUserMessage, message);
                 }
             }
 

@@ -24,7 +24,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                     gameServersList.Remove(server);
 
                     //Out log message
-                    networkClient.SendLogMessage(string.Format("Connecting to the game server: {0}...", server));
+                    networkClient.OutLogMessage(string.Format("Connecting to the game server: {0}...", server));
 
                     //Try to connect
                     bool isConnected = networkClient.ConnectToGameServer(server);
@@ -39,6 +39,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
             }
 
             //Connection failed
+            networkClient.Disconnect();
             return false;
         }
 

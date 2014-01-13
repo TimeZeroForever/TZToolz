@@ -11,7 +11,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
         public bool DoStep(NetworkClient networkClient, GameClient client)
         {
             bool chatStarted = false;
-            networkClient.SendLogMessage("Starting chat...");
+            networkClient.OutLogMessage("Starting chat...");
 
             //Get chat info
             string getInfo = Packet.BuildPacket(FromClient.CHAT_CTRL, Chat.START);
@@ -33,7 +33,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                 }
             }
 
-            networkClient.SendLogMessage(!chatStarted 
+            networkClient.OutLogMessage(!chatStarted 
                 ? "WARNING: chat wasn`t started" 
                 : "Chat was successfully started");
 

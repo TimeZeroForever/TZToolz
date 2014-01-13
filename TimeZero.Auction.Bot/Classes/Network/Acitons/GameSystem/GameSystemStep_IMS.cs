@@ -31,7 +31,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
             if (messages.Count > 0)
             {
-                networkClient.SendInstantMessage(string.Format("Instant message(s), {0} received:", messages.Count));
+                networkClient.OutInstantMessage(string.Format("Instant message(s), {0} received:", messages.Count));
                 foreach (string message in messages)
                 {
                     string logMessage;
@@ -65,7 +65,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     //Play alert
                     _soundPlayer.Play();
 
-                    networkClient.SendInstantMessage(logMessage);
+                    networkClient.OutInstantMessage(logMessage);
                 }
 
                 //Clear all IMS on server

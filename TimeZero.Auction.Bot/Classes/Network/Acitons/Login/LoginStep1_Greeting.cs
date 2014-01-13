@@ -12,7 +12,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
 
         public bool DoStep(NetworkClient networkClient, GameClient client)
         {
-            networkClient.SendLogMessage("Getting a servers list...");
+            networkClient.OutLogMessage("Getting a servers list...");
 
             //Send greeting
             string greeting = Packet.BuildPacket(FromClient.GREETING);
@@ -36,7 +36,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                     client.AdditionalData.Add(ObjectPropertyName.GAME_SERVER, server);
                 }
 
-                networkClient.SendLogMessage(sServers.Insert(0, "Available servers: ").ToString());
+                networkClient.OutLogMessage(sServers.Insert(0, "Available servers: ").ToString());
                 return true;
             }
 

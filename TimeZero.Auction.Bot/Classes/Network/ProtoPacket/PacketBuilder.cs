@@ -1,4 +1,5 @@
 ﻿using System;
+using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes;
 
 namespace TimeZero.Auction.Bot.Classes.Network.ProtoPacket
 {
@@ -145,6 +146,37 @@ namespace TimeZero.Auction.Bot.Classes.Network.ProtoPacket
             }
         }
 
+        //1: To, 2: Type, 3: Message
+        private static string BuildPacketChatPost(object[] p)
+        {
+            string type = ((ChatMessageType)p[3]) == ChatMessageType.Pivate ? "private" : "to";
+            string message = string.Format("{0} [{1}] {2}", type, p[2], p[4]);
+            return string.Format("<{0} t=\"{1}\" />", FromClient.CHAT_MESSAGE, message);
+        }
+        
+        private static string BuildPacketChatMessage(object[] p)
+        {
+            if (p.Length == 0)
+            {
+                throw new Exception("CHAT_MESSAGE command should call with additional command");
+            }
+            string cmd = p[0].ToString().ToLower();
+            try
+            {
+                switch (cmd)
+                {
+                    case Chat.POST:
+                        return BuildPacketChatPost(p);
+                    default:
+                        throw new Exception(string.Format("Unrecognized CHAT_MESSAGE command: {0}", cmd));
+                }
+            }
+            catch
+            {
+                throw new Exception(string.Format("Invalid parameters list for CHAT_MESSAGE command: {0}", cmd));
+            }
+        }
+
         public static string BuildPacket(string packetType, params object[] p)
         {
             switch (packetType)
@@ -165,6 +197,8 @@ namespace TimeZero.Auction.Bot.Classes.Network.ProtoPacket
                     return BuildPacketJoinInventory(p);
                 case FromClient.CHAT_CTRL:
                     return BuildPacketChatCtrl(p);
+                case FromClient.CHAT_MESSAGE:
+                    return BuildPacketChatMessage(p);
             }
             return null;
         }

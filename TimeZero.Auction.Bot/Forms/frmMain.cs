@@ -16,6 +16,7 @@ using TimeZero.Auction.Bot.Classes.TZProcess;
 using TimeZero.Auction.Bot.ClassesInstances;
 using TimeZero.Auction.Bot.Helpers;
 using TimeZero.Auction.Bot.Properties;
+using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases;
 
 namespace TimeZero.Auction.Bot.Forms
 {
@@ -87,7 +88,7 @@ namespace TimeZero.Auction.Bot.Forms
 #endregion
 
 #region Class methods
-
+        
         public frmMain()
         {
             BeginLoading();

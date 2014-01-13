@@ -9,6 +9,7 @@ using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 using TimeZero.Auction.Bot.ClassesInstances;
 using TimeZero.Auction.Bot.Classes.Network.Helpers;
 using TimeZero.Auction.Bot.Classes.Game.InventoryItems;
+using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes;
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 {
@@ -17,7 +18,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
 #region Constants
 
-        private const int SHOPPING_DELAY_SEC       = 5   ; //In seconds, 5 sec
+        private const int SHOPPING_DELAY_SEC       = 60  ; //In seconds, 1 min
         private const int SHOPPING_FULL_UPDATE_MIN = 60  ; //In minutes, 1 hour
 
 #endregion
@@ -31,8 +32,10 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
         private readonly Dictionary<string, List<Packet>> _cachedGroupPages =
             new Dictionary<string, List<Packet>>();
 
-        private readonly Dictionary<string, DateTime> _listOfPurchasedItemsWithOwners =
-            new Dictionary<string, DateTime>();
+        private readonly ShoppingItemsSellerList _listOfItemsOwners =
+            new ShoppingItemsSellerList();
+        private readonly ShoppingPurchasedItemWithOwnerList _listOfPurchasedItemsWithOwners =
+            new ShoppingPurchasedItemWithOwnerList();
 
         private readonly SoundPlayer _soundPlayer = new SoundPlayer(Properties.Resources.buy_item);
 
@@ -59,46 +62,29 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                    gameItem.FactoryCost * count < 30f;
         }
 
-        private void RefreshListOfPurchasedItemsWithOwners()
+        private bool PassAntibotManeuvers(GameItem gameItem, int count, string owner)
         {
-            DateTime now = DateTime.Now;
-            List<string> toRemove = new List<string>();
-            
-            //Searching for old records, that older than 60 min
-            foreach (string key in _listOfPurchasedItemsWithOwners.Keys)
-            {
-                DateTime itemAddTime = _listOfPurchasedItemsWithOwners[key];
-                TimeSpan timeDiff = now.Subtract(itemAddTime);
-                if (timeDiff.TotalMinutes >= 60)
-                {
-                    toRemove.Add(key);
-                }
-            }
-
-            //Remove old records
-            foreach (string key in toRemove)
-            {
-                _listOfPurchasedItemsWithOwners.Remove(key);
-            }
-        }
-
-        private string GetItemPlusOwnerUniqueId(GameItem gameItem, string owner)
-        {
-            return string.Format("{0}|{1}", gameItem, owner).ToLower();
-        }
-
-        private bool VerifyAbilityToBuyItem(GameItem gameItem, string owner)
-        {
-            string uniqueId = GetItemPlusOwnerUniqueId(gameItem, owner);
-            if (_listOfPurchasedItemsWithOwners.ContainsKey(uniqueId))
+            //Check on antibot maneuvers, 1
+            if (IsPossibleAntiBotManeuvers(gameItem, count))
             {
                 return false;
             }
 
-            _listOfPurchasedItemsWithOwners.Add(uniqueId, DateTime.Now);
+            //Check on antibot maneuvers, 2
+            if (!_listOfItemsOwners.Check(owner))
+            {
+                return false;
+            }
+
+            //Check on antibot maneuvers, 3
+            if (!_listOfPurchasedItemsWithOwners.Check(gameItem, owner))
+            {
+                return false;
+            }
+
             return true;
         }
-
+        
 #endregion
 
 #region Class methods
@@ -140,19 +126,9 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                             string sId = id.InnerText;
                             int iCount = int.Parse(count.InnerText);
 
-                            //Check on antibot maneuvers, 1
-                            if (IsPossibleAntiBotManeuvers(gameItem, iCount))
+                            //Check on antibot maneuvers
+                            if (!PassAntibotManeuvers(gameItem, iCount, owner))
                             {
-                                return;
-                            }
-
-                            //Check on antibot maneuvers, 2
-                            if (!VerifyAbilityToBuyItem(gameItem, owner))
-                            {
-                                /*message = 
-                                    string.Format("!Ingored to buy: {0}, owner: {1}, page: {2}, count: {3}, cost: {4}...",
-                                    gameItem, owner, groupPage + 1, iCount, fCost);
-                                networkClient.SendLogMessage(message);*/
                                 return;
                             }
 
@@ -160,9 +136,9 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                             int totalCost = (int) Math.Ceiling(iCount * fCost);
                             string groupName = _gameItemsGroups[groupId].Name;
                             string message = 
-                                string.Format("Trying to buy: {0}, group: {1}, page: {2}, count: {3}, cost: {4}, total cost: {5}...",
-                                gameItem, groupName, groupPage + 1, iCount, fCost, totalCost);
-                            networkClient.SendLogMessage(message);
+                                string.Format("Trying to buy: {0}, owner: {1}, group: {2}, page: {3}, count: {4}, cost: {5}, total cost: {6}...",
+                                gameItem, owner, groupName, groupPage + 1, iCount, fCost, totalCost);
+                            networkClient.OutLogMessage(message);
 
                             //Try to buy the item
                             //Query params: 1: item ID, 2: count, 3: cost
@@ -211,7 +187,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                             _soundPlayer.Play();
 
                                             //Out log message
-                                            networkClient.SendLogMessage("Successful");
+                                            networkClient.OutLogMessage("Successful");
                                             break;
                                         }
                                 }
@@ -542,7 +518,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     string endTime = DateTime.Now.Subtract(startTime).ToString();
                     string message = string.Format("'{0}' processed. Subgroups count: {1}, duration: {2}",
                         groupName, subGroupsCount, Helper.RemoveMilliseconds(endTime));
-                    networkClient.SendActionLogMessage(this, message);  
+                    networkClient.OutActionLogMessage(this, message);  
                 }
             }
         }
@@ -582,7 +558,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                 string endTime = DateTime.Now.Subtract(startTime).ToString();
                 string message = string.Format("'{0}' processed. Subgroups count: {1}, duration: {2}",
                     groupName, subGroupsCount, Helper.RemoveMilliseconds(endTime));
-                networkClient.SendActionLogMessage(this, message);  
+                networkClient.OutActionLogMessage(this, message);  
             }
         }
 
@@ -638,8 +614,11 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                 _gameItemsGroups = Instance.GameItemsGroups;
                 DateTime startShoppingTime = DateTime.Now;
 
+                //Refresh list of items owners
+                _listOfItemsOwners.Refresh();
+
                 //Refresh list of purchased items with their owners
-                RefreshListOfPurchasedItemsWithOwners();
+                _listOfPurchasedItemsWithOwners.Refresh();
 
                 //Check full update requirement
                 bool fullUpdate = _prewFullUpdateTime == 0 || 
@@ -663,7 +642,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
    isShop ? "YES" : "NO", 
    isAuction ? "YES" : "NO",
    fullUpdate ? "YES" : "NO").TrimEnd();
-                networkClient.SendActionLogMessage(this, message);
+                networkClient.OutActionLogMessage(this, message);
 
                 //Current location must be a shop, check it
                 if (isShop)
@@ -675,7 +654,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                 {
                     //Out action message
                     message = "You are not inside a shop. Shopping unavailable.";
-                    networkClient.SendActionLogMessage(this, message);                    
+                    networkClient.OutActionLogMessage(this, message);                    
                 }
 
                 //Store last time of full update
@@ -688,7 +667,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                 //Out action message
                 string shoppingTime = DateTime.Now.Subtract(startShoppingTime).ToString();
                 message = string.Format("completed. Duration: {0}", Helper.RemoveMilliseconds(shoppingTime));
-                networkClient.SendActionLogMessage(this, message);  
+                networkClient.OutActionLogMessage(this, message);  
 
                 return true;
             }

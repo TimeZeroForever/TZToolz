@@ -15,7 +15,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
 
         public bool DoStep(NetworkClient networkClient, GameClient client)
         {
-            networkClient.SendLogMessage("Getting my information...");
+            networkClient.OutLogMessage("Getting my information...");
 
             //Get my information
             string getInfo = Packet.BuildPacket(FromClient.GET_MY_INFO);

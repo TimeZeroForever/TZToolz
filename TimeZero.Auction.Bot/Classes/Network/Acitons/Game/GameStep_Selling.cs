@@ -108,7 +108,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                 ShopItem shopItem)
         {
             string message = string.Format("Trying to get: {0}...", shopItem.Parent);
-            networkClient.SendLogMessage(message);
+            networkClient.OutLogMessage(message);
 
             //Try to get the item
             //Query params: 1: item ID
@@ -147,12 +147,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                 GameStep_JoinInventory.DoJoin(networkClient, client);
 
                                 //Out log message
-                                networkClient.SendLogMessage("Successful");
+                                networkClient.OutLogMessage("Successful");
 
                                 //Done
                                 return true;
                             }
-                            string errorMessage = string.Format("SELL: BAD INVENTORY ITEM: {0}", getResult.Data);
+                            string errorMessage = string.Format("GET OWN ITEM: BAD INVENTORY ITEM: {0}", getResult.Data);
                             networkClient.ThrowError(errorMessage);
                             break;
                         }
@@ -175,7 +175,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
             string message = string.Format("Trying to sell: {0}, cost: {1}, count: {2}...",
                                            itemName, cost, itemCount);
-            networkClient.SendLogMessage(message);
+            networkClient.OutLogMessage(message);
 
             //Get a result
             string[] packetTypes = new[] { FromServer.SHOP_OK, FromServer.SHOP_ERROR };
@@ -208,7 +208,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                             _soundPlayer.Play();
 
                             //Out log message
-                            networkClient.SendLogMessage("Successful");
+                            networkClient.OutLogMessage("Successful");
                             break;
                         }
                 }
