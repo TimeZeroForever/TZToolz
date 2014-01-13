@@ -12,7 +12,6 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
                  "Занят"
                 ,"Сейчас занят, сорри"
                 ,"Работаю, извини"
-                ,"Ты по делу или просто поговорить?"
                 ,"Напиши позже"
                 ,"Давай потом"
             };
