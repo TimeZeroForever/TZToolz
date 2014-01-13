@@ -134,9 +134,13 @@
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Base.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\PhrasesFactory.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_BotCheck.cs" />
+    <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Dumping.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Greeting.cs" />
+    <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Invective.cs" />
+    <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_OK.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_SellRequest.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Shopping.cs" />
+    <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Thanks.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Unknown.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\WordsDictionary.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\Shopping\ShoppingItemsSeller.cs" />

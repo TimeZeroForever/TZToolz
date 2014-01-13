@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Collections.Generic;
 using TimeZero.Auction.Bot.Classes.Game.GameItems;
 
-namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes
+namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.Shopping
 {
     public sealed class ShoppingPurchasedItemWithOwner
     {

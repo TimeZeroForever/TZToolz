@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
 {
     public static class WordsDictionary
     {
-        private static Dictionary<string, string> _words_gen = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> _words_gen = new Dictionary<string, string>
         {
              { "ночь" , "ночи"   }
             ,{ "утро" , "утра"   }
@@ -24,27 +21,27 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
             if (!string.IsNullOrEmpty(langCase))
             {
                 //Get appropriate lang. case dictionary
-                Dictionary<string, string> words_cases = null;
+                Dictionary<string, string> wordsCases = null;
                 switch (langCase)
                 {
                     //Genitive case
                     case "gen":
                         {
-                            words_cases = _words_gen;
+                            wordsCases = _words_gen;
                             break;
                         }
                 }
 
                 //If the dictionary exists
-                if (words_cases != null)
+                if (wordsCases != null)
                 {
                     //Get word-key
                     string wordKey = (word ?? string.Empty).Trim().ToLower();
 
                     //Find word
-                    if (words_cases.ContainsKey(wordKey))
+                    if (wordsCases.ContainsKey(wordKey))
                     {
-                        word = words_cases[wordKey];
+                        word = wordsCases[wordKey];
                     }
                 }
             }

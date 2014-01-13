@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes
+namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot
 {
     public sealed class ChatBotConversationList : Dictionary<string, ChatBotConversation>
     {
@@ -53,7 +51,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes
             List<string> toRemove = new List<string>();
 
             //Searching for outdated conversations
-            foreach (string sender in this.Keys)
+            foreach (string sender in Keys)
             {
                 ChatBotConversation cbc = this[sender];
                 DateTime lastUpdateTime = cbc.LastUpdateTime;

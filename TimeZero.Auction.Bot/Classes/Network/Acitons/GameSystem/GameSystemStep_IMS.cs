@@ -4,7 +4,7 @@ using System.Media;
 using TimeZero.Auction.Bot.Classes.Game.Client;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 
-namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
+namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
 {
     public sealed class GameSystemStep_IMS : IActionStep
     {

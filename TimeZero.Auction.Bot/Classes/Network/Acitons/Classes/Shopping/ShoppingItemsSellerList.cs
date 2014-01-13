@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes
+namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.Shopping
 {
     public sealed class ShoppingItemsSellerList : List<ShoppingItemsSeller>
     {
@@ -19,7 +17,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes
 
         private ShoppingItemsSeller Get(string owner)
         {
-            return this.Find(sis => sis.Owner == owner);
+            return Find(sis => sis.Owner == owner);
         }
 
         private ShoppingItemsSeller Append(string owner)

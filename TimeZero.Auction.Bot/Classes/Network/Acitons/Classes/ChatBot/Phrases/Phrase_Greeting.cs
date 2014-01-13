@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
 {
     public sealed class Phrase_Greeting : Phrase_Base
     {
-        private static List<string> _inputMessageTemplates = new List<string>()
-        {
-             "добрый"
-            ,"доброе"
-            ,"прив"
-            ,"здраств"
-            ,"здравств"
-            ,"здрас"
-            ,"сдраств"
-            ,"сдравств"
-            ,"сдрас"
-            ,"ку-ку"
-            ,"куку"
-        };
+        private static readonly List<string> _inputMessageTemplates = new List<string>
+            {
+                 "добрый"
+                ,"доброе"
+                ,"прив"
+                ,"здраств"
+                ,"здравств"
+                ,"здрас"
+                ,"сдраств"
+                ,"сдравств"
+                ,"сдрас"
+                ,"ку-ку"
+                ,"куку"
+            };
 
         private static readonly List<string> _phrases_i0 = new List<string>
             {
@@ -42,10 +40,11 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
                  ,"Оригинально"
                  ,"Пока"
                  ,"В игнор"
+                 ,"Игнор"
                  ," :lesom: "
             };
 
-        private static readonly List<string>[] _phrases = new List<string>[]
+        private static readonly List<string>[] _phrases = new[]
             {
                  _phrases_i0
                 ,_phrases_i1
@@ -64,39 +63,40 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
 
         static Phrase_Greeting()
         {
-            //Populate input message templates list
-            _inputMessageTemplates.AddRange(_phrases_i0);
-
-            //Populate _phrases_i1
-            List<string> phrases_i1_add = new List<string>();
+            //Populate _phrases_i0
+            List<string> phrasesI0Add = new List<string>();
             foreach (string phrase in _phrases_i0)
             {
-                phrases_i1_add.Add(phrase + " :privet: ");
+                phrasesI0Add.Add(phrase + " :privet: ");
             }
-            phrases_i1_add.Add(" :privet: ");
-            _phrases_i0.AddRange(phrases_i1_add);
+            phrasesI0Add.Add(" :privet: ");
+            _phrases_i0.AddRange(phrasesI0Add);
 
-            //Populate _phrases_i2
-            List<string> phrases_i2_add = new List<string>();
+            //Populate _phrases_i1
+            List<string> phrasesI1Add = new List<string>();
             foreach (string phrase in _phrases_i0.Distinct())
             {
                 string updPhrase = phrase.Replace(" :privet: ", "");
                 if (!string.IsNullOrEmpty(updPhrase))
                 {
-                    phrases_i2_add.Add(updPhrase + " ещё раз");
-                    phrases_i2_add.Add(updPhrase + " снова");
+                    phrasesI1Add.Add(updPhrase + " ещё раз");
+                    phrasesI1Add.Add(updPhrase + " снова");
                     updPhrase = updPhrase.ToLower();
-                    phrases_i2_add.Add("И снова " + updPhrase);
-                    phrases_i2_add.Add("И ещё раз " + updPhrase);
-                    phrases_i2_add.Add("И опять " + updPhrase);
+                    phrasesI1Add.Add("И снова " + updPhrase);
+                    phrasesI1Add.Add("И ещё раз " + updPhrase);
+                    phrasesI1Add.Add("И опять " + updPhrase);
                 }
             }
-            _phrases_i1.AddRange(phrases_i2_add.Distinct());
+            _phrases_i1.AddRange(phrasesI1Add.Distinct());
         }
 
         public override bool HasAnswerOnInputMessage(string message)
         {
             message = message.ToLower();
+            if (message.Trim() == ":privet:")
+            {
+                return true;
+            }
             foreach (string t in _inputMessageTemplates)
             {
                 if (message.Contains(t))

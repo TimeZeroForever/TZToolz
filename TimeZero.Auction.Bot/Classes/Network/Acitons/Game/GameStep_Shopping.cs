@@ -4,12 +4,12 @@ using System.Media;
 using System.Collections.Generic;
 using TimeZero.Auction.Bot.Classes.Game.Client;
 using TimeZero.Auction.Bot.Classes.Game.GameItems;
+using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.Shopping;
 using TimeZero.Auction.Bot.Classes.Network.Constants;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 using TimeZero.Auction.Bot.ClassesInstances;
 using TimeZero.Auction.Bot.Classes.Network.Helpers;
 using TimeZero.Auction.Bot.Classes.Game.InventoryItems;
-using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes;
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 {
@@ -18,7 +18,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
 #region Constants
 
-        private const int SHOPPING_DELAY_SEC       = 60  ; //In seconds, 1 min
+        private const int SHOPPING_DELAY_SEC       = 5   ; //In seconds, 5 sec
         private const int SHOPPING_FULL_UPDATE_MIN = 60  ; //In minutes, 1 hour
 
 #endregion

@@ -1,5 +1,6 @@
 ﻿using System;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes;
+using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot;
 
 namespace TimeZero.Auction.Bot.Classes.Network.ProtoPacket
 {

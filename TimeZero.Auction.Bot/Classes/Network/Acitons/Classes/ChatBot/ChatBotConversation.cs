@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases;
 
-namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes
+namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot
 {
     public sealed class ChatBotConversation
     {

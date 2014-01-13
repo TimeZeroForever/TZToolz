@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
 {
@@ -10,13 +7,13 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
         private static readonly List<string> _phrase_i0 = new List<string>
             {
                  "Занят"
-                ,"Сейчас занят, сорри"
+                ,"Я занят"
+                ,"Сейчас занят"
                 ,"Работаю, извини"
-                ,"Напиши позже"
                 ,"Давай потом"
             };
 
-        private static readonly List<string>[] _phrases = new List<string>[]
+        private static readonly List<string>[] _phrases = new[]
             {
                  _phrase_i0
             };

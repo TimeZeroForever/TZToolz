@@ -2,21 +2,36 @@
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
 {
-    public sealed class Phrase_SellRequest : Phrase_Base
+    public sealed class Phrase_Invective :  Phrase_Base
     {
         private static readonly List<string> _inputMessageTemplates = new List<string>
             {
-                 "куплю"
-                ,"есть"
-                ,"продаеш"
-                ,"продаш"
-                ,"продаёш"
-                ,"купить"
+                 "@#"
+                ,"нуб"
+                ,"нуп"
+                ,"чмо"
+                ,"урод"
+                ,"козел"
+                ,"казел"
+                ,"козёл"
+                ,"казёл"
+                ,"дурак"
+                ,"баран"
+                ,"петух"
+                ,"питух"
+                ,"олень"
+                ,"алень"
+                ,"дятел"
+                ,"идиот"
+                ,"мудак"
+                ,"мудло"
             };
 
         private static readonly List<string> _phrases_i0 = new List<string>
             {
-                 "Нет"
+                 "Игнор"
+                ,"В игнор"
+                ," :lesom: "
             };
 
         private static readonly List<string>[] _phrases = new[]
@@ -29,14 +44,17 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
             get { return _phrases; }
         }
 
-        public override int ProcessedPhraseValue { get { return 0; } }
+        protected override bool IsSenderInIgnore(int iteration)
+        {
+            return true;
+        }
 
         public override bool HasAnswerOnInputMessage(string message)
         {
             message = message.ToLower();
             foreach (string t in _inputMessageTemplates)
             {
-                if (message.Contains(t) && message.Contains("?"))
+                if (message.Contains(t))
                 {
                     return true;
                 }

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TimeZero.Auction.Bot.Classes.Game.Client;
-using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes;
+using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 using System.Media;
@@ -19,7 +18,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
         private static readonly List<ChatMessage> _outChatMessages = new List<ChatMessage>();
         private readonly SoundPlayer _soundPlayer = new SoundPlayer(Properties.Resources.private_message);
 
-        private static HashSet<string> _blackList = new HashSet<string>
+        private static readonly HashSet<string> _blackList = new HashSet<string>
         {
              "Дочка_пенопласта"
         };

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using TimeZero.Auction.Bot.Classes.Game.GameItems;
 
-namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes
+namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.Shopping
 {
     public sealed class ShoppingPurchasedItemWithOwnerList : List<ShoppingPurchasedItemWithOwner>
     {
@@ -20,7 +18,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes
         private ShoppingPurchasedItemWithOwner Get(GameItem gameItem, string owner)
         {
             string item = gameItem.ToString();
-            return this.Find
+            return Find
                 (
                     piwo => piwo.Item == item && piwo.Owner == owner
                 );

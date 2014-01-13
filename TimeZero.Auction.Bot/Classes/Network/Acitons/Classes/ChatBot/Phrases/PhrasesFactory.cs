@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -14,8 +13,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
         {
              new Phrase_Greeting()
             ,new Phrase_Shopping()
+            ,new Phrase_Dumping()
             ,new Phrase_SellRequest()
             ,new Phrase_BotCheck()
+            ,new Phrase_Thanks()
+            ,new Phrase_OK()
+            ,new Phrase_Invective()
         };
 
         private static readonly Phrase_Base PhraseUnknown = new Phrase_Unknown();
@@ -42,6 +45,18 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
             {
                 StringBuilder sbAnswer = new StringBuilder();
                 ChatBotConversation conversation = chatMessage.Conversation;
+
+                //Check for standalone phase
+                Phrase_Base standalonePhrase = objs.FirstOrDefault
+                    (
+                        o => o is Phrase_Invective || 
+                             o is Phrase_SellRequest
+                    );
+                if (standalonePhrase != null)
+                {
+                    objs = objs.Where(o => o == standalonePhrase);
+                }
+
                 foreach (Phrase_Base phraseObj in objs)
                 {
                     //Get iteration number
