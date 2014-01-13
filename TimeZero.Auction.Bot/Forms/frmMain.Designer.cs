@@ -2,6 +2,7 @@
 using TimeZero.Auction.Bot.Controls.Header;
 using TimeZero.Auction.Bot.Controls.TreeViewSearchBox;
 using System.Windows.Forms;
+using RichTextBoxLinks;
 
 namespace TimeZero.Auction.Bot.Forms
 {
@@ -61,23 +62,26 @@ namespace TimeZero.Auction.Bot.Forms
             this.lblItemIsNotSelected = new System.Windows.Forms.Label();
             this.tpIMS = new System.Windows.Forms.TabPage();
             this.pIMSBack = new System.Windows.Forms.Panel();
-            this.tbIMS = new System.Windows.Forms.TextBox();
+            this.tbIMS = new RichTextBoxLinks.RichTextBoxEx();
             this.tpChat = new System.Windows.Forms.TabPage();
             this.pChatBack = new System.Windows.Forms.Panel();
-            this.tbChat = new System.Windows.Forms.RichTextBox();
+            this.tbChat = new RichTextBoxLinks.RichTextBoxEx();
             this.tpLogs = new System.Windows.Forms.TabPage();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnClearLogs = new System.Windows.Forms.Button();
             this.tcLogs = new System.Windows.Forms.TabControl();
             this.tpGeneralLogs = new System.Windows.Forms.TabPage();
             this.pGeneralLogsBack = new System.Windows.Forms.Panel();
-            this.tbGeneralLogs = new System.Windows.Forms.TextBox();
+            this.tbGeneralLogs = new RichTextBoxLinks.RichTextBoxEx();
             this.tpActionsLogs = new System.Windows.Forms.TabPage();
             this.pActionsLogsBack = new System.Windows.Forms.Panel();
-            this.tbActionsLogs = new System.Windows.Forms.TextBox();
+            this.tbActionsLogs = new RichTextBoxLinks.RichTextBoxEx();
             this.tpDetailedLogs = new System.Windows.Forms.TabPage();
             this.pDetailedLogsBack = new System.Windows.Forms.Panel();
             this.tbDetailedLogs = new System.Windows.Forms.TextBox();
+            this.tpWebBrowser = new System.Windows.Forms.TabPage();
+            this.pWebBrowserBack = new System.Windows.Forms.Panel();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.tsMain = new System.Windows.Forms.ToolStrip();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
@@ -121,6 +125,8 @@ namespace TimeZero.Auction.Bot.Forms
             this.pActionsLogsBack.SuspendLayout();
             this.tpDetailedLogs.SuspendLayout();
             this.pDetailedLogsBack.SuspendLayout();
+            this.tpWebBrowser.SuspendLayout();
+            this.pWebBrowserBack.SuspendLayout();
             this.tsMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flashPlayer)).BeginInit();
             this.ssMain.SuspendLayout();
@@ -135,6 +141,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tcMain.Controls.Add(this.tpIMS);
             this.tcMain.Controls.Add(this.tpChat);
             this.tcMain.Controls.Add(this.tpLogs);
+            this.tcMain.Controls.Add(this.tpWebBrowser);
             this.tcMain.Location = new System.Drawing.Point(12, 30);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
@@ -436,7 +443,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tpIMS.Padding = new System.Windows.Forms.Padding(3);
             this.tpIMS.Size = new System.Drawing.Size(652, 462);
             this.tpIMS.TabIndex = 4;
-            this.tpIMS.Text = "IMS";
+            this.tpIMS.Text = "Instant messages";
             this.tpIMS.UseVisualStyleBackColor = true;
             // 
             // pIMSBack
@@ -456,13 +463,14 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbIMS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbIMS.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.tbIMS.Location = new System.Drawing.Point(0, 0);
-            this.tbIMS.Multiline = true;
             this.tbIMS.Name = "tbIMS";
             this.tbIMS.ReadOnly = true;
-            this.tbIMS.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbIMS.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
             this.tbIMS.Size = new System.Drawing.Size(644, 454);
             this.tbIMS.TabIndex = 0;
             this.tbIMS.TabStop = false;
+            this.tbIMS.Text = "";
+            this.tbIMS.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextBoxLinkClicked);
             // 
             // tpChat
             // 
@@ -472,7 +480,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tpChat.Padding = new System.Windows.Forms.Padding(3);
             this.tpChat.Size = new System.Drawing.Size(652, 462);
             this.tpChat.TabIndex = 3;
-            this.tpChat.Text = "Chat";
+            this.tpChat.Text = "Chat conversations";
             this.tpChat.UseVisualStyleBackColor = true;
             // 
             // pChatBack
@@ -499,6 +507,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbChat.TabIndex = 1;
             this.tbChat.TabStop = false;
             this.tbChat.Text = "";
+            this.tbChat.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextBoxLinkClicked);
             // 
             // tpLogs
             // 
@@ -509,7 +518,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tpLogs.Padding = new System.Windows.Forms.Padding(3);
             this.tpLogs.Size = new System.Drawing.Size(652, 462);
             this.tpLogs.TabIndex = 1;
-            this.tpLogs.Text = "Logs";
+            this.tpLogs.Text = "Game logs";
             this.tpLogs.UseVisualStyleBackColor = true;
             // 
             // panel3
@@ -563,7 +572,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pGeneralLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pGeneralLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pGeneralLogsBack.Name = "pGeneralLogsBack";
-            this.pGeneralLogsBack.Size = new System.Drawing.Size(632, 423);
+            this.pGeneralLogsBack.Size = new System.Drawing.Size(632, 424);
             this.pGeneralLogsBack.TabIndex = 2;
             // 
             // tbGeneralLogs
@@ -573,13 +582,14 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbGeneralLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbGeneralLogs.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.tbGeneralLogs.Location = new System.Drawing.Point(0, 0);
-            this.tbGeneralLogs.Multiline = true;
             this.tbGeneralLogs.Name = "tbGeneralLogs";
             this.tbGeneralLogs.ReadOnly = true;
-            this.tbGeneralLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbGeneralLogs.Size = new System.Drawing.Size(630, 421);
+            this.tbGeneralLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.tbGeneralLogs.Size = new System.Drawing.Size(630, 422);
             this.tbGeneralLogs.TabIndex = 0;
             this.tbGeneralLogs.TabStop = false;
+            this.tbGeneralLogs.Text = "";
+            this.tbGeneralLogs.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextBoxLinkClicked);
             // 
             // tpActionsLogs
             // 
@@ -599,7 +609,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pActionsLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pActionsLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pActionsLogsBack.Name = "pActionsLogsBack";
-            this.pActionsLogsBack.Size = new System.Drawing.Size(632, 423);
+            this.pActionsLogsBack.Size = new System.Drawing.Size(632, 424);
             this.pActionsLogsBack.TabIndex = 3;
             // 
             // tbActionsLogs
@@ -609,13 +619,14 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbActionsLogs.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbActionsLogs.Font = new System.Drawing.Font("Tahoma", 8.25F);
             this.tbActionsLogs.Location = new System.Drawing.Point(0, 0);
-            this.tbActionsLogs.Multiline = true;
             this.tbActionsLogs.Name = "tbActionsLogs";
             this.tbActionsLogs.ReadOnly = true;
-            this.tbActionsLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbActionsLogs.Size = new System.Drawing.Size(630, 421);
+            this.tbActionsLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.tbActionsLogs.Size = new System.Drawing.Size(630, 422);
             this.tbActionsLogs.TabIndex = 1;
             this.tbActionsLogs.TabStop = false;
+            this.tbActionsLogs.Text = "";
+            this.tbActionsLogs.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextBoxLinkClicked);
             // 
             // tpDetailedLogs
             // 
@@ -635,7 +646,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pDetailedLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pDetailedLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pDetailedLogsBack.Name = "pDetailedLogsBack";
-            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 423);
+            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 424);
             this.pDetailedLogsBack.TabIndex = 2;
             // 
             // tbDetailedLogs
@@ -649,9 +660,43 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbDetailedLogs.Name = "tbDetailedLogs";
             this.tbDetailedLogs.ReadOnly = true;
             this.tbDetailedLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 421);
+            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 422);
             this.tbDetailedLogs.TabIndex = 1;
             this.tbDetailedLogs.TabStop = false;
+            // 
+            // tpWebBrowser
+            // 
+            this.tpWebBrowser.Controls.Add(this.pWebBrowserBack);
+            this.tpWebBrowser.Location = new System.Drawing.Point(4, 23);
+            this.tpWebBrowser.Name = "tpWebBrowser";
+            this.tpWebBrowser.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWebBrowser.Size = new System.Drawing.Size(652, 462);
+            this.tpWebBrowser.TabIndex = 5;
+            this.tpWebBrowser.Text = "Browser";
+            this.tpWebBrowser.UseVisualStyleBackColor = true;
+            // 
+            // pWebBrowserBack
+            // 
+            this.pWebBrowserBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pWebBrowserBack.Controls.Add(this.webBrowser);
+            this.pWebBrowserBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pWebBrowserBack.Location = new System.Drawing.Point(3, 3);
+            this.pWebBrowserBack.Name = "pWebBrowserBack";
+            this.pWebBrowserBack.Size = new System.Drawing.Size(646, 456);
+            this.pWebBrowserBack.TabIndex = 0;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.AllowWebBrowserDrop = false;
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.webBrowser.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.ScriptErrorsSuppressed = true;
+            this.webBrowser.Size = new System.Drawing.Size(644, 454);
+            this.webBrowser.TabIndex = 1;
+            this.webBrowser.WebBrowserShortcutsEnabled = false;
             // 
             // tsMain
             // 
@@ -895,7 +940,6 @@ namespace TimeZero.Auction.Bot.Forms
             this.tsGameItems.PerformLayout();
             this.tpIMS.ResumeLayout(false);
             this.pIMSBack.ResumeLayout(false);
-            this.pIMSBack.PerformLayout();
             this.tpChat.ResumeLayout(false);
             this.pChatBack.ResumeLayout(false);
             this.tpLogs.ResumeLayout(false);
@@ -903,13 +947,13 @@ namespace TimeZero.Auction.Bot.Forms
             this.tcLogs.ResumeLayout(false);
             this.tpGeneralLogs.ResumeLayout(false);
             this.pGeneralLogsBack.ResumeLayout(false);
-            this.pGeneralLogsBack.PerformLayout();
             this.tpActionsLogs.ResumeLayout(false);
             this.pActionsLogsBack.ResumeLayout(false);
-            this.pActionsLogsBack.PerformLayout();
             this.tpDetailedLogs.ResumeLayout(false);
             this.pDetailedLogsBack.ResumeLayout(false);
             this.pDetailedLogsBack.PerformLayout();
+            this.tpWebBrowser.ResumeLayout(false);
+            this.pWebBrowserBack.ResumeLayout(false);
             this.tsMain.ResumeLayout(false);
             this.tsMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flashPlayer)).EndInit();
@@ -969,25 +1013,28 @@ namespace TimeZero.Auction.Bot.Forms
         private TabControl tcLogs;
         private TabPage tpGeneralLogs;
         private Panel pGeneralLogsBack;
-        private TextBox tbGeneralLogs;
+        private RichTextBoxEx tbGeneralLogs;
         private TabPage tpDetailedLogs;
         private Panel pDetailedLogsBack;
         private TextBox tbDetailedLogs;
         private TabPage tpActionsLogs;
         private Panel pActionsLogsBack;
-        private TextBox tbActionsLogs;
+        private RichTextBoxEx tbActionsLogs;
         private ToolStripButton btnOutActionsLogs;
         private Panel panel3;
         private Button btnClearLogs;
         private TabPage tpChat;
         private Panel pChatBack;
-        private RichTextBox tbChat;
+        private RichTextBoxEx tbChat;
         private TabPage tpIMS;
         private Panel pIMSBack;
-        private TextBox tbIMS;
+        private RichTextBoxEx tbIMS;
         private ToolStripButton btnOutInstantMessages;
         private ToolStripButton btnOutChatMessages;
         private ToolStripSeparator toolStripSeparator7;
+        private TabPage tpWebBrowser;
+        private Panel pWebBrowserBack;
+        private WebBrowser webBrowser;
     }
 }
 

@@ -136,7 +136,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                             int totalCost = (int) Math.Ceiling(iCount * fCost);
                             string groupName = _gameItemsGroups[groupId].Name;
                             string message = 
-                                string.Format("Trying to buy: {0}, owner: {1}, group: {2}, page: {3}, count: {4}, cost: {5}, total cost: {6}...",
+                                string.Format("Trying to buy: {0}, owner: [{1}], group: {2}, page: {3}, count: {4}, cost: {5}, total cost: {6}...",
                                 gameItem, owner, groupName, groupPage + 1, iCount, fCost, totalCost);
                             networkClient.OutLogMessage(message);
 

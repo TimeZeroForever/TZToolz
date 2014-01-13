@@ -44,14 +44,14 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
                         //Private IM
                         case "100":
                             {
-                                logMessage = string.Format("\t• {0}. Private from '{1}': {2}",
+                                logMessage = string.Format("\t• {0}. Private from [{1}]: {2}",
                                     messageParts[0], messageParts[2], messageParts[3]);
                                 break;
                             }
                         //Shop message
                         case "217":
                             {
-                                logMessage = string.Format("\t• {0}. Was received Coins[{1}] from '{2}'. Target: {3}",
+                                logMessage = string.Format("\t• {0}. Was received Coins[{1}] from [{2}]. Target: {3}",
                                     messageParts[0], messageParts[3], messageParts[4], messageParts[6]);
                                 break;
                             }

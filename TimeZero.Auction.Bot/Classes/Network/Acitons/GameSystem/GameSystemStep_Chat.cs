@@ -94,8 +94,8 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
                     networkClient.OutChatMessage(fullMessage);
 
                     //Post this message to the chat bot
-                    GameSystemStep_ChatBot.AppendIncomingMessage(sender, isPrivateMessage, isPersonalMessage,
-                                                                  isMultiUserMessage, message);
+                    GameSystemStep_ChatBot.AppendIncomingMessage(sender, isPrivateMessage, 
+                        isPersonalMessage, isMultiUserMessage, message);
                 }
             }
 

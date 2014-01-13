@@ -17,6 +17,8 @@ using TimeZero.Auction.Bot.ClassesInstances;
 using TimeZero.Auction.Bot.Helpers;
 using TimeZero.Auction.Bot.Properties;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases;
+using RichTextBoxLinks;
+using System.Text.RegularExpressions;
 
 namespace TimeZero.Auction.Bot.Forms
 {
@@ -26,6 +28,12 @@ namespace TimeZero.Auction.Bot.Forms
 #region Delegates
 
         delegate void OutLogData(string data);
+
+#endregion
+
+#region Static private fields
+
+        private static readonly Regex _regexNickName = new Regex(@"(?s)(?<=\s+\[)(?<NICKNAME>.+?)(?=\])");
 
 #endregion
 
@@ -267,11 +275,33 @@ Application terminated.",
             }
         }
 
+        private void AppendFormattedText(RichTextBoxEx textBox, string text)
+        {
+            Helper.LockUpdate(textBox);
+
+            int start = textBox.Text.Length;
+            textBox.AppendText(text);
+
+            MatchCollection matches = _regexNickName.Matches(text);
+            foreach (Match match in matches)
+            {
+                Group groupNickName = match.Groups["NICKNAME"];
+                textBox.SelectionStart = start + groupNickName.Index;
+                textBox.SelectionLength = groupNickName.Length;
+                textBox.SetSelectionLink(true);
+            }
+
+            textBox.SelectionStart = textBox.Text.Length;
+            textBox.SelectionLength = 0;
+
+            Helper.UnlockUpdate(textBox);
+        }
+
         private void OutGeneralLogMessage(string message)
         {
             lock (_syncObject)
             {
-                tbGeneralLogs.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+                AppendFormattedText(tbGeneralLogs, string.Format("{0}{1}", message, Environment.NewLine));
             }
         }
 
@@ -288,7 +318,7 @@ Application terminated.",
         {
             lock (_syncObject)
             {
-                tbActionsLogs.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+                AppendFormattedText(tbActionsLogs, string.Format("{0}{1}", message, Environment.NewLine));
             }
         }
 
@@ -296,7 +326,7 @@ Application terminated.",
         {
             lock (_syncObject)
             {
-                tbIMS.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+                AppendFormattedText(tbIMS, string.Format("{0}{1}", message, Environment.NewLine));
             }
         }
 
@@ -304,7 +334,7 @@ Application terminated.",
         {
             lock (_syncObject)
             {
-                tbChat.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+                AppendFormattedText(tbChat, string.Format("{0}{1}", message, Environment.NewLine));
             }
         }
 
@@ -1278,7 +1308,7 @@ Application terminated.",
 
 #endregion
 
-#region Settings
+#region Settings methods
 
         private bool ChangeSettings(bool firstRun)
         {
@@ -1324,6 +1354,18 @@ Reconnect right now?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Q
         private void BtnSettingsClick(object sender, EventArgs e)
         {
             ChangeSettings(false);
+        }
+
+#endregion
+
+#region Web browser and hyperlinks methods
+
+        private void TextBoxLinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            string playerInfoUrl = string.Format("http://www.timezero.ru/info.pl?{0}",
+                                                 e.LinkText);
+            webBrowser.Navigate(playerInfoUrl);
+            tcMain.SelectedTab = tpWebBrowser;
         }
 
 #endregion

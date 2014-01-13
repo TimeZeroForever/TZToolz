@@ -160,6 +160,9 @@
     <Compile Include="Controls\Header\Header.designer.cs">
       <DependentUpon>Header.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RichTextBoxEx\RichTextBoxEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\SettingsListView\SettingsListView.cs">
       <SubType>Component</SubType>
     </Compile>
