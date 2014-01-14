@@ -1,8 +1,8 @@
 ﻿using TimeZero.Auction.Bot.Controls;
 using TimeZero.Auction.Bot.Controls.Header;
+using TimeZero.Auction.Bot.Controls.RichTextBoxEx;
 using TimeZero.Auction.Bot.Controls.TreeViewSearchBox;
 using System.Windows.Forms;
-using RichTextBoxLinks;
 
 namespace TimeZero.Auction.Bot.Forms
 {
@@ -62,20 +62,20 @@ namespace TimeZero.Auction.Bot.Forms
             this.lblItemIsNotSelected = new System.Windows.Forms.Label();
             this.tpIMS = new System.Windows.Forms.TabPage();
             this.pIMSBack = new System.Windows.Forms.Panel();
-            this.tbIMS = new RichTextBoxLinks.RichTextBoxEx();
+            this.tbIMS = new TimeZero.Auction.Bot.Controls.RichTextBoxEx.RichTextBoxEx();
             this.tpChat = new System.Windows.Forms.TabPage();
             this.pChatBack = new System.Windows.Forms.Panel();
-            this.tbChat = new RichTextBoxLinks.RichTextBoxEx();
+            this.tbChat = new TimeZero.Auction.Bot.Controls.RichTextBoxEx.RichTextBoxEx();
             this.tpLogs = new System.Windows.Forms.TabPage();
-            this.panel3 = new System.Windows.Forms.Panel();
+            this.pClearLogsBtnBack = new System.Windows.Forms.Panel();
             this.btnClearLogs = new System.Windows.Forms.Button();
             this.tcLogs = new System.Windows.Forms.TabControl();
             this.tpGeneralLogs = new System.Windows.Forms.TabPage();
             this.pGeneralLogsBack = new System.Windows.Forms.Panel();
-            this.tbGeneralLogs = new RichTextBoxLinks.RichTextBoxEx();
+            this.tbGeneralLogs = new TimeZero.Auction.Bot.Controls.RichTextBoxEx.RichTextBoxEx();
             this.tpActionsLogs = new System.Windows.Forms.TabPage();
             this.pActionsLogsBack = new System.Windows.Forms.Panel();
-            this.tbActionsLogs = new RichTextBoxLinks.RichTextBoxEx();
+            this.tbActionsLogs = new TimeZero.Auction.Bot.Controls.RichTextBoxEx.RichTextBoxEx();
             this.tpDetailedLogs = new System.Windows.Forms.TabPage();
             this.pDetailedLogsBack = new System.Windows.Forms.Panel();
             this.tbDetailedLogs = new System.Windows.Forms.TextBox();
@@ -117,7 +117,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tpChat.SuspendLayout();
             this.pChatBack.SuspendLayout();
             this.tpLogs.SuspendLayout();
-            this.panel3.SuspendLayout();
+            this.pClearLogsBtnBack.SuspendLayout();
             this.tcLogs.SuspendLayout();
             this.tpGeneralLogs.SuspendLayout();
             this.pGeneralLogsBack.SuspendLayout();
@@ -511,7 +511,7 @@ namespace TimeZero.Auction.Bot.Forms
             // 
             // tpLogs
             // 
-            this.tpLogs.Controls.Add(this.panel3);
+            this.tpLogs.Controls.Add(this.pClearLogsBtnBack);
             this.tpLogs.Controls.Add(this.tcLogs);
             this.tpLogs.Location = new System.Drawing.Point(4, 23);
             this.tpLogs.Name = "tpLogs";
@@ -521,14 +521,15 @@ namespace TimeZero.Auction.Bot.Forms
             this.tpLogs.Text = "Game logs";
             this.tpLogs.UseVisualStyleBackColor = true;
             // 
-            // panel3
+            // pClearLogsBtnBack
             // 
-            this.panel3.BackColor = System.Drawing.Color.Transparent;
-            this.panel3.Controls.Add(this.btnClearLogs);
-            this.panel3.Location = new System.Drawing.Point(624, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(24, 23);
-            this.panel3.TabIndex = 10;
+            this.pClearLogsBtnBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pClearLogsBtnBack.BackColor = System.Drawing.Color.Transparent;
+            this.pClearLogsBtnBack.Controls.Add(this.btnClearLogs);
+            this.pClearLogsBtnBack.Location = new System.Drawing.Point(624, 0);
+            this.pClearLogsBtnBack.Name = "pClearLogsBtnBack";
+            this.pClearLogsBtnBack.Size = new System.Drawing.Size(24, 23);
+            this.pClearLogsBtnBack.TabIndex = 10;
             // 
             // btnClearLogs
             // 
@@ -572,7 +573,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pGeneralLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pGeneralLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pGeneralLogsBack.Name = "pGeneralLogsBack";
-            this.pGeneralLogsBack.Size = new System.Drawing.Size(632, 424);
+            this.pGeneralLogsBack.Size = new System.Drawing.Size(632, 423);
             this.pGeneralLogsBack.TabIndex = 2;
             // 
             // tbGeneralLogs
@@ -585,7 +586,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbGeneralLogs.Name = "tbGeneralLogs";
             this.tbGeneralLogs.ReadOnly = true;
             this.tbGeneralLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.tbGeneralLogs.Size = new System.Drawing.Size(630, 422);
+            this.tbGeneralLogs.Size = new System.Drawing.Size(630, 421);
             this.tbGeneralLogs.TabIndex = 0;
             this.tbGeneralLogs.TabStop = false;
             this.tbGeneralLogs.Text = "";
@@ -609,7 +610,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pActionsLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pActionsLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pActionsLogsBack.Name = "pActionsLogsBack";
-            this.pActionsLogsBack.Size = new System.Drawing.Size(632, 424);
+            this.pActionsLogsBack.Size = new System.Drawing.Size(632, 423);
             this.pActionsLogsBack.TabIndex = 3;
             // 
             // tbActionsLogs
@@ -622,7 +623,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbActionsLogs.Name = "tbActionsLogs";
             this.tbActionsLogs.ReadOnly = true;
             this.tbActionsLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.tbActionsLogs.Size = new System.Drawing.Size(630, 422);
+            this.tbActionsLogs.Size = new System.Drawing.Size(630, 421);
             this.tbActionsLogs.TabIndex = 1;
             this.tbActionsLogs.TabStop = false;
             this.tbActionsLogs.Text = "";
@@ -646,7 +647,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.pDetailedLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pDetailedLogsBack.Location = new System.Drawing.Point(3, 3);
             this.pDetailedLogsBack.Name = "pDetailedLogsBack";
-            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 424);
+            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 423);
             this.pDetailedLogsBack.TabIndex = 2;
             // 
             // tbDetailedLogs
@@ -660,7 +661,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tbDetailedLogs.Name = "tbDetailedLogs";
             this.tbDetailedLogs.ReadOnly = true;
             this.tbDetailedLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 422);
+            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 421);
             this.tbDetailedLogs.TabIndex = 1;
             this.tbDetailedLogs.TabStop = false;
             // 
@@ -943,7 +944,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tpChat.ResumeLayout(false);
             this.pChatBack.ResumeLayout(false);
             this.tpLogs.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
+            this.pClearLogsBtnBack.ResumeLayout(false);
             this.tcLogs.ResumeLayout(false);
             this.tpGeneralLogs.ResumeLayout(false);
             this.pGeneralLogsBack.ResumeLayout(false);
@@ -1021,7 +1022,7 @@ namespace TimeZero.Auction.Bot.Forms
         private Panel pActionsLogsBack;
         private RichTextBoxEx tbActionsLogs;
         private ToolStripButton btnOutActionsLogs;
-        private Panel panel3;
+        private Panel pClearLogsBtnBack;
         private Button btnClearLogs;
         private TabPage tpChat;
         private Panel pChatBack;

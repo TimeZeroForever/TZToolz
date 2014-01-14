@@ -96,8 +96,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
             if (item != null && item.Attributes != null)
             {
                 XmlAttribute cost = item.Attributes["cost"];
-                XmlAttribute made = item.Attributes["made"];
-                if (cost != null && (made == null || made.InnerText != "Public Factory"))
+                if (cost != null)
                 {
                     float qualityMdf = 1f;
                     float fCost = float.Parse(cost.InnerText);
@@ -136,7 +135,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                             int totalCost = (int) Math.Ceiling(iCount * fCost);
                             string groupName = _gameItemsGroups[groupId].Name;
                             string message = 
-                                string.Format("Trying to buy: {0}, owner: [{1}], group: {2}, page: {3}, count: {4}, cost: {5}, total cost: {6}...",
+                                string.Format("Trying to buy: '{0}', owner: [{1}], group: {2}, page: {3}, count: {4}, cost: {5}, total cost: {6}...",
                                 gameItem, owner, groupName, groupPage + 1, iCount, fCost, totalCost);
                             networkClient.OutLogMessage(message);
 
@@ -219,7 +218,8 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
                 XmlAttribute txt = item.Attributes["txt"];
                 XmlAttribute lvl = item.Attributes["lvl"];
-                if (txt != null)
+                XmlAttribute made = item.Attributes["made"];
+                if (txt != null && (made == null || made.InnerText != "Public Factory"))
                 {
                     //Get item data
                     string sTxt;
@@ -245,22 +245,30 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     //Get item or create new one
                     GameItem gameItem = _gameItemsGroups.GetItem(groupId, subGroupId, subGroupType,
                                                                  sTxt, sLvl);
-                    if (gameItem == null && item.Attributes != null)
+                    if (gameItem == null)
                     {
-                        XmlAttribute massa = item.Attributes["massa"];
-                        float fMassa = massa == null ? 0 : float.Parse(massa.InnerText);
-                        gameItem = _gameItemsGroups.AddItem(groupId, subGroupId, subGroupType,
-                            subGroupName, subGroupLevel, sTxt, sLvl, fMassa);
+                        if (item.Attributes != null)
+                        {
+                            XmlAttribute massa = item.Attributes["massa"];
+                            float fMassa = massa == null ? 0 : float.Parse(massa.InnerText);
+                            gameItem = _gameItemsGroups.AddItem(groupId, subGroupId, subGroupType,
+                                                                subGroupName, subGroupLevel, sTxt, sLvl, fMassa);
+                        }
+                    }
+                    else
+                    {
+                        //Update the item last review time
+                        gameItem.LastReviewDate = DateTime.Now;
                     }
 
                     //Process game item
                     if (gameItem != null && !gameItem.IgnoreForShopping && item.Attributes != null)
                     {
-                        //Get maxcost
-                        XmlAttribute maxCost = item.Attributes["max_p"];
-                        if (maxCost != null && !string.IsNullOrEmpty(maxCost.InnerText))
+                        //Get factory cost
+                        XmlAttribute factoryCost = item.Attributes["max_p"];
+                        if (factoryCost != null && !string.IsNullOrEmpty(factoryCost.InnerText))
                         {
-                            gameItem.FactoryCost = float.Parse(maxCost.InnerText);
+                            gameItem.FactoryCost = float.Parse(factoryCost.InnerText);
                         }
 
                         //Instant buy the item
@@ -349,7 +357,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                         {
                             //Check IgnoreForShopping flag
                             GameItemsSubGroup subGroup = _gameItemsGroups[groupId].GetSubGroup(subGroupId, subGroupType);
-                            if (subGroup != null && subGroup.IgnoreForShopping)
+                            if (subGroup != null && (subGroup.IgnoreForShopping || subGroup.ItemsCount == 0))
                             {
                                 continue;
                             }
@@ -413,7 +421,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                         {
                             //Check IgnoreForShopping flag
                             GameItemsSubGroup subGroup = _gameItemsGroups[groupId].GetSubGroup(subGroupId, subGroupType);
-                            if (subGroup != null && subGroup.IgnoreForShopping)
+                            if (subGroup != null && (subGroup.IgnoreForShopping || subGroup.ItemsCount == 0))
                             {
                                 continue;
                             }

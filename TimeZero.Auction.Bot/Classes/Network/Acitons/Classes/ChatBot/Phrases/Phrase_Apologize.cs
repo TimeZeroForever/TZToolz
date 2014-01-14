@@ -2,30 +2,22 @@
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
 {
-    public sealed class Phrase_SellRequest : Phrase_Base
+    public sealed class Phrase_Apologize : Phrase_Base
     {
         private static readonly List<string> _inputMessageTemplates = new List<string>
             {
-                 "куплю"
-                ,"есть"
-                ,"продаеш"
-                ,"продаш"
-                ,"продаёш"
-                ,"купить"
-                ,"вернуть"
-                ,"верни"
-                ,"вирни"
-                ,"вернё"
-                ,"вирнё"
-                ,"верне"
-                ,"вирне"
-                ,"пажалу"
-                ,"пожалу"
+                 "дешевле"
+                ,"скинуть цену"
+                ,"сбросить цену"
+                ,"снизить цену"
+                ,"скидк"
             };
 
         private static readonly List<string> _phrases_i0 = new List<string>
             {
-                "Нет"
+                  "Простите, не могу"
+                 ,"Прошу прощения, но нет"
+                 ,"Не могу, простите"
             };
 
         private static readonly List<string>[] _phrases = new[]
@@ -38,14 +30,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
             get { return _phrases; }
         }
 
-        public override int ProcessedPhraseValue { get { return 0; } }
-
         public override bool HasAnswerOnInputMessage(string message)
         {
             message = message.ToLower();
             foreach (string t in _inputMessageTemplates)
             {
-                if (message.Contains(t) && message.Contains("?"))
+                if (message.Contains(t))
                 {
                     return true;
                 }

@@ -2,7 +2,7 @@
 
 namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
 {
-    class Phrase_Thanks : Phrase_Base
+    public sealed class Phrase_Thanks : Phrase_Base
     {
         private static readonly List<string> _inputMessageTemplates = new List<string>
             {

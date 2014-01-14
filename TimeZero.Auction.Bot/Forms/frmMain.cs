@@ -14,10 +14,9 @@ using TimeZero.Auction.Bot.Classes.Network.Acitons;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Game;
 using TimeZero.Auction.Bot.Classes.TZProcess;
 using TimeZero.Auction.Bot.ClassesInstances;
+using TimeZero.Auction.Bot.Controls.RichTextBoxEx;
 using TimeZero.Auction.Bot.Helpers;
 using TimeZero.Auction.Bot.Properties;
-using TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases;
-using RichTextBoxLinks;
 using System.Text.RegularExpressions;
 
 namespace TimeZero.Auction.Bot.Forms
@@ -28,13 +27,27 @@ namespace TimeZero.Auction.Bot.Forms
 #region Delegates
 
         delegate void OutLogData(string data);
+        delegate void OnSaveItemsList(bool silent);
+
+#endregion
+
+#region Constants
+
+        private const char LINK_MARKER_NICKNAME = '[';
+        private const char LINK_MARKER_GAMEITEM = '\'';
 
 #endregion
 
 #region Static private fields
 
-        private static readonly Regex _regexNickName = new Regex(@"(?s)(?<=\s+\[)(?<NICKNAME>.+?)(?=\])");
+        private static readonly Regex _regexNickName = new Regex(@"(?s)(?<=\s+)(?<VALUE>\[.+?\])");
+        private static readonly Regex _regexGameItem = new Regex(@"(?s)(?<=\s+)(?<VALUE>\'.+?\')");
 
+        private static readonly List<Regex> _regexesHyperlinks = new List<Regex>
+                                                                     {
+                                                                         _regexNickName,
+                                                                         _regexGameItem
+                                                                     };
 #endregion
 
 #region Private fields
@@ -282,13 +295,17 @@ Application terminated.",
             int start = textBox.Text.Length;
             textBox.AppendText(text);
 
-            MatchCollection matches = _regexNickName.Matches(text);
-            foreach (Match match in matches)
+            //Parse hyperlinks
+            foreach (Regex regex in _regexesHyperlinks)
             {
-                Group groupNickName = match.Groups["NICKNAME"];
-                textBox.SelectionStart = start + groupNickName.Index;
-                textBox.SelectionLength = groupNickName.Length;
-                textBox.SetSelectionLink(true);
+                MatchCollection matches = regex.Matches(text);
+                foreach (Match match in matches)
+                {
+                    Group groupValue = match.Groups["VALUE"];
+                    textBox.SelectionStart = start + groupValue.Index;
+                    textBox.SelectionLength = groupValue.Length;
+                    textBox.SetSelectionLink(true);
+                }
             }
 
             textBox.SelectionStart = textBox.Text.Length;
@@ -578,7 +595,7 @@ Application terminated.",
 
         private void OnActionStepStarted(IActionStep actionStep) 
         {
-            BeginInvoke(new OnActionStepStarted(SyncActionStepStarted), new[] { actionStep });
+            BeginInvoke(new OnActionStepStarted(SyncActionStepStarted), new object[] { actionStep });
         }
 
         private void SyncActionStepCompleted(IActionStep actionStep)
@@ -591,9 +608,9 @@ Application terminated.",
         {
             if (actionStep is GameStep_Shopping && done)
             {
-                BeginInvoke(new Action(SaveGameItemsList));
+                BeginInvoke(new OnSaveItemsList(SaveGameItemsList), new object[] { true });
             }
-            BeginInvoke(new OnActionStepStarted(SyncActionStepCompleted), new[] { actionStep });
+            BeginInvoke(new OnActionStepStarted(SyncActionStepCompleted), new object[] { actionStep });
         }
 
         private void Connected()
@@ -665,7 +682,7 @@ Application terminated.",
 
         private void BtnSaveItemsListClick(object sender, EventArgs e)
         {
-            SaveGameItemsList();
+            SaveGameItemsList(false);
         }
 
         private void TvItemsAfterSelect(object sender, TreeViewEventArgs e)
@@ -678,16 +695,22 @@ Application terminated.",
             RefreshGameItemsTreeView();
         }
 
-        private void SaveGameItemsList()
+        private void SaveGameItemsList(bool silent)
         {
-            Cursor = Cursors.WaitCursor;
+            if (!silent)
+            {
+                Cursor = Cursors.WaitCursor;
+            }
 
             //Save game items list
             Serializer<GameItemsGroupList> serializer = new Serializer<GameItemsGroupList>();
             byte[] gameItemsGroups = serializer.Serialize(_gameItemsGroups);
             File.WriteAllBytes("gameItemsGroups.dat", gameItemsGroups);
 
-            Cursor = Cursors.Default;
+            if (!silent)
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void RefreshGameItemsTreeView()
@@ -812,6 +835,10 @@ Application terminated.",
                                     if (form.UseSubGroupsIgnoreForShopping)
                                     {
                                         subGroup.IgnoreForShopping = form.SubGroupsIgnoreForShopping;
+                                    }
+                                    if (form.UseSubGroupsIgnoreForSelling)
+                                    {
+                                        subGroup.IgnoreForSelling = form.SubGroupsIgnoreForSelling;
                                     }
                                     if (form.UseSubGroupsUseExtendedShoppingRule)
                                     {
@@ -1178,7 +1205,7 @@ Application terminated.",
                 {
                     case Keys.S:
                         {
-                            SaveGameItemsList();
+                            SaveGameItemsList(false);
                             break;
                         }
                     case Keys.R:
@@ -1360,12 +1387,68 @@ Reconnect right now?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Q
 
 #region Web browser and hyperlinks methods
 
+        private TreeNode SearchNode(string searchText, TreeNode startNode)
+        {
+            TreeNode node = null;
+            while (startNode != null)
+            {
+                if (startNode.Text == searchText && startNode.Tag is GameItem)
+                {
+                    node = startNode;
+                    break;
+                }
+                if (startNode.Nodes.Count != 0)
+                {
+                    node = SearchNode(searchText, startNode.Nodes[0]);
+                    if (node != null)
+                    {
+                        break;
+                    }
+                }
+                startNode = startNode.NextNode;
+            }
+            return node;
+        }
+
+        private TreeNode SearchGameItemNode(string searchText)
+        {
+            foreach (TreeNode node in tvGameItems.Nodes)
+            {
+                TreeNode foundNode = SearchNode(searchText, node);
+                if (foundNode != null)
+                {
+                    return foundNode;
+                }
+            }
+            return null;
+        }
+
         private void TextBoxLinkClicked(object sender, LinkClickedEventArgs e)
         {
-            string playerInfoUrl = string.Format("http://www.timezero.ru/info.pl?{0}",
-                                                 e.LinkText);
-            webBrowser.Navigate(playerInfoUrl);
-            tcMain.SelectedTab = tpWebBrowser;
+            char mark = e.LinkText[0];
+            string value = e.LinkText.Substring(1, e.LinkText.Length - 2);
+            switch (mark)
+            {
+                case LINK_MARKER_NICKNAME:
+                    {
+                        webBrowser.Navigate(string.Format("http://www.timezero.ru/info.pl?{0}", value));
+                        tcMain.SelectedTab = tpWebBrowser;
+                        break;
+                    }
+                case LINK_MARKER_GAMEITEM:
+                    {
+                        TreeNode node = SearchGameItemNode(value);
+                        if (node != null)
+                        {
+                            tvGameItems.SelectedNode = node;
+                            tvGameItems.SelectedNode.EnsureVisible();
+                            tcMain.SelectedTab = tpItems;
+                            pgItems.Select();
+                            pgItems.Focus();
+                        }
+                        break;
+                    }
+            }
         }
 
 #endregion

@@ -23,9 +23,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
                  "Простите, не интересует"
                 ,"Не интересует"
                 ,"Не нужно"
-                ,"Сейчас нет"
                 ,"Не торгую"
-                ,"Нет"
             };
 
         private static readonly List<string> _phrases_i1 = new List<string>();

@@ -55,6 +55,9 @@ namespace TimeZero.Auction.Bot.Classes.Game.GameItems
         [Category("Shopping"), DisplayName(@"Ignore for shopping")]
         public bool IgnoreForShopping { get; set; }
 
+        [Category("Selling"), DisplayName(@"Ignore for selling")]
+        public bool IgnoreForSelling { get; set; }
+
         [Browsable(false)]
         public string Ident
         {
@@ -71,7 +74,7 @@ namespace TimeZero.Auction.Bot.Classes.Game.GameItems
         public bool HasReviewed { get; set; }
 
         [Browsable(false)]
-        public DateTime LastUpdateTime { get; set; }
+        public DateTime LastReviewDate { get; set; }
 
 #endregion
 
@@ -139,7 +142,7 @@ namespace TimeZero.Auction.Bot.Classes.Game.GameItems
 
         public GameItem() 
         {
-            LastUpdateTime = DateTime.Now;
+            LastReviewDate = DateTime.Now;
         }
 
         public GameItem(string text, string modification, string level, float massa,

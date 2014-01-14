@@ -107,7 +107,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
         private bool GetOwnItem(NetworkClient networkClient, GameClient client,
                                 ShopItem shopItem)
         {
-            string message = string.Format("Trying to get: {0}...", shopItem.Parent);
+            string message = string.Format("Trying to get: '{0}'...", shopItem.Parent);
             networkClient.OutLogMessage(message);
 
             //Try to get the item
@@ -173,7 +173,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                                     itemID, cost, itemCount);
             networkClient.SendData(sellItem);
 
-            string message = string.Format("Trying to sell: {0}, cost: {1}, count: {2}...",
+            string message = string.Format("Trying to sell: '{0}', cost: {1}, count: {2}...",
                                            itemName, cost, itemCount);
             networkClient.OutLogMessage(message);
 
@@ -532,7 +532,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     GameItem gameItem = _gameItemsGroups.GetItem(groupId, subGroupId,
                         subGroupType, inventoryItem.PureName, inventoryItem.Level);
 
-                    if (gameItem != null)
+                    if (gameItem != null && !gameItem.IgnoreForSelling)
                     {
                         if (string.IsNullOrEmpty(gameItem.SubGroupID))
                         {
@@ -543,15 +543,18 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                         GameItemsSubGroup sg = _gameItemsGroups[groupId].GetSubGroup(
                             subGroupId, subGroupType);
 
-                        //Cache items list from auction
-                        CacheAuctionItems(networkClient, groupId, subGroupId, sg.Type, sg.Level);
+                        if (!sg.IgnoreForSelling)
+                        {
+                            //Cache items list from auction
+                            CacheAuctionItems(networkClient, groupId, subGroupId, sg.Type, sg.Level);
 
-                        //Create shop item
-                        ShopItem myItem = ShopItem.FromInventoryItem(gameItem, 
-                            inventoryItem, client.Login);
+                            //Create shop item
+                            ShopItem myItem = ShopItem.FromInventoryItem(gameItem, inventoryItem,
+                                                                         client.Login);
 
-                        //Do dumping
-                        DoDumping(networkClient, client, myItem, false);
+                            //Do dumping
+                            DoDumping(networkClient, client, myItem, false);
+                        }
                     }
                 }
             }

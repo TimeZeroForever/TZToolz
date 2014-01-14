@@ -1,10 +1,9 @@
 using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace RichTextBoxLinks
+namespace TimeZero.Auction.Bot.Controls.RichTextBoxEx
 {
 	public class RichTextBoxEx : RichTextBox
 	{

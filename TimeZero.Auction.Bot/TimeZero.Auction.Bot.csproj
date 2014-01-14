@@ -131,6 +131,7 @@
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\ChatMessage.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\ChatMessageDirection.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\ChatMessageType.cs" />
+    <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Apologize.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_Base.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\PhrasesFactory.cs" />
     <Compile Include="Classes\Network\Acitons\Classes\ChatBot\Phrases\Phrase_BotCheck.cs" />
