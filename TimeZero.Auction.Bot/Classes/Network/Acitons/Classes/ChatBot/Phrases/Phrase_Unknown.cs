@@ -11,6 +11,8 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
                 ,"Сейчас занят"
                 ,"Работаю, извини"
                 ,"Давай потом"
+                ,"Напиши попозже"
+                ,"Позже"
             };
 
         private static readonly List<string>[] _phrases = new[]
@@ -25,7 +27,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
 
         protected override bool IsSenderInIgnore(int iteration)
         {
-            return iteration == 1;
+            return iteration == 0;
         }
 
         public override bool HasAnswerOnInputMessage(string message)

@@ -20,6 +20,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Classes.ChatBot.Phrases
             ,new Phrase_OK()
             ,new Phrase_Invective()
             ,new Phrase_Apologize()
+            ,new Phrase_Credit()
         };
 
         private static readonly Phrase_Base PhraseUnknown = new Phrase_Unknown();

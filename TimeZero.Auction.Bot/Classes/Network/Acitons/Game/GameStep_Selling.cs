@@ -244,7 +244,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
         {
             //Get basic item cost
             float cost = myItem.FactoryCost > 0f
-                ? (int)myItem.FactoryCost * 1.5f
+                ? myItem.FactoryCost * 1.5f
                 : 0f;
 
             //Last shop item with a lower quality
