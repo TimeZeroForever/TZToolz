@@ -840,10 +840,6 @@ Application terminated.",
                                     {
                                         subGroup.IgnoreForSelling = form.SubGroupsIgnoreForSelling;
                                     }
-                                    if (form.UseSubGroupsUseExtendedShoppingRule)
-                                    {
-                                        subGroup.UseExtendedShoppingRule = form.SubGroupsUseExtendedShoppingRule;
-                                    }
                                     if (form.UseSubGroupsShopPagesLimit)
                                     {
                                         subGroup.ShopPagesLimit = form.SubGroupsShopPagesLimit;

@@ -27,15 +27,6 @@ namespace TimeZero.Auction.Bot.Forms
             get { return cbSubGroupsIgnoreForSelling.Checked; }
         }
 
-        public bool UseSubGroupsUseExtendedShoppingRule
-        {
-            get { return cbUseSubGroupsUseExtendedShoppingRule.Checked; }
-        }
-        public bool SubGroupsUseExtendedShoppingRule
-        {
-            get { return cbSubGroupsUseExtendedShoppingRule.Checked; } 
-        }
-
         public bool UseSubGroupsShopPagesLimit
         {
             get { return cbUseSubGroupsShopPagesLimit.Checked; }
@@ -81,7 +72,6 @@ namespace TimeZero.Auction.Bot.Forms
         {
             cbSubGroupsIgnoreForShopping.Enabled = UseSubGroupsIgnoreForShopping;
             cbSubGroupsIgnoreForSelling.Enabled = UseSubGroupsIgnoreForSelling;
-            cbSubGroupsUseExtendedShoppingRule.Enabled = UseSubGroupsUseExtendedShoppingRule;
             tbSubGroupsShopPagesLimit.Enabled = UseSubGroupsShopPagesLimit;
 
             pGameItems.Enabled = ApplyForGameItems;
@@ -91,7 +81,6 @@ namespace TimeZero.Auction.Bot.Forms
 
             btnApply.Enabled = UseSubGroupsIgnoreForShopping ||
                                UseSubGroupsIgnoreForSelling ||
-                               UseSubGroupsUseExtendedShoppingRule ||
                                UseSubGroupsShopPagesLimit ||
                                ApplyForGameItems;
         }

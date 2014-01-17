@@ -31,10 +31,8 @@
             this.pSubGroups = new System.Windows.Forms.Panel();
             this.cbUseSubGroupsIgnoreForSelling = new System.Windows.Forms.CheckBox();
             this.cbSubGroupsIgnoreForSelling = new System.Windows.Forms.CheckBox();
-            this.cbUseSubGroupsUseExtendedShoppingRule = new System.Windows.Forms.CheckBox();
             this.cbUseSubGroupsShopPagesLimit = new System.Windows.Forms.CheckBox();
             this.cbUseSubGroupsIgnoreForShopping = new System.Windows.Forms.CheckBox();
-            this.cbSubGroupsUseExtendedShoppingRule = new System.Windows.Forms.CheckBox();
             this.cbSubGroupsIgnoreForShopping = new System.Windows.Forms.CheckBox();
             this.tbSubGroupsShopPagesLimit = new System.Windows.Forms.NumericUpDown();
             this.pGameItems = new System.Windows.Forms.Panel();
@@ -56,20 +54,19 @@
             // 
             // pSubGroups
             // 
-            this.pSubGroups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pSubGroups.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pSubGroups.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pSubGroups.Controls.Add(this.cbUseSubGroupsIgnoreForSelling);
             this.pSubGroups.Controls.Add(this.cbSubGroupsIgnoreForSelling);
-            this.pSubGroups.Controls.Add(this.cbUseSubGroupsUseExtendedShoppingRule);
             this.pSubGroups.Controls.Add(this.cbUseSubGroupsShopPagesLimit);
             this.pSubGroups.Controls.Add(this.cbUseSubGroupsIgnoreForShopping);
-            this.pSubGroups.Controls.Add(this.cbSubGroupsUseExtendedShoppingRule);
             this.pSubGroups.Controls.Add(this.cbSubGroupsIgnoreForShopping);
             this.pSubGroups.Controls.Add(this.tbSubGroupsShopPagesLimit);
             this.pSubGroups.Location = new System.Drawing.Point(12, 12);
             this.pSubGroups.Name = "pSubGroups";
-            this.pSubGroups.Size = new System.Drawing.Size(241, 125);
+            this.pSubGroups.Size = new System.Drawing.Size(241, 99);
             this.pSubGroups.TabIndex = 1;
             // 
             // cbUseSubGroupsIgnoreForSelling
@@ -93,20 +90,10 @@
             this.cbSubGroupsIgnoreForSelling.UseVisualStyleBackColor = true;
             this.cbSubGroupsIgnoreForSelling.CheckedChanged += new System.EventHandler(this.CbSubGroupsCheckedChanged);
             // 
-            // cbUseSubGroupsUseExtendedShoppingRule
-            // 
-            this.cbUseSubGroupsUseExtendedShoppingRule.AutoSize = true;
-            this.cbUseSubGroupsUseExtendedShoppingRule.Location = new System.Drawing.Point(15, 67);
-            this.cbUseSubGroupsUseExtendedShoppingRule.Name = "cbUseSubGroupsUseExtendedShoppingRule";
-            this.cbUseSubGroupsUseExtendedShoppingRule.Size = new System.Drawing.Size(15, 14);
-            this.cbUseSubGroupsUseExtendedShoppingRule.TabIndex = 2;
-            this.cbUseSubGroupsUseExtendedShoppingRule.UseVisualStyleBackColor = true;
-            this.cbUseSubGroupsUseExtendedShoppingRule.CheckedChanged += new System.EventHandler(this.CbSubGroupsCheckedChanged);
-            // 
             // cbUseSubGroupsShopPagesLimit
             // 
             this.cbUseSubGroupsShopPagesLimit.AutoSize = true;
-            this.cbUseSubGroupsShopPagesLimit.Location = new System.Drawing.Point(15, 90);
+            this.cbUseSubGroupsShopPagesLimit.Location = new System.Drawing.Point(15, 65);
             this.cbUseSubGroupsShopPagesLimit.Name = "cbUseSubGroupsShopPagesLimit";
             this.cbUseSubGroupsShopPagesLimit.Size = new System.Drawing.Size(148, 18);
             this.cbUseSubGroupsShopPagesLimit.TabIndex = 4;
@@ -124,19 +111,6 @@
             this.cbUseSubGroupsIgnoreForShopping.UseVisualStyleBackColor = true;
             this.cbUseSubGroupsIgnoreForShopping.CheckedChanged += new System.EventHandler(this.CbSubGroupsCheckedChanged);
             // 
-            // cbSubGroupsUseExtendedShoppingRule
-            // 
-            this.cbSubGroupsUseExtendedShoppingRule.AutoSize = true;
-            this.cbSubGroupsUseExtendedShoppingRule.Checked = true;
-            this.cbSubGroupsUseExtendedShoppingRule.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cbSubGroupsUseExtendedShoppingRule.Location = new System.Drawing.Point(38, 65);
-            this.cbSubGroupsUseExtendedShoppingRule.Name = "cbSubGroupsUseExtendedShoppingRule";
-            this.cbSubGroupsUseExtendedShoppingRule.Size = new System.Drawing.Size(180, 18);
-            this.cbSubGroupsUseExtendedShoppingRule.TabIndex = 3;
-            this.cbSubGroupsUseExtendedShoppingRule.Text = "Use extended shopping rule";
-            this.cbSubGroupsUseExtendedShoppingRule.UseVisualStyleBackColor = true;
-            this.cbSubGroupsUseExtendedShoppingRule.CheckedChanged += new System.EventHandler(this.CbSubGroupsCheckedChanged);
-            // 
             // cbSubGroupsIgnoreForShopping
             // 
             this.cbSubGroupsIgnoreForShopping.AutoSize = true;
@@ -152,7 +126,7 @@
             // 
             this.tbSubGroupsShopPagesLimit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbSubGroupsShopPagesLimit.Location = new System.Drawing.Point(166, 88);
+            this.tbSubGroupsShopPagesLimit.Location = new System.Drawing.Point(166, 63);
             this.tbSubGroupsShopPagesLimit.Maximum = new decimal(new int[] {
             255,
             0,
@@ -177,7 +151,7 @@
             this.pGameItems.Controls.Add(this.rbGameItemsInstantPurchasePerz);
             this.pGameItems.Controls.Add(this.rbGameItemsInstantPurchaseCost);
             this.pGameItems.Controls.Add(this.tbGameItemsInstantPurchaseCost);
-            this.pGameItems.Location = new System.Drawing.Point(12, 151);
+            this.pGameItems.Location = new System.Drawing.Point(12, 125);
             this.pGameItems.Name = "pGameItems";
             this.pGameItems.Size = new System.Drawing.Size(241, 114);
             this.pGameItems.TabIndex = 3;
@@ -265,7 +239,7 @@
             // 
             this.cbGameItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cbGameItems.AutoSize = true;
-            this.cbGameItems.Location = new System.Drawing.Point(19, 143);
+            this.cbGameItems.Location = new System.Drawing.Point(19, 117);
             this.cbGameItems.Name = "cbGameItems";
             this.cbGameItems.Size = new System.Drawing.Size(141, 18);
             this.cbGameItems.TabIndex = 2;
@@ -278,7 +252,7 @@
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnApply.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnApply.Location = new System.Drawing.Point(98, 276);
+            this.btnApply.Location = new System.Drawing.Point(98, 250);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(75, 23);
             this.btnApply.TabIndex = 5;
@@ -289,7 +263,7 @@
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(179, 276);
+            this.btnCancel.Location = new System.Drawing.Point(179, 250);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 6;
@@ -309,7 +283,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(265, 310);
+            this.ClientSize = new System.Drawing.Size(265, 284);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnApply);
@@ -344,7 +318,6 @@
         private System.Windows.Forms.Panel pSubGroups;
         private System.Windows.Forms.NumericUpDown tbSubGroupsShopPagesLimit;
         private System.Windows.Forms.CheckBox cbSubGroupsIgnoreForShopping;
-        private System.Windows.Forms.CheckBox cbSubGroupsUseExtendedShoppingRule;
         private System.Windows.Forms.Panel pGameItems;
         private System.Windows.Forms.CheckBox cbGameItems;
         private System.Windows.Forms.Button btnApply;
@@ -354,7 +327,6 @@
         private System.Windows.Forms.NumericUpDown tbGameItemsInstantPurchasePerz;
         private System.Windows.Forms.RadioButton rbGameItemsInstantPurchasePerz;
         private System.Windows.Forms.CheckBox cbGameItemsUseInstantCostIfNoPublicCost;
-        private System.Windows.Forms.CheckBox cbUseSubGroupsUseExtendedShoppingRule;
         private System.Windows.Forms.CheckBox cbUseSubGroupsShopPagesLimit;
         private System.Windows.Forms.CheckBox cbUseSubGroupsIgnoreForShopping;
         private System.Windows.Forms.Label label1;
