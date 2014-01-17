@@ -31,7 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("General", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Application", 1);
             this.ilHelp = new System.Windows.Forms.ImageList(this.components);
             this.pSettings = new System.Windows.Forms.Panel();
             this.tbSettings = new System.Windows.Forms.TabControl();
@@ -544,8 +543,7 @@
             this.lvSettings.FullRowSelect = true;
             this.lvSettings.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lvSettings.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2});
+            listViewItem1});
             this.lvSettings.Location = new System.Drawing.Point(14, 13);
             this.lvSettings.MultiSelect = false;
             this.lvSettings.Name = "lvSettings";

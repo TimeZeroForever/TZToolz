@@ -26,9 +26,6 @@ namespace TimeZero.Auction.Bot.Classes.Game.GameItems
         [Category("Common settings"), DisplayName(@"Type"), ReadOnly(true)]
         public string Type { get; set; }
 
-        [Category("Shopping"), DisplayName(@"Use extended shopping rule")]
-        public bool UseExtendedShoppingRule { get; set; }
-
         [Category("Shopping"), DisplayName(@"Limit of pages to view")]
         public byte ShopPagesLimit { get; set; }
 
