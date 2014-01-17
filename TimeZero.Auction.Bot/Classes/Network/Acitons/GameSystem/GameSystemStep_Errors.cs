@@ -26,7 +26,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
                         }
                     default:
                         {
-                            networkClient.SendLogMessage(string.Format("ERROR: {0}", errorMessage));
+                            networkClient.OutLogMessage(string.Format("ERROR: {0}", errorMessage));
                             break;
                         }
                 }

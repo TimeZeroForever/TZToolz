@@ -4,9 +4,9 @@ using System.Media;
 using TimeZero.Auction.Bot.Classes.Game.Client;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
 
-namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
+namespace TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem
 {
-    public sealed class GameStep_IMS : IActionStep
+    public sealed class GameSystemStep_IMS : IActionStep
     {
         private readonly SoundPlayer _soundPlayer = new SoundPlayer(Properties.Resources.ims);
 
@@ -17,6 +17,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
             List<string> messages = new List<string>();
 
             Packet[] packets = networkClient.InputQueue.PopAll(FromServer.IMS);
+
+            if (!networkClient.OutInstantMessages || packets.Length == 0)
+            {
+                return false;
+            }
+
             foreach (Packet packet in packets)
             {
                 string sMessages = packet["@m"];
@@ -25,7 +31,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
             if (messages.Count > 0)
             {
-                networkClient.OnLogMessage(string.Format("Instant message(s), {0} received:", messages.Count));
+                networkClient.OutInstantMessage(string.Format("Instant message(s), {0} received:", messages.Count));
                 foreach (string message in messages)
                 {
                     string logMessage;
@@ -38,14 +44,14 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                         //Private IM
                         case "100":
                             {
-                                logMessage = string.Format("\t• {0}. Private from '{1}': {2}",
+                                logMessage = string.Format("\t• {0}. Private from [{1}]: {2}",
                                     messageParts[0], messageParts[2], messageParts[3]);
                                 break;
                             }
                         //Shop message
                         case "217":
                             {
-                                logMessage = string.Format("\t• {0}. Was received Coins[{1}] from '{2}'. Target: {3}",
+                                logMessage = string.Format("\t• {0}. Was received Coins[{1}] from [{2}]. Target: {3}",
                                     messageParts[0], messageParts[3], messageParts[4], messageParts[6]);
                                 break;
                             }
@@ -59,7 +65,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
                     //Play alert
                     _soundPlayer.Play();
 
-                    networkClient.OnLogMessage(logMessage);
+                    networkClient.OutInstantMessage(logMessage);
                 }
 
                 //Clear all IMS on server
@@ -68,6 +74,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Game
 
                 return true;
             }
+
             return false;
         }
 

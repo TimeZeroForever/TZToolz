@@ -35,16 +35,19 @@ namespace TimeZero.Auction.Bot.Classes.Game.GameItems
         [Category("Shopping"), DisplayName(@"Ignore for shopping")]
         public bool IgnoreForShopping { get; set; }
 
+        [Category("Selling"), DisplayName(@"Ignore for selling")]
+        public bool IgnoreForSelling { get; set; }
+
+        [Browsable(false)]
+        public int ItemsCount { get { return _gameItems.Count; } }
+
         [Browsable(false)]
         public string Level { get; set; }
 
         [Browsable(false)]
         public string Ident
         {
-            get
-            {
-                return GetSubGroupIdent(ID, Type);
-            }
+            get { return GetSubGroupIdent(ID, Type); }
         }
 
         [Browsable(false)]

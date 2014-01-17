@@ -9,12 +9,14 @@ using TimeZero.Auction.Bot.Classes.Network.Acitons.Game;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Login;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
+using System.Net;
 
 namespace TimeZero.Auction.Bot.Classes.Network
 {
     public delegate void OnData(string data);
     public delegate void OnNetworkActivity(int dataLength);
     public delegate void OnLogMessage(string message);
+    public delegate void OnActionLogMessage(IActionStep actionStep, string message);
     
     public delegate void OnActionStepStarted(IActionStep actionStep);
     public delegate void OnActionStepCompleted(IActionStep actionStep, bool done);
@@ -30,8 +32,8 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
 #region Static private fields
 
-        private static readonly string LogSeparator1 = new string('-', 155);
-        private static readonly string LogSeparator2 = new string('=', 77);
+        private static readonly string LogSeparator1 = new string('-', 151);
+        private static readonly string LogSeparator2 = new string('=', 75);
 
         private static readonly IActionStep[] LoginSteps = new IActionStep[]
             {
@@ -48,15 +50,17 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         private static readonly IActionStep[] GameSystemSteps = new IActionStep[]
             {
-                 new GameSystemStep_Ping()
-                ,new GameSystemStep_Errors()
+                 new GameSystemStep_Errors()
+                ,new GameSystemStep_Ping()
+                ,new GameSystemStep_IMS()
+                ,new GameSystemStep_Chat()
+                ,new GameSystemStep_ChatBot()
+                ,new GameSystemStep_GC()
             };
 
         private static readonly IActionStep[] GameSteps = new IActionStep[]
             {
-                 new GameStep_IMS()
-                ,new GameStep_GC()
-                ,new GameStep_JoinInventory()
+                 new GameStep_JoinInventory()
                 ,new GameStep_Shopping()
                 ,new GameStep_Selling()
             };
@@ -69,13 +73,16 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 GameSteps
             };
 
-        private static readonly Regex _regexPacketData = new Regex(@"(?s+)^(?:<(.*?)[ |>].*?</(\1)>|<(.(?!<))+?/>)");
+        private static readonly Regex _regexPacketData = new Regex(@"(?s)^(?:<(.*?)[ |>].*?</(\1)>|<(.(?!<))+?/>)");
 
 #endregion
 
 #region Events
 
-        public OnLogMessage OnLogMessage { get; set; }
+        public OnLogMessage OnGeneralLogMessage { get; set; }
+        public OnLogMessage OnInstantMessage { get; set; }
+        public OnLogMessage OnChatMessage { get; set; }
+        public OnActionLogMessage OnActionLogMessage { get; set; }
 
         public OnData OnDataReceived { get; set; }
         public OnData OnDataSended { get; set; }
@@ -95,7 +102,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         private string _server;
         private int _port;
-        private int _chatServerPort;
+        private int _chatPort;
 
         private GameClient _client;
 
@@ -132,11 +139,25 @@ namespace TimeZero.Auction.Bot.Classes.Network
             get { return _inputQueue; }
         }
 
-        public bool OutLogs { get; set; }
+        public bool OutGeneralLogs { get; set; }
 
         public bool OutDetailedLogs { get; set; }
 
-        internal int LastSendDataTime { get; private set; } 
+        public bool OutActionsLogs { get; set; }
+
+        public bool OutInstantMessages { get; set; }
+
+        public bool OutChatMessages { get; set; }
+
+        public string LocalIPAddress
+        {
+            get
+            {
+                return _tcpClient != null
+                  ? ((IPEndPoint)_tcpClient.Client.LocalEndPoint).Address.ToString()
+                  : string.Empty;
+            }
+        }
 
 #endregion
 
@@ -144,7 +165,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         public NetworkClient()
         {
-            OutLogs = true;
+            OutGeneralLogs = true;
         }
 
         public NetworkClient(string server, int port, int chatServerPort)
@@ -153,18 +174,42 @@ namespace TimeZero.Auction.Bot.Classes.Network
             Init(server, port, chatServerPort);
         }
 
-        public void Init(string server, int port, int chatServerPort)
+        public void Init(string server, int port, int chatPort)
         {
             _server = server;
             _port = port;
-            _chatServerPort = chatServerPort;
+            _chatPort = chatPort;
         }
 
-        public void SendLogMessage(string message)
+        public void OutLogMessage(string message)
         {
-            if (OutLogs && OnLogMessage != null)
+            if (OutGeneralLogs && OnGeneralLogMessage != null)
             {
-                OnLogMessage(message);
+                OnGeneralLogMessage(message);
+            }
+        }
+
+        public void OutActionLogMessage(IActionStep actionStep, string message)
+        {
+            if (OutActionsLogs && OnActionLogMessage != null)
+            {
+                OnActionLogMessage(actionStep, message);
+            }
+        }
+
+        public void OutInstantMessage(string message)
+        {
+            if (OutInstantMessages && OnInstantMessage != null)
+            {
+                OnInstantMessage(message);
+            }
+        }
+
+        public void OutChatMessage(string message)
+        {
+            if (OutChatMessages && OnChatMessage != null)
+            {
+                OnChatMessage(message);
             }
         }
 
@@ -175,7 +220,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         public void ThrowError(string errorMessage, bool disconnect)
         {
-            SendLogMessage("ERROR: " + errorMessage);
+            OutLogMessage("ERROR: " + errorMessage);
             if (disconnect)
             {
                 Disconnect();
@@ -194,14 +239,14 @@ namespace TimeZero.Auction.Bot.Classes.Network
             {
                 if (!_intermediateState)
                 {
-                    SendLogMessage("Trying to establish connection...");
+                    OutLogMessage("Trying to establish connection...");
                 }
 
                 //Terminate current connection
                 Disconnect();
 
                 //Establish TCP connection
-                _tcpClient = new TcpClient { ReceiveBufferSize = 100000 };
+                _tcpClient = new TcpClient();
                 _tcpClient.Connect(_server, _port);
                 _networkStream = _tcpClient.GetStream();
 
@@ -219,12 +264,12 @@ namespace TimeZero.Auction.Bot.Classes.Network
                     OnConnected();
                 }
 
-                SendLogMessage("A connection was successfully established");
+                OutLogMessage("A connection was successfully established");
             }
             catch (Exception ex)
             {
-                SendLogMessage(string.Format("CONNECTION ERROR: {0}\r\n", ex));
                 _connected = 0;
+                OutLogMessage(string.Format("CONNECTION ERROR: {0}\r\n", ex));
             }
 
             //Done
@@ -314,7 +359,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 }
                 catch (Exception ex)
                 {
-                    SendLogMessage(string.Format("DISCONNECTION ERROR: {0}\r\n", ex));
+                    OutLogMessage(string.Format("DISCONNECTION ERROR: {0}\r\n", ex));
                 }
                 finally
                 {
@@ -339,8 +384,14 @@ namespace TimeZero.Auction.Bot.Classes.Network
                             OnDisconnected();
                         }
 
-                        SendLogMessage(string.Format("Disconnected from the server\r\n{0}\r\n",
+                        //Out log message
+                        OutLogMessage(string.Format("Disconnected from the server\r\n{0}\r\n",
                             LogSeparator2));
+                    }
+                    else
+                    {
+                        //Restore connected state
+                        _connected = 1;
                     }
                 }
             }
@@ -375,7 +426,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
             {
                 if (Thread.CurrentThread.ThreadState == ThreadState.Running)
                 {
-                    SendLogMessage(string.Format("LOGIN ERROR: {0}\r\n", ex));
+                    OutLogMessage(string.Format("LOGIN ERROR: {0}\r\n", ex));
                     Disconnect();
                 }
             }
@@ -407,7 +458,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
             {
                 if (Thread.CurrentThread.ThreadState == ThreadState.Running)
                 {
-                    SendLogMessage(string.Format("AUTHORIZATION ERROR: {0}\r\n", ex));
+                    OutLogMessage(string.Format("AUTHORIZATION ERROR: {0}\r\n", ex));
                     Disconnect();
                 }
                 return false;
@@ -420,7 +471,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         public void PlayGame()
         {
-            SendLogMessage(string.Format("{0}", LogSeparator1));
+            OutLogMessage(LogSeparator1);
 
             //Create client thread
             _sysThread = new Thread(DoSysCommands);
@@ -455,7 +506,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
             {
                 if (Thread.CurrentThread.ThreadState == ThreadState.Running)
                 {
-                    SendLogMessage(string.Format("SYSCOMMAND ERROR: {0}\r\n", ex));
+                    OutLogMessage(string.Format("SYSCOMMAND ERROR: {0}\r\n", ex));
                     Disconnect();
                 }
             }
@@ -500,7 +551,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
             {
                 if (Thread.CurrentThread.ThreadState == ThreadState.Running)
                 {
-                    SendLogMessage(string.Format("GAME ERROR: {0}\r\n", ex));
+                    OutLogMessage(string.Format("GAME ERROR: {0}\r\n", ex));
                     Disconnect();
                 }
             }
@@ -517,8 +568,8 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 try
                 {
                     //Establish TCP connection
-                    _chatTcpClient = new TcpClient { ReceiveBufferSize = 100000 };
-                    _chatTcpClient.Connect(chatServer, _chatServerPort);
+                    _chatTcpClient = new TcpClient();
+                    _chatTcpClient.Connect(chatServer, _chatPort);
                     _chatNetworkStream = _chatTcpClient.GetStream();
 
                     //Create data thread
@@ -529,8 +580,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 }
                 catch (Exception ex)
                 {
-                    SendLogMessage(string.Format("CHAT ERROR: {0}\r\n", ex));
-                    _connected = 0;
+                    OutLogMessage(string.Format("CHAT ERROR: {0}\r\n", ex));
                 }
             }
             return false;
@@ -557,7 +607,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 }
                 catch (Exception ex)
                 {
-                    SendLogMessage(string.Format("CHAT STOPPING ERROR: {0}\r\n", ex));
+                    OutLogMessage(string.Format("CHAT STOPPING ERROR: {0}\r\n", ex));
                 }
                 finally
                 {
@@ -565,7 +615,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                     _chatThread = null;
                     _chatTcpClient = null;
                     _chatNetworkStream = null;
-                    SendLogMessage("Chat was stopped");
+                    OutLogMessage("Chat was stopped");
                 }
             }
         }
@@ -597,7 +647,6 @@ namespace TimeZero.Auction.Bot.Classes.Network
                     byte[] byteBuffer = Encoding.UTF8.GetBytes(data);
                     int dataLength = byteBuffer.Length;
                     networkStream.Write(byteBuffer, 0, dataLength);
-                    LastSendDataTime = Environment.TickCount;
 
                     //Fire OnDataSended event
                     if (OutDetailedLogs && OnDataSended != null)
@@ -614,7 +663,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
             }
             catch (Exception ex)
             {
-                SendLogMessage(string.Format("DATA SEND ERROR: {0}\r\n", ex));
+                OutLogMessage(string.Format("DATA SEND ERROR: {0}\r\n", ex));
                 Disconnect();
             }
         }
@@ -645,7 +694,10 @@ namespace TimeZero.Auction.Bot.Classes.Network
         {
             StringBuilder dataPart = new StringBuilder();
             StringBuilder bufferedDataPart = new StringBuilder();
-            byte[] buffer = new byte[tcpClient.ReceiveBufferSize * 2];
+            byte[] buffer = new byte[tcpClient.ReceiveBufferSize];
+
+            //Is a game chat stream?
+            bool isGameChat = tcpClient == _chatTcpClient;
 
             while (!_terminated && tcpClient.Connected)
             {
@@ -653,28 +705,56 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 {
                     if (networkStream.DataAvailable)
                     {
-                        //Read received data from net. buffer
-                        int dataSize = _tcpClient.Available;
-                        if (dataSize == 0)
-                        {
-                            continue;
-                        }
-
+                        //Read received data from network buffer
+                        int dataSize = tcpClient.Available;
                         networkStream.Read(buffer, 0, dataSize);
 
-                        //Ingnore 'players in the room' packets
-                        if (buffer[0] == '\x4')
+                        switch (buffer[0]) 
                         {
-                            continue;
+                            //Ingnore 'players in the room' packets
+                            //0x2 - enter, 0x3 - my info, 0x4 - leave
+                            case 2:
+                            case 3:
+                            case 4:
+                                {
+                                    continue;
+                                }
                         }
 
-                        //Received data to string and trim junk data
-                        string data = Encoding.UTF8.GetString(buffer, 0, dataSize).
-                            Replace("\0",       "").    //Extra zero
-                            Replace("\x1",      "\" "). //0x1   -> " 
-                            Replace("\x4",      ">").   //0x4   -> >
-                            Replace("\x6",      "\" "). //0x6   -> " 
-                            Replace("\x1\x46",  "=");   //0x1+F -> =
+                        //Received data to string and remove all zero chars
+                        string data = Encoding.UTF8.GetString(buffer, 0, dataSize).Replace("\x0", "");
+
+                        switch (buffer[0])
+                        {
+                            //Chat message
+                            case 5:
+                                {
+                                    data = data.
+                                        Replace("\x5", "\"").               //0x5   -> "
+                                        Remove (data.IndexOf('\x9') + 1).
+                                        Replace("\x9", "\"");               //0x9   -> "
+                                    data = string.Format("<{0} text={1} />", FromServer.CHAT_MESSAGE, data);
+                                    break;
+                                }
+                            //Game data
+                            default:
+                                {
+                                    //Ingore all non-chat packets for the game chat stream
+                                    if (isGameChat)
+                                    {
+                                        continue;
+                                    }
+
+                                    //Trim junk data
+                                    data = data.
+                                        Replace("\x1",      "\" "). //0x1   -> " 
+                                        Replace("\x4",      ">"  ). //0x4   -> >
+                                        Replace("\x6",      "\" "). //0x6   -> " 
+                                        Replace("\x1\x46",  "="  ); //0x1+F -> =
+                                    break;
+                                }
+                        }
+
                         dataPart.Append(data);
 
                         //Process packet
@@ -701,7 +781,7 @@ namespace TimeZero.Auction.Bot.Classes.Network
                 {
                     if (Thread.CurrentThread.ThreadState == ThreadState.Running)
                     {
-                        SendLogMessage(string.Format("DATA RECEIVE ERROR: {0}\r\n", ex));
+                        OutLogMessage(string.Format("DATA RECEIVE ERROR: {0}\r\n", ex));
                         Disconnect();
                     }
                     return;

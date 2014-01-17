@@ -23,13 +23,13 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                 //Get hashed password
                 string passwordHash = client.GetPasswordHash(key);
 
-                networkClient.SendLogMessage(
+                networkClient.OutLogMessage(
                     string.Format("Trying to login: U = {0}, P = {1}, K = {2}, H = {3}...", 
                     client.Login, client.Password, key, passwordHash));
 
                 //Do login
                 string login = Packet.BuildPacket(FromClient.LOGIN_DATA,
-                    client.LocalIP, client.Version2, client.Version, passwordHash, client.Login);
+                    networkClient.LocalIPAddress, client.Version2, client.Version, passwordHash, client.Login);
                 networkClient.SendData(login);
 
                 //Get login result
@@ -64,7 +64,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                     string sessionId = data["@ses"];
                     client.AdditionalData.Add(ObjectPropertyName.SESSION_ID, sessionId);
 
-                    networkClient.SendLogMessage(string.Format("User login successful"));
+                    networkClient.OutLogMessage(string.Format("User login successful"));
 
                     return true;
                 }

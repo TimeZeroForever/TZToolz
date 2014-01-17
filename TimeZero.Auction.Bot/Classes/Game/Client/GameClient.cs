@@ -10,7 +10,6 @@ namespace TimeZero.Auction.Bot.Classes.Game.Client
 
 #region Properties
 
-        public string LocalIP  { get; private set; }
         public string Login    { get; private set; }
         public string Password { get; private set; }
         public string Version  { get; private set; }
@@ -31,17 +30,16 @@ namespace TimeZero.Auction.Bot.Classes.Game.Client
             InventoryItems = new InventoryItemList();
         }
 
-        public GameClient(string localIP, string login, string password, string version, 
+        public GameClient(string login, string password, string version, 
                           string version2, AxShockwaveFlash flashPlayer) 
             : this()
         {
-            Init(localIP, login, password, version, version2, flashPlayer);
+            Init(login, password, version, version2, flashPlayer);
         }
 
-        public void Init(string localIP, string login, string password, string version,
+        public void Init(string login, string password, string version,
                          string version2, AxShockwaveFlash flashPlayer)
         {
-            LocalIP = localIP;
             Login = login;
             Password = password;
             Version = version;

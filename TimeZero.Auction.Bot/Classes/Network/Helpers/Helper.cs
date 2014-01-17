@@ -221,6 +221,12 @@ namespace TimeZero.Auction.Bot.Classes.Network.Helpers
             return pairsList;
         }
 
+        public static string RemoveMilliseconds(string time)
+        {
+            int dotIdx = time.IndexOf('.');
+            return dotIdx > -1 ? time.Remove(dotIdx) : time;
+        }
+
 #endregion
 
     }

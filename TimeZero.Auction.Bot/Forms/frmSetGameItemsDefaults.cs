@@ -18,6 +18,15 @@ namespace TimeZero.Auction.Bot.Forms
             get { return cbSubGroupsIgnoreForShopping.Checked; } 
         }
 
+        public bool UseSubGroupsIgnoreForSelling
+        {
+            get { return cbUseSubGroupsIgnoreForSelling.Checked; }
+        }
+        public bool SubGroupsIgnoreForSelling
+        {
+            get { return cbSubGroupsIgnoreForSelling.Checked; }
+        }
+
         public bool UseSubGroupsUseExtendedShoppingRule
         {
             get { return cbUseSubGroupsUseExtendedShoppingRule.Checked; }
@@ -71,6 +80,7 @@ namespace TimeZero.Auction.Bot.Forms
         private void UpdateInterface()
         {
             cbSubGroupsIgnoreForShopping.Enabled = UseSubGroupsIgnoreForShopping;
+            cbSubGroupsIgnoreForSelling.Enabled = UseSubGroupsIgnoreForSelling;
             cbSubGroupsUseExtendedShoppingRule.Enabled = UseSubGroupsUseExtendedShoppingRule;
             tbSubGroupsShopPagesLimit.Enabled = UseSubGroupsShopPagesLimit;
 
@@ -80,6 +90,7 @@ namespace TimeZero.Auction.Bot.Forms
             cbGameItemsUseInstantCostIfNoPublicCost.Enabled = InstantPurchaseByPerz;
 
             btnApply.Enabled = UseSubGroupsIgnoreForShopping ||
+                               UseSubGroupsIgnoreForSelling ||
                                UseSubGroupsUseExtendedShoppingRule ||
                                UseSubGroupsShopPagesLimit ||
                                ApplyForGameItems;

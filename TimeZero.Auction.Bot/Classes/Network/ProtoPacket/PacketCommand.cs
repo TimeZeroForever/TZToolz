@@ -13,5 +13,6 @@
     {
         public const string START = "start" ;
         public const string AUTH  = "auth"  ;
+        public const string POST  = "post"  ;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using TimeZero.Auction.Bot.Controls;
 using TimeZero.Auction.Bot.Controls.Header;
+using TimeZero.Auction.Bot.Controls.RichTextBoxEx;
 using TimeZero.Auction.Bot.Controls.TreeViewSearchBox;
 using System.Windows.Forms;
 
@@ -42,6 +43,9 @@ namespace TimeZero.Auction.Bot.Forms
             this.tsGameItems = new System.Windows.Forms.ToolStrip();
             this.btnGameItemsSaveAll = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnGameItemsActions = new System.Windows.Forms.ToolStripDropDownButton();
+            this.removeAllUnreviewedItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeAllZerocostItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btnGameItemsSetDefaults = new System.Windows.Forms.ToolStripButton();
             this.btnGameItemRemove = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -56,17 +60,37 @@ namespace TimeZero.Auction.Bot.Forms
             this.pgItems = new System.Windows.Forms.PropertyGrid();
             this.header1 = new TimeZero.Auction.Bot.Controls.Header.Header();
             this.lblItemIsNotSelected = new System.Windows.Forms.Label();
-            this.tpLog = new System.Windows.Forms.TabPage();
-            this.pLogInfoBack = new System.Windows.Forms.Panel();
-            this.tbLog = new System.Windows.Forms.TextBox();
-            this.tpDetailedLog = new System.Windows.Forms.TabPage();
-            this.pDetailedLogBack = new System.Windows.Forms.Panel();
-            this.tbDetailedLog = new System.Windows.Forms.TextBox();
+            this.tpIMS = new System.Windows.Forms.TabPage();
+            this.pIMSBack = new System.Windows.Forms.Panel();
+            this.tbIMS = new TimeZero.Auction.Bot.Controls.RichTextBoxEx.RichTextBoxEx();
+            this.tpChat = new System.Windows.Forms.TabPage();
+            this.pChatBack = new System.Windows.Forms.Panel();
+            this.tbChat = new TimeZero.Auction.Bot.Controls.RichTextBoxEx.RichTextBoxEx();
+            this.tpLogs = new System.Windows.Forms.TabPage();
+            this.pClearLogsBtnBack = new System.Windows.Forms.Panel();
+            this.btnClearLogs = new System.Windows.Forms.Button();
+            this.tcLogs = new System.Windows.Forms.TabControl();
+            this.tpGeneralLogs = new System.Windows.Forms.TabPage();
+            this.pGeneralLogsBack = new System.Windows.Forms.Panel();
+            this.tbGeneralLogs = new TimeZero.Auction.Bot.Controls.RichTextBoxEx.RichTextBoxEx();
+            this.tpActionsLogs = new System.Windows.Forms.TabPage();
+            this.pActionsLogsBack = new System.Windows.Forms.Panel();
+            this.tbActionsLogs = new TimeZero.Auction.Bot.Controls.RichTextBoxEx.RichTextBoxEx();
+            this.tpDetailedLogs = new System.Windows.Forms.TabPage();
+            this.pDetailedLogsBack = new System.Windows.Forms.Panel();
+            this.tbDetailedLogs = new System.Windows.Forms.TextBox();
+            this.tpWebBrowser = new System.Windows.Forms.TabPage();
+            this.pWebBrowserBack = new System.Windows.Forms.Panel();
+            this.webBrowser = new System.Windows.Forms.WebBrowser();
             this.tsMain = new System.Windows.Forms.ToolStrip();
             this.btnConnect = new System.Windows.Forms.ToolStripButton();
             this.btnDisconnect = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnOutLogs = new System.Windows.Forms.ToolStripButton();
+            this.btnOutInstantMessages = new System.Windows.Forms.ToolStripButton();
+            this.btnOutChatMessages = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnOutGeneralLogs = new System.Windows.Forms.ToolStripButton();
+            this.btnOutActionsLogs = new System.Windows.Forms.ToolStripButton();
             this.btnOutDetailedLogs = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.btnRunGame = new System.Windows.Forms.ToolStripButton();
@@ -77,8 +101,6 @@ namespace TimeZero.Auction.Bot.Forms
             this.ssMain = new System.Windows.Forms.StatusStrip();
             this.slNetworkOut = new System.Windows.Forms.ToolStripStatusLabel();
             this.slNetworkIn = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblLastShoppingTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblActionInProgress = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerNetworkActivity = new System.Windows.Forms.Timer(this.components);
@@ -90,10 +112,21 @@ namespace TimeZero.Auction.Bot.Forms
             this.scItems.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tsGameItems.SuspendLayout();
-            this.tpLog.SuspendLayout();
-            this.pLogInfoBack.SuspendLayout();
-            this.tpDetailedLog.SuspendLayout();
-            this.pDetailedLogBack.SuspendLayout();
+            this.tpIMS.SuspendLayout();
+            this.pIMSBack.SuspendLayout();
+            this.tpChat.SuspendLayout();
+            this.pChatBack.SuspendLayout();
+            this.tpLogs.SuspendLayout();
+            this.pClearLogsBtnBack.SuspendLayout();
+            this.tcLogs.SuspendLayout();
+            this.tpGeneralLogs.SuspendLayout();
+            this.pGeneralLogsBack.SuspendLayout();
+            this.tpActionsLogs.SuspendLayout();
+            this.pActionsLogsBack.SuspendLayout();
+            this.tpDetailedLogs.SuspendLayout();
+            this.pDetailedLogsBack.SuspendLayout();
+            this.tpWebBrowser.SuspendLayout();
+            this.pWebBrowserBack.SuspendLayout();
             this.tsMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flashPlayer)).BeginInit();
             this.ssMain.SuspendLayout();
@@ -105,8 +138,10 @@ namespace TimeZero.Auction.Bot.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tcMain.Controls.Add(this.tpItems);
-            this.tcMain.Controls.Add(this.tpLog);
-            this.tcMain.Controls.Add(this.tpDetailedLog);
+            this.tcMain.Controls.Add(this.tpIMS);
+            this.tcMain.Controls.Add(this.tpChat);
+            this.tcMain.Controls.Add(this.tpLogs);
+            this.tcMain.Controls.Add(this.tpWebBrowser);
             this.tcMain.Location = new System.Drawing.Point(12, 30);
             this.tcMain.Name = "tcMain";
             this.tcMain.SelectedIndex = 0;
@@ -168,6 +203,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.tsGameItems.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnGameItemsSaveAll,
             this.toolStripSeparator4,
+            this.btnGameItemsActions,
             this.btnGameItemsSetDefaults,
             this.btnGameItemRemove,
             this.toolStripSeparator6,
@@ -188,13 +224,39 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnGameItemsSaveAll.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGameItemsSaveAll.Name = "btnGameItemsSaveAll";
             this.btnGameItemsSaveAll.Size = new System.Drawing.Size(23, 22);
-            this.btnGameItemsSaveAll.Text = "B";
+            this.btnGameItemsSaveAll.Text = "Save items list";
             this.btnGameItemsSaveAll.Click += new System.EventHandler(this.BtnSaveItemsListClick);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnGameItemsActions
+            // 
+            this.btnGameItemsActions.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnGameItemsActions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.removeAllUnreviewedItemsToolStripMenuItem,
+            this.removeAllZerocostItemsToolStripMenuItem});
+            this.btnGameItemsActions.Image = global::TimeZero.Auction.Bot.Properties.Resources.lightning;
+            this.btnGameItemsActions.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnGameItemsActions.Name = "btnGameItemsActions";
+            this.btnGameItemsActions.Size = new System.Drawing.Size(29, 22);
+            this.btnGameItemsActions.Text = "Actions";
+            // 
+            // removeAllUnreviewedItemsToolStripMenuItem
+            // 
+            this.removeAllUnreviewedItemsToolStripMenuItem.Name = "removeAllUnreviewedItemsToolStripMenuItem";
+            this.removeAllUnreviewedItemsToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.removeAllUnreviewedItemsToolStripMenuItem.Text = "Remove all unreviewed items";
+            this.removeAllUnreviewedItemsToolStripMenuItem.Click += new System.EventHandler(this.RemoveAllUnreviewedItemsToolStripMenuItemClick);
+            // 
+            // removeAllZerocostItemsToolStripMenuItem
+            // 
+            this.removeAllZerocostItemsToolStripMenuItem.Name = "removeAllZerocostItemsToolStripMenuItem";
+            this.removeAllZerocostItemsToolStripMenuItem.Size = new System.Drawing.Size(228, 22);
+            this.removeAllZerocostItemsToolStripMenuItem.Text = "Remove all zero-cost items";
+            this.removeAllZerocostItemsToolStripMenuItem.Click += new System.EventHandler(this.RemoveAllZerocostItemsToolStripMenuItemClick);
             // 
             // btnGameItemsSetDefaults
             // 
@@ -213,7 +275,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnGameItemRemove.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnGameItemRemove.Name = "btnGameItemRemove";
             this.btnGameItemRemove.Size = new System.Drawing.Size(23, 22);
-            this.btnGameItemRemove.Text = "Delete selected item";
+            this.btnGameItemRemove.Text = "Delete selected object";
             this.btnGameItemRemove.Click += new System.EventHandler(this.BtnGameItemRemoveClick);
             // 
             // toolStripSeparator6
@@ -373,77 +435,269 @@ namespace TimeZero.Auction.Bot.Forms
             this.lblItemIsNotSelected.Text = "Please select a group or a game item first";
             this.lblItemIsNotSelected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // tpLog
+            // tpIMS
             // 
-            this.tpLog.Controls.Add(this.pLogInfoBack);
-            this.tpLog.Location = new System.Drawing.Point(4, 23);
-            this.tpLog.Name = "tpLog";
-            this.tpLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpLog.Size = new System.Drawing.Size(652, 462);
-            this.tpLog.TabIndex = 1;
-            this.tpLog.Text = "Log information";
-            this.tpLog.UseVisualStyleBackColor = true;
+            this.tpIMS.Controls.Add(this.pIMSBack);
+            this.tpIMS.Location = new System.Drawing.Point(4, 23);
+            this.tpIMS.Name = "tpIMS";
+            this.tpIMS.Padding = new System.Windows.Forms.Padding(3);
+            this.tpIMS.Size = new System.Drawing.Size(652, 462);
+            this.tpIMS.TabIndex = 4;
+            this.tpIMS.Text = "Instant messages";
+            this.tpIMS.UseVisualStyleBackColor = true;
             // 
-            // pLogInfoBack
+            // pIMSBack
             // 
-            this.pLogInfoBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pLogInfoBack.Controls.Add(this.tbLog);
-            this.pLogInfoBack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pLogInfoBack.Location = new System.Drawing.Point(3, 3);
-            this.pLogInfoBack.Name = "pLogInfoBack";
-            this.pLogInfoBack.Size = new System.Drawing.Size(646, 456);
-            this.pLogInfoBack.TabIndex = 0;
+            this.pIMSBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pIMSBack.Controls.Add(this.tbIMS);
+            this.pIMSBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pIMSBack.Location = new System.Drawing.Point(3, 3);
+            this.pIMSBack.Name = "pIMSBack";
+            this.pIMSBack.Size = new System.Drawing.Size(646, 456);
+            this.pIMSBack.TabIndex = 3;
             // 
-            // tbLog
+            // tbIMS
             // 
-            this.tbLog.BackColor = System.Drawing.Color.White;
-            this.tbLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbLog.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.tbLog.Location = new System.Drawing.Point(0, 0);
-            this.tbLog.Multiline = true;
-            this.tbLog.Name = "tbLog";
-            this.tbLog.ReadOnly = true;
-            this.tbLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbLog.Size = new System.Drawing.Size(644, 454);
-            this.tbLog.TabIndex = 0;
-            this.tbLog.TabStop = false;
+            this.tbIMS.BackColor = System.Drawing.Color.White;
+            this.tbIMS.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbIMS.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbIMS.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.tbIMS.Location = new System.Drawing.Point(0, 0);
+            this.tbIMS.Name = "tbIMS";
+            this.tbIMS.ReadOnly = true;
+            this.tbIMS.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.tbIMS.Size = new System.Drawing.Size(644, 454);
+            this.tbIMS.TabIndex = 0;
+            this.tbIMS.TabStop = false;
+            this.tbIMS.Text = "";
+            this.tbIMS.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextBoxLinkClicked);
             // 
-            // tpDetailedLog
+            // tpChat
             // 
-            this.tpDetailedLog.Controls.Add(this.pDetailedLogBack);
-            this.tpDetailedLog.Location = new System.Drawing.Point(4, 23);
-            this.tpDetailedLog.Name = "tpDetailedLog";
-            this.tpDetailedLog.Padding = new System.Windows.Forms.Padding(3);
-            this.tpDetailedLog.Size = new System.Drawing.Size(652, 462);
-            this.tpDetailedLog.TabIndex = 0;
-            this.tpDetailedLog.Text = "Detailed log information";
-            this.tpDetailedLog.UseVisualStyleBackColor = true;
+            this.tpChat.Controls.Add(this.pChatBack);
+            this.tpChat.Location = new System.Drawing.Point(4, 23);
+            this.tpChat.Name = "tpChat";
+            this.tpChat.Padding = new System.Windows.Forms.Padding(3);
+            this.tpChat.Size = new System.Drawing.Size(652, 462);
+            this.tpChat.TabIndex = 3;
+            this.tpChat.Text = "Chat conversations";
+            this.tpChat.UseVisualStyleBackColor = true;
             // 
-            // pDetailedLogBack
+            // pChatBack
             // 
-            this.pDetailedLogBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pDetailedLogBack.Controls.Add(this.tbDetailedLog);
-            this.pDetailedLogBack.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pDetailedLogBack.Location = new System.Drawing.Point(3, 3);
-            this.pDetailedLogBack.Name = "pDetailedLogBack";
-            this.pDetailedLogBack.Size = new System.Drawing.Size(646, 456);
-            this.pDetailedLogBack.TabIndex = 1;
+            this.pChatBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pChatBack.Controls.Add(this.tbChat);
+            this.pChatBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pChatBack.Location = new System.Drawing.Point(3, 3);
+            this.pChatBack.Name = "pChatBack";
+            this.pChatBack.Size = new System.Drawing.Size(646, 456);
+            this.pChatBack.TabIndex = 0;
             // 
-            // tbDetailedLog
+            // tbChat
             // 
-            this.tbDetailedLog.BackColor = System.Drawing.Color.White;
-            this.tbDetailedLog.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbDetailedLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbDetailedLog.Font = new System.Drawing.Font("Tahoma", 8.25F);
-            this.tbDetailedLog.Location = new System.Drawing.Point(0, 0);
-            this.tbDetailedLog.Multiline = true;
-            this.tbDetailedLog.Name = "tbDetailedLog";
-            this.tbDetailedLog.ReadOnly = true;
-            this.tbDetailedLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbDetailedLog.Size = new System.Drawing.Size(644, 454);
-            this.tbDetailedLog.TabIndex = 1;
-            this.tbDetailedLog.TabStop = false;
+            this.tbChat.BackColor = System.Drawing.SystemColors.Window;
+            this.tbChat.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbChat.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbChat.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.tbChat.Location = new System.Drawing.Point(0, 0);
+            this.tbChat.Name = "tbChat";
+            this.tbChat.ReadOnly = true;
+            this.tbChat.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.tbChat.Size = new System.Drawing.Size(644, 454);
+            this.tbChat.TabIndex = 1;
+            this.tbChat.TabStop = false;
+            this.tbChat.Text = "";
+            this.tbChat.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextBoxLinkClicked);
+            // 
+            // tpLogs
+            // 
+            this.tpLogs.Controls.Add(this.pClearLogsBtnBack);
+            this.tpLogs.Controls.Add(this.tcLogs);
+            this.tpLogs.Location = new System.Drawing.Point(4, 23);
+            this.tpLogs.Name = "tpLogs";
+            this.tpLogs.Padding = new System.Windows.Forms.Padding(3);
+            this.tpLogs.Size = new System.Drawing.Size(652, 462);
+            this.tpLogs.TabIndex = 1;
+            this.tpLogs.Text = "Game logs";
+            this.tpLogs.UseVisualStyleBackColor = true;
+            // 
+            // pClearLogsBtnBack
+            // 
+            this.pClearLogsBtnBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pClearLogsBtnBack.BackColor = System.Drawing.Color.Transparent;
+            this.pClearLogsBtnBack.Controls.Add(this.btnClearLogs);
+            this.pClearLogsBtnBack.Location = new System.Drawing.Point(624, 0);
+            this.pClearLogsBtnBack.Name = "pClearLogsBtnBack";
+            this.pClearLogsBtnBack.Size = new System.Drawing.Size(24, 23);
+            this.pClearLogsBtnBack.TabIndex = 10;
+            // 
+            // btnClearLogs
+            // 
+            this.btnClearLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnClearLogs.Image = global::TimeZero.Auction.Bot.Properties.Resources.eraser;
+            this.btnClearLogs.Location = new System.Drawing.Point(0, 0);
+            this.btnClearLogs.Name = "btnClearLogs";
+            this.btnClearLogs.Size = new System.Drawing.Size(24, 23);
+            this.btnClearLogs.TabIndex = 0;
+            this.btnClearLogs.TabStop = false;
+            this.btnClearLogs.UseVisualStyleBackColor = true;
+            this.btnClearLogs.Click += new System.EventHandler(this.BtnClearLogsClick);
+            // 
+            // tcLogs
+            // 
+            this.tcLogs.Controls.Add(this.tpGeneralLogs);
+            this.tcLogs.Controls.Add(this.tpActionsLogs);
+            this.tcLogs.Controls.Add(this.tpDetailedLogs);
+            this.tcLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tcLogs.Location = new System.Drawing.Point(3, 3);
+            this.tcLogs.Name = "tcLogs";
+            this.tcLogs.SelectedIndex = 0;
+            this.tcLogs.Size = new System.Drawing.Size(646, 456);
+            this.tcLogs.TabIndex = 0;
+            // 
+            // tpGeneralLogs
+            // 
+            this.tpGeneralLogs.Controls.Add(this.pGeneralLogsBack);
+            this.tpGeneralLogs.Location = new System.Drawing.Point(4, 23);
+            this.tpGeneralLogs.Name = "tpGeneralLogs";
+            this.tpGeneralLogs.Padding = new System.Windows.Forms.Padding(3);
+            this.tpGeneralLogs.Size = new System.Drawing.Size(638, 429);
+            this.tpGeneralLogs.TabIndex = 0;
+            this.tpGeneralLogs.Text = "General";
+            this.tpGeneralLogs.UseVisualStyleBackColor = true;
+            // 
+            // pGeneralLogsBack
+            // 
+            this.pGeneralLogsBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pGeneralLogsBack.Controls.Add(this.tbGeneralLogs);
+            this.pGeneralLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pGeneralLogsBack.Location = new System.Drawing.Point(3, 3);
+            this.pGeneralLogsBack.Name = "pGeneralLogsBack";
+            this.pGeneralLogsBack.Size = new System.Drawing.Size(632, 423);
+            this.pGeneralLogsBack.TabIndex = 2;
+            // 
+            // tbGeneralLogs
+            // 
+            this.tbGeneralLogs.BackColor = System.Drawing.Color.White;
+            this.tbGeneralLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbGeneralLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbGeneralLogs.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.tbGeneralLogs.Location = new System.Drawing.Point(0, 0);
+            this.tbGeneralLogs.Name = "tbGeneralLogs";
+            this.tbGeneralLogs.ReadOnly = true;
+            this.tbGeneralLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.tbGeneralLogs.Size = new System.Drawing.Size(630, 421);
+            this.tbGeneralLogs.TabIndex = 0;
+            this.tbGeneralLogs.TabStop = false;
+            this.tbGeneralLogs.Text = "";
+            this.tbGeneralLogs.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextBoxLinkClicked);
+            // 
+            // tpActionsLogs
+            // 
+            this.tpActionsLogs.Controls.Add(this.pActionsLogsBack);
+            this.tpActionsLogs.Location = new System.Drawing.Point(4, 23);
+            this.tpActionsLogs.Name = "tpActionsLogs";
+            this.tpActionsLogs.Padding = new System.Windows.Forms.Padding(3);
+            this.tpActionsLogs.Size = new System.Drawing.Size(638, 429);
+            this.tpActionsLogs.TabIndex = 2;
+            this.tpActionsLogs.Text = "Actions";
+            this.tpActionsLogs.UseVisualStyleBackColor = true;
+            // 
+            // pActionsLogsBack
+            // 
+            this.pActionsLogsBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pActionsLogsBack.Controls.Add(this.tbActionsLogs);
+            this.pActionsLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pActionsLogsBack.Location = new System.Drawing.Point(3, 3);
+            this.pActionsLogsBack.Name = "pActionsLogsBack";
+            this.pActionsLogsBack.Size = new System.Drawing.Size(632, 423);
+            this.pActionsLogsBack.TabIndex = 3;
+            // 
+            // tbActionsLogs
+            // 
+            this.tbActionsLogs.BackColor = System.Drawing.Color.White;
+            this.tbActionsLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbActionsLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbActionsLogs.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.tbActionsLogs.Location = new System.Drawing.Point(0, 0);
+            this.tbActionsLogs.Name = "tbActionsLogs";
+            this.tbActionsLogs.ReadOnly = true;
+            this.tbActionsLogs.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.tbActionsLogs.Size = new System.Drawing.Size(630, 421);
+            this.tbActionsLogs.TabIndex = 1;
+            this.tbActionsLogs.TabStop = false;
+            this.tbActionsLogs.Text = "";
+            this.tbActionsLogs.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.TextBoxLinkClicked);
+            // 
+            // tpDetailedLogs
+            // 
+            this.tpDetailedLogs.Controls.Add(this.pDetailedLogsBack);
+            this.tpDetailedLogs.Location = new System.Drawing.Point(4, 23);
+            this.tpDetailedLogs.Name = "tpDetailedLogs";
+            this.tpDetailedLogs.Padding = new System.Windows.Forms.Padding(3);
+            this.tpDetailedLogs.Size = new System.Drawing.Size(638, 429);
+            this.tpDetailedLogs.TabIndex = 1;
+            this.tpDetailedLogs.Text = "Details";
+            this.tpDetailedLogs.UseVisualStyleBackColor = true;
+            // 
+            // pDetailedLogsBack
+            // 
+            this.pDetailedLogsBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pDetailedLogsBack.Controls.Add(this.tbDetailedLogs);
+            this.pDetailedLogsBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pDetailedLogsBack.Location = new System.Drawing.Point(3, 3);
+            this.pDetailedLogsBack.Name = "pDetailedLogsBack";
+            this.pDetailedLogsBack.Size = new System.Drawing.Size(632, 423);
+            this.pDetailedLogsBack.TabIndex = 2;
+            // 
+            // tbDetailedLogs
+            // 
+            this.tbDetailedLogs.BackColor = System.Drawing.Color.White;
+            this.tbDetailedLogs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbDetailedLogs.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbDetailedLogs.Font = new System.Drawing.Font("Tahoma", 8.25F);
+            this.tbDetailedLogs.Location = new System.Drawing.Point(0, 0);
+            this.tbDetailedLogs.Multiline = true;
+            this.tbDetailedLogs.Name = "tbDetailedLogs";
+            this.tbDetailedLogs.ReadOnly = true;
+            this.tbDetailedLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tbDetailedLogs.Size = new System.Drawing.Size(630, 421);
+            this.tbDetailedLogs.TabIndex = 1;
+            this.tbDetailedLogs.TabStop = false;
+            // 
+            // tpWebBrowser
+            // 
+            this.tpWebBrowser.Controls.Add(this.pWebBrowserBack);
+            this.tpWebBrowser.Location = new System.Drawing.Point(4, 23);
+            this.tpWebBrowser.Name = "tpWebBrowser";
+            this.tpWebBrowser.Padding = new System.Windows.Forms.Padding(3);
+            this.tpWebBrowser.Size = new System.Drawing.Size(652, 462);
+            this.tpWebBrowser.TabIndex = 5;
+            this.tpWebBrowser.Text = "Browser";
+            this.tpWebBrowser.UseVisualStyleBackColor = true;
+            // 
+            // pWebBrowserBack
+            // 
+            this.pWebBrowserBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pWebBrowserBack.Controls.Add(this.webBrowser);
+            this.pWebBrowserBack.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pWebBrowserBack.Location = new System.Drawing.Point(3, 3);
+            this.pWebBrowserBack.Name = "pWebBrowserBack";
+            this.pWebBrowserBack.Size = new System.Drawing.Size(646, 456);
+            this.pWebBrowserBack.TabIndex = 0;
+            // 
+            // webBrowser
+            // 
+            this.webBrowser.AllowWebBrowserDrop = false;
+            this.webBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser.IsWebBrowserContextMenuEnabled = false;
+            this.webBrowser.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser.Name = "webBrowser";
+            this.webBrowser.ScriptErrorsSuppressed = true;
+            this.webBrowser.Size = new System.Drawing.Size(644, 454);
+            this.webBrowser.TabIndex = 1;
+            this.webBrowser.WebBrowserShortcutsEnabled = false;
             // 
             // tsMain
             // 
@@ -451,7 +705,11 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnConnect,
             this.btnDisconnect,
             this.toolStripSeparator2,
-            this.btnOutLogs,
+            this.btnOutInstantMessages,
+            this.btnOutChatMessages,
+            this.toolStripSeparator7,
+            this.btnOutGeneralLogs,
+            this.btnOutActionsLogs,
             this.btnOutDetailedLogs,
             this.toolStripSeparator5,
             this.btnRunGame,
@@ -487,18 +745,60 @@ namespace TimeZero.Auction.Bot.Forms
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnOutLogs
+            // btnOutInstantMessages
             // 
-            this.btnOutLogs.Checked = true;
-            this.btnOutLogs.CheckOnClick = true;
-            this.btnOutLogs.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.btnOutLogs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnOutLogs.Image = global::TimeZero.Auction.Bot.Properties.Resources.document_text;
-            this.btnOutLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnOutLogs.Name = "btnOutLogs";
-            this.btnOutLogs.Size = new System.Drawing.Size(23, 22);
-            this.btnOutLogs.Text = "Out log information";
-            this.btnOutLogs.Click += new System.EventHandler(this.BtnOutLogsClick);
+            this.btnOutInstantMessages.Checked = true;
+            this.btnOutInstantMessages.CheckOnClick = true;
+            this.btnOutInstantMessages.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnOutInstantMessages.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOutInstantMessages.Image = global::TimeZero.Auction.Bot.Properties.Resources.mail2;
+            this.btnOutInstantMessages.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOutInstantMessages.Name = "btnOutInstantMessages";
+            this.btnOutInstantMessages.Size = new System.Drawing.Size(23, 22);
+            this.btnOutInstantMessages.Text = "Out instant messages";
+            this.btnOutInstantMessages.Click += new System.EventHandler(this.BtnOutInstantMessagesClick);
+            // 
+            // btnOutChatMessages
+            // 
+            this.btnOutChatMessages.Checked = true;
+            this.btnOutChatMessages.CheckOnClick = true;
+            this.btnOutChatMessages.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnOutChatMessages.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOutChatMessages.Image = global::TimeZero.Auction.Bot.Properties.Resources.messages;
+            this.btnOutChatMessages.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOutChatMessages.Name = "btnOutChatMessages";
+            this.btnOutChatMessages.Size = new System.Drawing.Size(23, 22);
+            this.btnOutChatMessages.Text = "Out chat messages";
+            this.btnOutChatMessages.Click += new System.EventHandler(this.BtnOutChatMessagesClick);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
+            // btnOutGeneralLogs
+            // 
+            this.btnOutGeneralLogs.Checked = true;
+            this.btnOutGeneralLogs.CheckOnClick = true;
+            this.btnOutGeneralLogs.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.btnOutGeneralLogs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOutGeneralLogs.Image = global::TimeZero.Auction.Bot.Properties.Resources.document_text;
+            this.btnOutGeneralLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOutGeneralLogs.Name = "btnOutGeneralLogs";
+            this.btnOutGeneralLogs.Size = new System.Drawing.Size(23, 22);
+            this.btnOutGeneralLogs.Text = "Out general logs";
+            this.btnOutGeneralLogs.Click += new System.EventHandler(this.BtnOutGeneralLogsClick);
+            // 
+            // btnOutActionsLogs
+            // 
+            this.btnOutActionsLogs.CheckOnClick = true;
+            this.btnOutActionsLogs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.btnOutActionsLogs.Image = global::TimeZero.Auction.Bot.Properties.Resources.document_gear;
+            this.btnOutActionsLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOutActionsLogs.Name = "btnOutActionsLogs";
+            this.btnOutActionsLogs.Size = new System.Drawing.Size(23, 22);
+            this.btnOutActionsLogs.Text = "Out actions logs";
+            this.btnOutActionsLogs.Click += new System.EventHandler(this.BtnOutActionsLogsClick);
             // 
             // btnOutDetailedLogs
             // 
@@ -508,7 +808,7 @@ namespace TimeZero.Auction.Bot.Forms
             this.btnOutDetailedLogs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.btnOutDetailedLogs.Name = "btnOutDetailedLogs";
             this.btnOutDetailedLogs.Size = new System.Drawing.Size(23, 22);
-            this.btnOutDetailedLogs.Text = "toolStripButton2";
+            this.btnOutDetailedLogs.Text = "Out detailed logs";
             this.btnOutDetailedLogs.Click += new System.EventHandler(this.BtnOutDetailedLogsClick);
             // 
             // toolStripSeparator5
@@ -563,8 +863,6 @@ namespace TimeZero.Auction.Bot.Forms
             this.ssMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.slNetworkOut,
             this.slNetworkIn,
-            this.toolStripStatusLabel1,
-            this.lblLastShoppingTime,
             this.toolStripStatusLabel2,
             this.lblActionInProgress});
             this.ssMain.Location = new System.Drawing.Point(0, 525);
@@ -587,23 +885,11 @@ namespace TimeZero.Auction.Bot.Forms
             this.slNetworkIn.Size = new System.Drawing.Size(16, 17);
             this.slNetworkIn.ToolTipText = "0 bytes received";
             // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(138, 17);
-            this.toolStripStatusLabel1.Text = "  Last shopping duration:";
-            // 
-            // lblLastShoppingTime
-            // 
-            this.lblLastShoppingTime.Name = "lblLastShoppingTime";
-            this.lblLastShoppingTime.Size = new System.Drawing.Size(22, 17);
-            this.lblLastShoppingTime.Text = "---";
-            // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(86, 17);
-            this.toolStripStatusLabel2.Text = "Current action:";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(92, 17);
+            this.toolStripStatusLabel2.Text = "  Current action:";
             // 
             // lblActionInProgress
             // 
@@ -653,12 +939,22 @@ namespace TimeZero.Auction.Bot.Forms
             this.panel1.ResumeLayout(false);
             this.tsGameItems.ResumeLayout(false);
             this.tsGameItems.PerformLayout();
-            this.tpLog.ResumeLayout(false);
-            this.pLogInfoBack.ResumeLayout(false);
-            this.pLogInfoBack.PerformLayout();
-            this.tpDetailedLog.ResumeLayout(false);
-            this.pDetailedLogBack.ResumeLayout(false);
-            this.pDetailedLogBack.PerformLayout();
+            this.tpIMS.ResumeLayout(false);
+            this.pIMSBack.ResumeLayout(false);
+            this.tpChat.ResumeLayout(false);
+            this.pChatBack.ResumeLayout(false);
+            this.tpLogs.ResumeLayout(false);
+            this.pClearLogsBtnBack.ResumeLayout(false);
+            this.tcLogs.ResumeLayout(false);
+            this.tpGeneralLogs.ResumeLayout(false);
+            this.pGeneralLogsBack.ResumeLayout(false);
+            this.tpActionsLogs.ResumeLayout(false);
+            this.pActionsLogsBack.ResumeLayout(false);
+            this.tpDetailedLogs.ResumeLayout(false);
+            this.pDetailedLogsBack.ResumeLayout(false);
+            this.pDetailedLogsBack.PerformLayout();
+            this.tpWebBrowser.ResumeLayout(false);
+            this.pWebBrowserBack.ResumeLayout(false);
             this.tsMain.ResumeLayout(false);
             this.tsMain.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.flashPlayer)).EndInit();
@@ -672,17 +968,12 @@ namespace TimeZero.Auction.Bot.Forms
         #endregion
 
         private System.Windows.Forms.TabControl tcMain;
-        private System.Windows.Forms.TabPage tpDetailedLog;
         private System.Windows.Forms.ToolStrip tsMain;
         private System.Windows.Forms.ToolStripButton btnConnect;
         private System.Windows.Forms.ToolStripButton btnDisconnect;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.TabPage tpLog;
-        private System.Windows.Forms.Panel pLogInfoBack;
-        private System.Windows.Forms.Panel pDetailedLogBack;
+        private System.Windows.Forms.TabPage tpLogs;
         private AxShockwaveFlashObjects.AxShockwaveFlash flashPlayer;
-        private System.Windows.Forms.TextBox tbLog;
-        private System.Windows.Forms.TextBox tbDetailedLog;
         private System.Windows.Forms.TabPage tpItems;
         private System.Windows.Forms.SplitContainer scItems;
         private TreeViewSearchBox tvsbItems;
@@ -703,7 +994,7 @@ namespace TimeZero.Auction.Bot.Forms
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripButton btnGameItemsJumpToUnreviewed;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private ToolStripButton btnOutLogs;
+        private ToolStripButton btnOutGeneralLogs;
         private ToolStripButton btnOutDetailedLogs;
         private StatusStrip ssMain;
         private ToolStripStatusLabel slNetworkOut;
@@ -712,13 +1003,39 @@ namespace TimeZero.Auction.Bot.Forms
         private ToolStripSeparator toolStripSeparator5;
         private ToolStripButton btnRunGame;
         private Panel panel2;
-        private ToolStripStatusLabel toolStripStatusLabel1;
-        private ToolStripStatusLabel lblLastShoppingTime;
         private ToolStripButton btnGameItemsMultiSelect;
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripStatusLabel toolStripStatusLabel2;
         private ToolStripStatusLabel lblActionInProgress;
         private ToolStripButton btnSettings;
+        private ToolStripDropDownButton btnGameItemsActions;
+        private ToolStripMenuItem removeAllUnreviewedItemsToolStripMenuItem;
+        private ToolStripMenuItem removeAllZerocostItemsToolStripMenuItem;
+        private TabControl tcLogs;
+        private TabPage tpGeneralLogs;
+        private Panel pGeneralLogsBack;
+        private RichTextBoxEx tbGeneralLogs;
+        private TabPage tpDetailedLogs;
+        private Panel pDetailedLogsBack;
+        private TextBox tbDetailedLogs;
+        private TabPage tpActionsLogs;
+        private Panel pActionsLogsBack;
+        private RichTextBoxEx tbActionsLogs;
+        private ToolStripButton btnOutActionsLogs;
+        private Panel pClearLogsBtnBack;
+        private Button btnClearLogs;
+        private TabPage tpChat;
+        private Panel pChatBack;
+        private RichTextBoxEx tbChat;
+        private TabPage tpIMS;
+        private Panel pIMSBack;
+        private RichTextBoxEx tbIMS;
+        private ToolStripButton btnOutInstantMessages;
+        private ToolStripButton btnOutChatMessages;
+        private ToolStripSeparator toolStripSeparator7;
+        private TabPage tpWebBrowser;
+        private Panel pWebBrowserBack;
+        private WebBrowser webBrowser;
     }
 }
 

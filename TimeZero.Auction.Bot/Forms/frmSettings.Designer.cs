@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("General", 0);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Main window", 1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Application", 1);
             this.ilHelp = new System.Windows.Forms.ImageList(this.components);
             this.pSettings = new System.Windows.Forms.Panel();
             this.tbSettings = new System.Windows.Forms.TabControl();
@@ -58,9 +58,14 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.lblServerSettings = new System.Windows.Forms.Label();
             this.chkSendHotkeyAfterSubmit = new System.Windows.Forms.CheckBox();
-            this.tpMainWindow = new System.Windows.Forms.TabPage();
-            this.cbOutDetailedLogInfo = new System.Windows.Forms.CheckBox();
-            this.cbOutLogInfo = new System.Windows.Forms.CheckBox();
+            this.tpApplication = new System.Windows.Forms.TabPage();
+            this.cbOutChatMessages = new System.Windows.Forms.CheckBox();
+            this.cbOutInstantMessages = new System.Windows.Forms.CheckBox();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cbOutActionsLogs = new System.Windows.Forms.CheckBox();
+            this.cbOutDetailedLogs = new System.Windows.Forms.CheckBox();
+            this.cbOutGeneralLogs = new System.Windows.Forms.CheckBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -72,7 +77,7 @@
             this.pSettings.SuspendLayout();
             this.tbSettings.SuspendLayout();
             this.tpGeneral.SuspendLayout();
-            this.tpMainWindow.SuspendLayout();
+            this.tpApplication.SuspendLayout();
             this.SuspendLayout();
             // 
             // ilHelp
@@ -100,7 +105,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbSettings.Controls.Add(this.tpGeneral);
-            this.tbSettings.Controls.Add(this.tpMainWindow);
+            this.tbSettings.Controls.Add(this.tpApplication);
             this.tbSettings.Location = new System.Drawing.Point(-1, -1);
             this.tbSettings.Name = "tbSettings";
             this.tbSettings.SelectedIndex = 0;
@@ -168,11 +173,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbPassword.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbPassword.Location = new System.Drawing.Point(114, 194);
-            this.tbPassword.MaxLength = 0;
+            this.tbPassword.MaxLength = 50;
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.PasswordChar = '•';
             this.tbPassword.Size = new System.Drawing.Size(243, 22);
             this.tbPassword.TabIndex = 109;
+            this.tbPassword.UseSystemPasswordChar = true;
             // 
             // label9
             // 
@@ -189,7 +195,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbLogin.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbLogin.Location = new System.Drawing.Point(114, 166);
-            this.tbLogin.MaxLength = 0;
+            this.tbLogin.MaxLength = 16;
             this.tbLogin.Name = "tbLogin";
             this.tbLogin.Size = new System.Drawing.Size(243, 22);
             this.tbLogin.TabIndex = 107;
@@ -230,7 +236,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbGameFolder.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbGameFolder.Location = new System.Drawing.Point(114, 111);
-            this.tbGameFolder.MaxLength = 0;
+            this.tbGameFolder.MaxLength = 500;
             this.tbGameFolder.Name = "tbGameFolder";
             this.tbGameFolder.Size = new System.Drawing.Size(217, 22);
             this.tbGameFolder.TabIndex = 103;
@@ -250,7 +256,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbClientVer2.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbClientVer2.Location = new System.Drawing.Point(267, 83);
-            this.tbClientVer2.MaxLength = 0;
+            this.tbClientVer2.MaxLength = 20;
             this.tbClientVer2.Name = "tbClientVer2";
             this.tbClientVer2.Size = new System.Drawing.Size(90, 22);
             this.tbClientVer2.TabIndex = 101;
@@ -268,7 +274,7 @@
             // 
             this.tbClientVer1.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbClientVer1.Location = new System.Drawing.Point(114, 83);
-            this.tbClientVer1.MaxLength = 0;
+            this.tbClientVer1.MaxLength = 3;
             this.tbClientVer1.Name = "tbClientVer1";
             this.tbClientVer1.Size = new System.Drawing.Size(46, 22);
             this.tbClientVer1.TabIndex = 99;
@@ -371,60 +377,125 @@
             this.chkSendHotkeyAfterSubmit.UseVisualStyleBackColor = false;
             this.chkSendHotkeyAfterSubmit.Visible = false;
             // 
-            // tpMainWindow
+            // tpApplication
             // 
-            this.tpMainWindow.Controls.Add(this.cbOutDetailedLogInfo);
-            this.tpMainWindow.Controls.Add(this.cbOutLogInfo);
-            this.tpMainWindow.Controls.Add(this.panel3);
-            this.tpMainWindow.Controls.Add(this.label5);
-            this.tpMainWindow.Location = new System.Drawing.Point(4, 24);
-            this.tpMainWindow.Name = "tpMainWindow";
-            this.tpMainWindow.Padding = new System.Windows.Forms.Padding(3);
-            this.tpMainWindow.Size = new System.Drawing.Size(368, 354);
-            this.tpMainWindow.TabIndex = 2;
-            this.tpMainWindow.Text = "Main window";
-            this.tpMainWindow.UseVisualStyleBackColor = true;
+            this.tpApplication.Controls.Add(this.cbOutChatMessages);
+            this.tpApplication.Controls.Add(this.cbOutInstantMessages);
+            this.tpApplication.Controls.Add(this.panel4);
+            this.tpApplication.Controls.Add(this.label10);
+            this.tpApplication.Controls.Add(this.cbOutActionsLogs);
+            this.tpApplication.Controls.Add(this.cbOutDetailedLogs);
+            this.tpApplication.Controls.Add(this.cbOutGeneralLogs);
+            this.tpApplication.Controls.Add(this.panel3);
+            this.tpApplication.Controls.Add(this.label5);
+            this.tpApplication.Location = new System.Drawing.Point(4, 24);
+            this.tpApplication.Name = "tpApplication";
+            this.tpApplication.Padding = new System.Windows.Forms.Padding(3);
+            this.tpApplication.Size = new System.Drawing.Size(368, 354);
+            this.tpApplication.TabIndex = 2;
+            this.tpApplication.Text = "Application";
+            this.tpApplication.UseVisualStyleBackColor = true;
             // 
-            // cbOutDetailedLogInfo
+            // cbOutChatMessages
             // 
-            this.cbOutDetailedLogInfo.AutoSize = true;
-            this.cbOutDetailedLogInfo.Location = new System.Drawing.Point(15, 53);
-            this.cbOutDetailedLogInfo.Name = "cbOutDetailedLogInfo";
-            this.cbOutDetailedLogInfo.Size = new System.Drawing.Size(182, 19);
-            this.cbOutDetailedLogInfo.TabIndex = 91;
-            this.cbOutDetailedLogInfo.Text = "Out detailed log information";
-            this.cbOutDetailedLogInfo.UseVisualStyleBackColor = true;
+            this.cbOutChatMessages.AutoSize = true;
+            this.cbOutChatMessages.Location = new System.Drawing.Point(15, 53);
+            this.cbOutChatMessages.Name = "cbOutChatMessages";
+            this.cbOutChatMessages.Size = new System.Drawing.Size(129, 19);
+            this.cbOutChatMessages.TabIndex = 2;
+            this.cbOutChatMessages.Text = "Out chat messages";
+            this.cbOutChatMessages.UseVisualStyleBackColor = true;
+            this.cbOutChatMessages.Visible = false;
             // 
-            // cbOutLogInfo
+            // cbOutInstantMessages
             // 
-            this.cbOutLogInfo.AutoSize = true;
-            this.cbOutLogInfo.Location = new System.Drawing.Point(15, 30);
-            this.cbOutLogInfo.Name = "cbOutLogInfo";
-            this.cbOutLogInfo.Size = new System.Drawing.Size(134, 19);
-            this.cbOutLogInfo.TabIndex = 90;
-            this.cbOutLogInfo.Text = "Out log information";
-            this.cbOutLogInfo.UseVisualStyleBackColor = true;
+            this.cbOutInstantMessages.AutoSize = true;
+            this.cbOutInstantMessages.Location = new System.Drawing.Point(15, 30);
+            this.cbOutInstantMessages.Name = "cbOutInstantMessages";
+            this.cbOutInstantMessages.Size = new System.Drawing.Size(144, 19);
+            this.cbOutInstantMessages.TabIndex = 1;
+            this.cbOutInstantMessages.Text = "Out instant messages";
+            this.cbOutInstantMessages.UseVisualStyleBackColor = true;
+            this.cbOutInstantMessages.Visible = false;
+            // 
+            // panel4
+            // 
+            this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel4.Location = new System.Drawing.Point(7, 21);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(350, 1);
+            this.panel4.TabIndex = 94;
+            this.panel4.Visible = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label10.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.label10.Location = new System.Drawing.Point(3, 3);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(59, 15);
+            this.label10.TabIndex = 93;
+            this.label10.Text = "Messages";
+            this.label10.Visible = false;
+            // 
+            // cbOutActionsLogs
+            // 
+            this.cbOutActionsLogs.AutoSize = true;
+            this.cbOutActionsLogs.Location = new System.Drawing.Point(15, 128);
+            this.cbOutActionsLogs.Name = "cbOutActionsLogs";
+            this.cbOutActionsLogs.Size = new System.Drawing.Size(115, 19);
+            this.cbOutActionsLogs.TabIndex = 4;
+            this.cbOutActionsLogs.Text = "Out actions logs";
+            this.cbOutActionsLogs.UseVisualStyleBackColor = true;
+            this.cbOutActionsLogs.Visible = false;
+            // 
+            // cbOutDetailedLogs
+            // 
+            this.cbOutDetailedLogs.AutoSize = true;
+            this.cbOutDetailedLogs.Location = new System.Drawing.Point(15, 151);
+            this.cbOutDetailedLogs.Name = "cbOutDetailedLogs";
+            this.cbOutDetailedLogs.Size = new System.Drawing.Size(120, 19);
+            this.cbOutDetailedLogs.TabIndex = 5;
+            this.cbOutDetailedLogs.Text = "Out detailed logs";
+            this.cbOutDetailedLogs.UseVisualStyleBackColor = true;
+            this.cbOutDetailedLogs.Visible = false;
+            // 
+            // cbOutGeneralLogs
+            // 
+            this.cbOutGeneralLogs.AutoSize = true;
+            this.cbOutGeneralLogs.Location = new System.Drawing.Point(15, 105);
+            this.cbOutGeneralLogs.Name = "cbOutGeneralLogs";
+            this.cbOutGeneralLogs.Size = new System.Drawing.Size(116, 19);
+            this.cbOutGeneralLogs.TabIndex = 3;
+            this.cbOutGeneralLogs.Text = "Out general logs";
+            this.cbOutGeneralLogs.UseVisualStyleBackColor = true;
+            this.cbOutGeneralLogs.Visible = false;
             // 
             // panel3
             // 
             this.panel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Location = new System.Drawing.Point(7, 21);
+            this.panel3.Location = new System.Drawing.Point(7, 96);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(350, 1);
             this.panel3.TabIndex = 89;
+            this.panel3.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label5.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.label5.Location = new System.Drawing.Point(3, 3);
+            this.label5.Location = new System.Drawing.Point(3, 78);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(48, 15);
             this.label5.TabIndex = 88;
             this.label5.Text = "Logging";
+            this.label5.Visible = false;
             // 
             // btnCancel
             // 
@@ -452,8 +523,7 @@
             // fbdGameFolder
             // 
             this.fbdGameFolder.Description = "Please select TimeZero game folder. Some of the game resources will be used to ma" +
-    "ke authorization on a game server. Privacy all of your personal data is guarante" +
-    "ed!";
+    "ke authorization on a game server.";
             this.fbdGameFolder.RootFolder = System.Environment.SpecialFolder.MyComputer;
             this.fbdGameFolder.ShowNewFolderButton = false;
             // 
@@ -516,8 +586,8 @@
             this.tbSettings.ResumeLayout(false);
             this.tpGeneral.ResumeLayout(false);
             this.tpGeneral.PerformLayout();
-            this.tpMainWindow.ResumeLayout(false);
-            this.tpMainWindow.PerformLayout();
+            this.tpApplication.ResumeLayout(false);
+            this.tpApplication.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -555,11 +625,16 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.FolderBrowserDialog fbdGameFolder;
         private System.Windows.Forms.ImageList ilSettings;
-        private System.Windows.Forms.TabPage tpMainWindow;
+        private System.Windows.Forms.TabPage tpApplication;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox cbOutLogInfo;
-        private System.Windows.Forms.CheckBox cbOutDetailedLogInfo;
+        private System.Windows.Forms.CheckBox cbOutGeneralLogs;
+        private System.Windows.Forms.CheckBox cbOutDetailedLogs;
         public System.Windows.Forms.TextBox tbGamePort;
+        private System.Windows.Forms.CheckBox cbOutActionsLogs;
+        private System.Windows.Forms.CheckBox cbOutChatMessages;
+        private System.Windows.Forms.CheckBox cbOutInstantMessages;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Label label10;
     }
 }

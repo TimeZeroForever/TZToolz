@@ -108,6 +108,13 @@ namespace TimeZero.Auction.Bot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap document_gear {
+            get {
+                object obj = ResourceManager.GetObject("document_gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap document_text {
             get {
                 object obj = ResourceManager.GetObject("document_text", resourceCulture);
@@ -118,6 +125,13 @@ namespace TimeZero.Auction.Bot.Properties {
         internal static System.Drawing.Bitmap emoticon_smile {
             get {
                 object obj = ResourceManager.GetObject("emoticon_smile", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap eraser {
+            get {
+                object obj = ResourceManager.GetObject("eraser", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -149,9 +163,37 @@ namespace TimeZero.Auction.Bot.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap lightning {
+            get {
+                object obj = ResourceManager.GetObject("lightning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap logo {
             get {
                 object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap mail2 {
+            get {
+                object obj = ResourceManager.GetObject("mail2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap message {
+            get {
+                object obj = ResourceManager.GetObject("message", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap messages {
+            get {
+                object obj = ResourceManager.GetObject("messages", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -160,6 +202,12 @@ namespace TimeZero.Auction.Bot.Properties {
             get {
                 object obj = ResourceManager.GetObject("Nuke", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.IO.UnmanagedMemoryStream private_message {
+            get {
+                return ResourceManager.GetStream("private_message", resourceCulture);
             }
         }
         

@@ -13,11 +13,12 @@
         public const string MY_SPECIALS     = "SPECIAL"       ;
         public const string MY_SPECIALS_A   = "SPECIALA"      ;
         public const string MY_SPECIALS_D   = "SPECIALD"      ;
-        public const string CHANGE_ONE      = "CHANGE_ONE"    ;
+        public const string ITEM_CHANGE_ONE = "CHANGE_ONE"    ;
         public const string ITEM_ADD_ONE    = "ADD_ONE"       ;
 
         public const string BOT_INFO        = "BOT"           ;
         public const string DIALOG_DATA     = "DLG"           ;
+
         public const string SHOP_DATA       = "SH"            ;
         public const string SHOP_ERROR      = "SH_ERR"        ;
         public const string SHOP_OK         = "SH_OK"         ;
@@ -25,13 +26,11 @@
         public const string EXCHANGE        = "EXCHANGE"      ;
         public const string EXCHANGE_CANCEL = "EXCHANGEDEL"   ;
         
-        public const string DM              = "DM"            ;
-
-        public const string MOVE_ERROR      = "ERRGO"         ;
         public const string GO_TO_BUILDING  = "GOBLD"         ;
+        public const string MOVE_ERROR      = "ERRGO"         ;
 
+        public const string CHAT_CTRL       = "CHAT"          ;
         public const string CHAT_MESSAGE    = "CHAT_MSG"      ;
-        public const string CHAT            = "CHAT"          ;
 
         public const string CLIENT_STATUS   = "CLIENT_STATUS" ;
         public const string UPDATE_VER      = "UPDATE_VER"    ;
@@ -39,6 +38,9 @@
         public const string IMS             = "IMS"           ;
         public const string LB              = "LB"            ;
         public const string ID2             = "ID2"           ;
+        public const string RELOADL         = "RELOADL"       ;
+        public const string DM              = "DM"            ;
+        
     }
 
     public static class FromClient
@@ -54,6 +56,7 @@
         public const string SHOP            = "SH"      ;
         public const string CLEAR_IMS       = "CLIMS"   ;
         public const string JOIN_INVENTORY  = "JOIN"    ;
-        public const string CHAT            = "CHAT"    ;        
+        public const string CHAT_CTRL       = "CHAT"    ;
+        public const string CHAT_MESSAGE    = "POST"    ;
     }
 }

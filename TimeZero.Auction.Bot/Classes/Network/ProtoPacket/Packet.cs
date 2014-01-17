@@ -14,7 +14,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.ProtoPacket
         private static readonly Regex _regexPacketType = new Regex("(?<=^\\<).*?(?=\\W)|(?<=^\\<).*?(?=\\>)", 
             RegexOptions.ExplicitCapture);
 
-        private static readonly Regex _regexXmlEncode = new Regex("(?s+)(?<==\".?)&(?!amp;)",
+        private static readonly Regex _regexXmlEncode = new Regex("(?s)(?<==\".?)&(?!amp;)",
             RegexOptions.ExplicitCapture);
 
         private static readonly Dictionary<string, string> _xmlEncodeReplacements = new Dictionary<string, string>
@@ -41,6 +41,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.ProtoPacket
 
         public string Type { get; private set; }
         public bool IsEncoded { get; private set; }
+        public DateTime ReceiveTime { get; private set; }
 
         public string Data
         {
@@ -81,6 +82,7 @@ namespace TimeZero.Auction.Bot.Classes.Network.ProtoPacket
                 _dataNode.InnerXml = string.Format("<{0}>{1}</{0}>", Type, encodedData);
                 IsEncoded = true;
             }
+            ReceiveTime = DateTime.Now;
         }
 
         private string NormalizeXmlData(string data)

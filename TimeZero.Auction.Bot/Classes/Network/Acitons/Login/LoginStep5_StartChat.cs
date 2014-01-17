@@ -11,14 +11,14 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
         public bool DoStep(NetworkClient networkClient, GameClient client)
         {
             bool chatStarted = false;
-            networkClient.SendLogMessage("Starting chat...");
+            networkClient.OutLogMessage("Starting chat...");
 
             //Get chat info
-            string getInfo = Packet.BuildPacket(FromClient.CHAT, Chat.START);
+            string getInfo = Packet.BuildPacket(FromClient.CHAT_CTRL, Chat.START);
             networkClient.SendData(getInfo);
 
             //Start chat
-            Packet chat = networkClient.InputQueue.Pop(FromServer.CHAT);
+            Packet chat = networkClient.InputQueue.Pop(FromServer.CHAT_CTRL);
             if (chat != null)
             {
                 string chatServer = chat["@server"];
@@ -27,20 +27,15 @@ namespace TimeZero.Auction.Bot.Classes.Network.Acitons.Login
                 if (chatStarted)
                 {
                     //1: Session ID, 2: Login
-                    string chatAuth = Packet.BuildPacket(FromClient.CHAT, Chat.AUTH, 
+                    string chatAuth = Packet.BuildPacket(FromClient.CHAT_CTRL, Chat.AUTH, 
                         sessionId, client.Login);
                     networkClient.SendChatData(chatAuth);
                 }
             }
 
-            if (!chatStarted)
-            {
-                networkClient.SendLogMessage("WARNING: chat wasn`t started");
-            }
-            else
-            {
-                networkClient.SendLogMessage("Chat was successfully started");
-            }
+            networkClient.OutLogMessage(!chatStarted 
+                ? "WARNING: chat wasn`t started" 
+                : "Chat was successfully started");
 
             return true;
         }

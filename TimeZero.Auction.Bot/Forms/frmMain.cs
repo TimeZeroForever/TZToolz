@@ -14,8 +14,10 @@ using TimeZero.Auction.Bot.Classes.Network.Acitons;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Game;
 using TimeZero.Auction.Bot.Classes.TZProcess;
 using TimeZero.Auction.Bot.ClassesInstances;
+using TimeZero.Auction.Bot.Controls.RichTextBoxEx;
 using TimeZero.Auction.Bot.Helpers;
 using TimeZero.Auction.Bot.Properties;
+using System.Text.RegularExpressions;
 
 namespace TimeZero.Auction.Bot.Forms
 {
@@ -25,7 +27,27 @@ namespace TimeZero.Auction.Bot.Forms
 #region Delegates
 
         delegate void OutLogData(string data);
+        delegate void OnSaveItemsList(bool silent);
 
+#endregion
+
+#region Constants
+
+        private const char LINK_MARKER_NICKNAME = '[';
+        private const char LINK_MARKER_GAMEITEM = '\'';
+
+#endregion
+
+#region Static private fields
+
+        private static readonly Regex _regexNickName = new Regex(@"(?s)(?<=\s+)(?<VALUE>\[.+?\])");
+        private static readonly Regex _regexGameItem = new Regex(@"(?s)(?<=\s+)(?<VALUE>\'.+?\')");
+
+        private static readonly List<Regex> _regexesHyperlinks = new List<Regex>
+                                                                     {
+                                                                         _regexNickName,
+                                                                         _regexGameItem
+                                                                     };
 #endregion
 
 #region Private fields
@@ -40,8 +62,6 @@ namespace TimeZero.Auction.Bot.Forms
 
         private long _networkDataOutLength;
         private long _networkDataInLength;
-
-        private DateTime _startShoppingTime;
 
         private List<TreeNode> _gameItemsCheckedNodes;
 
@@ -89,7 +109,7 @@ namespace TimeZero.Auction.Bot.Forms
 #endregion
 
 #region Class methods
-
+        
         public frmMain()
         {
             BeginLoading();
@@ -172,9 +192,9 @@ Application terminated.",
             flashPlayer.OnReadyStateChange += player_OnReadyStateChange;
 
             //Init game client
-            _gameClient.Init(Helper.GetLocalIP(),
-                             AppSettings.Instance["Login"],
-                             AppSettings.Instance["Password"],
+            string password = AppSettings.Instance["Password"];
+            _gameClient.Init(AppSettings.Instance["Login"],
+                             Helper.DecryptStringByHardwareID(password),
                              AppSettings.Instance["ClientVersion"],
                              AppSettings.Instance["ClientVersion2"],
                              flashPlayer);
@@ -185,13 +205,22 @@ Application terminated.",
                                 AppSettings.Instance.GetInt("Port"));
             _networkClient.OnDataReceived += DataReceived;
             _networkClient.OnDataSended += DataSended;
-            _networkClient.OnLogMessage += LogMessage;
+            _networkClient.OnGeneralLogMessage += GeneralLogMessage;
+            _networkClient.OnInstantMessage += InstantMessage;
+            _networkClient.OnChatMessage += ChatMessage;
+            _networkClient.OnActionLogMessage += ActionLogMessage;
             _networkClient.OnNetworkActivityOut += NetworkActivityOut;
             _networkClient.OnNetworkActivityIn += NetworkActivityIn;
             _networkClient.OnConnected += Connected;
             _networkClient.OnDisconnected += Disconnected;
             _networkClient.OnActionStepStarted += OnActionStepStarted;
             _networkClient.OnActionStepCompleted += OnActionStepCompleted;
+
+            _networkClient.OutInstantMessages = AppSettings.Instance.GetBool("OutInstantMessages");
+            _networkClient.OutChatMessages = AppSettings.Instance.GetBool("OutChatMessages");
+            _networkClient.OutGeneralLogs = AppSettings.Instance.GetBool("OutGeneralLogs");
+            _networkClient.OutDetailedLogs = AppSettings.Instance.GetBool("OutDetailedLogs");
+            _networkClient.OutActionsLogs = AppSettings.Instance.GetBool("OutActionsLogs");
 
             //Init game items groups
             try
@@ -210,12 +239,6 @@ Application terminated.",
                 _gameItemsGroups.InitializeDefaults();
             }
             RefreshGameItemsTreeView();
-
-            //Init tool buttons
-            btnOutLogs.Checked = AppSettings.Instance.GetBool("OutLogs");
-            BtnOutLogsClick(null, null);
-            btnOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
-            BtnOutDetailedLogsClick(null, null);
         }
 
         private void DeinitializeEnvironment()
@@ -235,6 +258,12 @@ Application terminated.",
             btnConnect.Enabled = !_networkClient.Connected && _tzProcessHasPatched;
             btnDisconnect.Enabled = _networkClient.Connected && _tzProcessHasPatched;
             tcMain.Enabled = _tzProcessHasPatched;
+
+            btnOutInstantMessages.Checked = AppSettings.Instance.GetBool("OutInstantMessages");
+            btnOutChatMessages.Checked = AppSettings.Instance.GetBool("OutChatMessages");
+            btnOutGeneralLogs.Checked = AppSettings.Instance.GetBool("OutGeneralLogs");
+            btnOutDetailedLogs.Checked = AppSettings.Instance.GetBool("OutDetailedLogs");
+            btnOutActionsLogs.Checked = AppSettings.Instance.GetBool("OutActionsLogs");
         }
 
         private void player_OnReadyStateChange(object sender, _IShockwaveFlashEvents_OnReadyStateChangeEvent e)
@@ -259,20 +288,70 @@ Application terminated.",
             }
         }
 
-        private void OutLogMessage(string message)
+        private void AppendFormattedText(RichTextBoxEx textBox, string text)
+        {
+            Helper.LockUpdate(textBox);
+
+            int start = textBox.Text.Length;
+            textBox.AppendText(text);
+
+            //Parse hyperlinks
+            foreach (Regex regex in _regexesHyperlinks)
+            {
+                MatchCollection matches = regex.Matches(text);
+                foreach (Match match in matches)
+                {
+                    Group groupValue = match.Groups["VALUE"];
+                    textBox.SelectionStart = start + groupValue.Index;
+                    textBox.SelectionLength = groupValue.Length;
+                    textBox.SetSelectionLink(true);
+                }
+            }
+
+            textBox.SelectionStart = textBox.Text.Length;
+            textBox.SelectionLength = 0;
+
+            Helper.UnlockUpdate(textBox);
+        }
+
+        private void OutGeneralLogMessage(string message)
         {
             lock (_syncObject)
             {
-                tbLog.AppendText(string.Format("{0}{1}", message, Environment.NewLine));
+                AppendFormattedText(tbGeneralLogs, string.Format("{0}{1}", message, Environment.NewLine));
             }
         }
 
-        private void OutFullLogMessage(string message)
+        private void OutDetailedLogMessage(string message)
         {
             lock (_syncObject)
             {
-                tbDetailedLog.AppendText(string.Format("{0}{1}{1}", message, Environment.NewLine));
+                tbDetailedLogs.AppendText(string.Format("{0}{1}{1}", message, Environment.NewLine));
                 Thread.Sleep(0);
+            }
+        }
+
+        private void OutActionLogMessage(string message)
+        {
+            lock (_syncObject)
+            {
+                AppendFormattedText(tbActionsLogs, string.Format("{0}{1}", message, Environment.NewLine));
+            }
+        }
+
+        private void OutInstantMessage(string message)
+        {
+            lock (_syncObject)
+            {
+                AppendFormattedText(tbIMS, string.Format("{0}{1}", message, Environment.NewLine));
+            }
+        }
+
+        private void OutChatMessage(string message)
+        {
+            lock (_syncObject)
+            {
+                AppendFormattedText(tbChat, string.Format("{0}{1}", message, Environment.NewLine));
             }
         }
 
@@ -317,14 +396,39 @@ Application terminated.",
             }
         }
 
-        private void BtnOutLogsClick(object sender, EventArgs e)
+        private void BtnOutInstantMessagesClick(object sender, EventArgs e)
         {
-            _networkClient.OutLogs = btnOutLogs.Checked;
+            _networkClient.OutInstantMessages = btnOutInstantMessages.Checked;
+            AppSettings.Instance["OutInstantMessages"] = btnOutInstantMessages.Checked.ToString();
+            AppSettings.Instance.Save();
+        }
+
+        private void BtnOutChatMessagesClick(object sender, EventArgs e)
+        {
+            _networkClient.OutChatMessages = btnOutChatMessages.Checked;
+            AppSettings.Instance["OutChatMessages"] = btnOutChatMessages.Checked.ToString();
+            AppSettings.Instance.Save();
+        }
+
+        private void BtnOutGeneralLogsClick(object sender, EventArgs e)
+        {
+            _networkClient.OutGeneralLogs = btnOutGeneralLogs.Checked;
+            AppSettings.Instance["OutGeneralLogs"] = btnOutGeneralLogs.Checked.ToString();
+            AppSettings.Instance.Save();
         }
 
         private void BtnOutDetailedLogsClick(object sender, EventArgs e)
         {
             _networkClient.OutDetailedLogs = btnOutDetailedLogs.Checked;
+            AppSettings.Instance["OutDetailedLogs"] = btnOutDetailedLogs.Checked.ToString();
+            AppSettings.Instance.Save();
+        }
+
+        private void BtnOutActionsLogsClick(object sender, EventArgs e)
+        {
+            _networkClient.OutActionsLogs = btnOutActionsLogs.Checked;
+            AppSettings.Instance["OutActionsLogs"] = btnOutActionsLogs.Checked.ToString();
+            AppSettings.Instance.Save();
         }
 
         private void TimerNetworkActivityTick(object sender, EventArgs e)
@@ -377,6 +481,28 @@ Application terminated.",
             }
         }
 
+        private void ClearSelectedLogsWindow()
+        {
+            switch (tcLogs.SelectedIndex)
+            {
+                case 0:
+                    tbGeneralLogs.Clear();
+                    break;
+                case 1:
+                    tbActionsLogs.Clear();
+                    break;
+                case 2:
+                    tbDetailedLogs.Clear();
+                    break;
+            }
+            tcLogs.SelectedTab.Focus();
+        }
+
+        private void BtnClearLogsClick(object sender, EventArgs e)
+        {
+            ClearSelectedLogsWindow();
+        }
+
 #endregion
 
 #region Network connection methods
@@ -409,40 +535,55 @@ Application terminated.",
         private void DataReceived(string data)
         {
             data = string.Format(">>> {1}:{0}{2}", Environment.NewLine, DateTime.Now, data);
-            tbDetailedLog.BeginInvoke(new OutLogData(OutFullLogMessage), new object[] { data });
+            tbDetailedLogs.BeginInvoke(new OutLogData(OutDetailedLogMessage), new object[] { data });
         }
 
         private void DataSended(string data)
         {
             data = string.Format("<<< {1}:{0}{2}", Environment.NewLine, DateTime.Now, data);
-            tbDetailedLog.BeginInvoke(new OutLogData(OutFullLogMessage), new object[] { data });
+            tbDetailedLogs.BeginInvoke(new OutLogData(OutDetailedLogMessage), new object[] { data });
         }
 
         private void NetworkActivityOut(int dataLength)
         {
-            tbDetailedLog.BeginInvoke(new OnNetworkActivity(OnNetworkActivityOut), 
+            tbDetailedLogs.BeginInvoke(new OnNetworkActivity(OnNetworkActivityOut), 
                 new object[] { dataLength });
         }
 
         private void NetworkActivityIn(int dataLength)
         {
-            tbDetailedLog.BeginInvoke(new OnNetworkActivity(OnNetworkActivityIn),
+            tbDetailedLogs.BeginInvoke(new OnNetworkActivity(OnNetworkActivityIn),
                 new object[] { dataLength });
         }
 
-        private void LogMessage(string message)
+        private void GeneralLogMessage(string message)
         {
             bool woDateTime = !string.IsNullOrEmpty(message) && 
                 (message[0] == '-' || message[0] == '=' || message[0] == '\t');
             message = string.Format("{0}{1}", woDateTime ? "" : DateTime.Now + ": ", message);
-            tbLog.BeginInvoke(new OutLogData(OutLogMessage), new object[] { message });
+            tbGeneralLogs.BeginInvoke(new OutLogData(OutGeneralLogMessage), new object[] { message });
         }
 
-        private void UpdateLastShoppingTime()
+        private void ActionLogMessage(IActionStep actionStep, string message)
         {
-            string time = DateTime.Now.Subtract(_startShoppingTime).ToString();
-            lblLastShoppingTime.Text = time.Remove(time.IndexOf('.'));
-            lblLastShoppingTime.ToolTipText = DateTime.Now.ToString();
+            string stepType = actionStep.GetType().ToString();
+            string stepName = stepType.Substring(stepType.IndexOf('_') + 1);
+            bool woStepName = !string.IsNullOrEmpty(message) && message[0] == '\t';
+            message = string.Format("{0}{1}", woStepName ? "" : stepName + ": ", message);
+            tbGeneralLogs.BeginInvoke(new OutLogData(OutActionLogMessage), new object[] { message });
+        }
+
+        private void InstantMessage(string message)
+        {
+            bool woDateTime = !string.IsNullOrEmpty(message) && message[0] == '\t';
+            message = string.Format("{0}{1}", woDateTime ? "" : DateTime.Now + ": ", message);
+            tbGeneralLogs.BeginInvoke(new OutLogData(OutInstantMessage), new object[] { message });
+        }
+
+        private void ChatMessage(string message)
+        {
+            message = string.Format("{0}{1}", DateTime.Now + ": ", message);
+            tbGeneralLogs.BeginInvoke(new OutLogData(OutChatMessage), new object[] { message });
         }
 
         private void SyncActionStepStarted(IActionStep actionStep)
@@ -454,11 +595,7 @@ Application terminated.",
 
         private void OnActionStepStarted(IActionStep actionStep) 
         {
-            if (actionStep is GameStep_Shopping)
-            {
-                _startShoppingTime = DateTime.Now;
-            }
-            BeginInvoke(new OnActionStepStarted(SyncActionStepStarted), new[] { actionStep });
+            BeginInvoke(new OnActionStepStarted(SyncActionStepStarted), new object[] { actionStep });
         }
 
         private void SyncActionStepCompleted(IActionStep actionStep)
@@ -471,11 +608,9 @@ Application terminated.",
         {
             if (actionStep is GameStep_Shopping && done)
             {
-                BeginInvoke(new Action(UpdateLastShoppingTime));
-                BeginInvoke(new Action(SaveGameItemsList));
-                BeginInvoke(new Action(tbDetailedLog.Clear));
+                BeginInvoke(new OnSaveItemsList(SaveGameItemsList), new object[] { true });
             }
-            BeginInvoke(new OnActionStepStarted(SyncActionStepCompleted), new[] { actionStep });
+            BeginInvoke(new OnActionStepStarted(SyncActionStepCompleted), new object[] { actionStep });
         }
 
         private void Connected()
@@ -489,8 +624,6 @@ Application terminated.",
             timerReconnect.Enabled = true;
             lblActionInProgress.Text = "---";
             lblActionInProgress.ToolTipText = string.Empty;
-            lblLastShoppingTime.Text = "---";
-            lblLastShoppingTime.ToolTipText = string.Empty;
         }
 
         private void Disconnected()
@@ -549,7 +682,7 @@ Application terminated.",
 
         private void BtnSaveItemsListClick(object sender, EventArgs e)
         {
-            SaveGameItemsList();
+            SaveGameItemsList(false);
         }
 
         private void TvItemsAfterSelect(object sender, TreeViewEventArgs e)
@@ -562,16 +695,22 @@ Application terminated.",
             RefreshGameItemsTreeView();
         }
 
-        private void SaveGameItemsList()
+        private void SaveGameItemsList(bool silent)
         {
-            Cursor = Cursors.WaitCursor;
+            if (!silent)
+            {
+                Cursor = Cursors.WaitCursor;
+            }
 
             //Save game items list
             Serializer<GameItemsGroupList> serializer = new Serializer<GameItemsGroupList>();
             byte[] gameItemsGroups = serializer.Serialize(_gameItemsGroups);
             File.WriteAllBytes("gameItemsGroups.dat", gameItemsGroups);
 
-            Cursor = Cursors.Default;
+            if (!silent)
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void RefreshGameItemsTreeView()
@@ -661,8 +800,9 @@ Application terminated.",
             btnGameItemRemove.Enabled = (IsGameItemsInMultiSelectionMode && nodes.Count > 0) || 
                 (selectedObject != null && !(selectedObject is GameItemsGroup));
 
-            btnGameItemsJumpToUnreviewed.Enabled = btnGameItemsOrderSubGroups.Enabled =
-                btnGameItemsRefresh.Enabled = !IsGameItemsInMultiSelectionMode;
+            btnGameItemsActions.Enabled = btnGameItemsJumpToUnreviewed.Enabled = 
+                btnGameItemsOrderSubGroups.Enabled = btnGameItemsRefresh.Enabled = 
+                !IsGameItemsInMultiSelectionMode;
 
             GameItem gameItem = selectedObject as GameItem;
             if (gameItem != null && !gameItem.HasReviewed)
@@ -695,6 +835,10 @@ Application terminated.",
                                     if (form.UseSubGroupsIgnoreForShopping)
                                     {
                                         subGroup.IgnoreForShopping = form.SubGroupsIgnoreForShopping;
+                                    }
+                                    if (form.UseSubGroupsIgnoreForSelling)
+                                    {
+                                        subGroup.IgnoreForSelling = form.SubGroupsIgnoreForSelling;
                                     }
                                     if (form.UseSubGroupsUseExtendedShoppingRule)
                                     {
@@ -1061,7 +1205,7 @@ Application terminated.",
                 {
                     case Keys.S:
                         {
-                            SaveGameItemsList();
+                            SaveGameItemsList(false);
                             break;
                         }
                     case Keys.R:
@@ -1116,9 +1260,82 @@ Application terminated.",
             }
         }
 
+        #region Actions
+
+        private void RemoveEmptySubGroups()
+        {
+            foreach (GameItemsGroup gig in _gameItemsGroups.Groups)
+            {
+                List<GameItemsSubGroup> toRemove = new List<GameItemsSubGroup>();
+                foreach (GameItemsSubGroup sg in gig.SubGroups)
+                {
+                    if (sg.ItemsCount == 0)
+                    {
+                        toRemove.Add(sg);
+                    }
+                }
+                foreach (GameItemsSubGroup sg in toRemove)
+                {
+                    gig.RemoveSubGroup(sg);
+                }
+            }
+        }
+
+        private void RemoveAllUnreviewedItemsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            foreach (GameItemsGroup gig in _gameItemsGroups.Groups)
+            {
+                foreach (GameItemsSubGroup sg in gig.SubGroups)
+                {
+                    List<GameItem> toRemove = new List<GameItem>();
+                    foreach (GameItem gi in sg.Items)
+                    {
+                        if (!gi.HasReviewed)
+                        {
+                            toRemove.Add(gi);
+                        }
+                    }
+                    foreach (GameItem gi in toRemove)
+                    {
+                        sg.RemoveItem(gi);
+                    }
+                }
+            }
+            RemoveEmptySubGroups();
+            RefreshGameItemsTreeView();
+        }
+
+        private void RemoveAllZerocostItemsToolStripMenuItemClick(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            foreach (GameItemsGroup gig in _gameItemsGroups.Groups)
+            {
+                foreach (GameItemsSubGroup sg in gig.SubGroups)
+                {
+                    List<GameItem> toRemove = new List<GameItem>();
+                    foreach (GameItem gi in sg.Items)
+                    {
+                        if (gi.InstantPurchaseCost == 0f)
+                        {
+                            toRemove.Add(gi);
+                        }
+                    }
+                    foreach (GameItem gi in toRemove)
+                    {
+                        sg.RemoveItem(gi);
+                    }
+                }
+            }
+            RemoveEmptySubGroups();
+            RefreshGameItemsTreeView();
+        }
+
+        #endregion
+
 #endregion
 
-#region Settings
+#region Settings methods
 
         private bool ChangeSettings(bool firstRun)
         {
@@ -1129,12 +1346,12 @@ Application terminated.",
                 using (frmSettings form = new frmSettings())
                 {
                     result = form.Execute(firstRun);
-                    if (!firstRun && result && form.IsGameSettingsChanged && _networkClient.Connected)
+                    if (!firstRun && result && form.IsGameSettingsChanged)
                     {
                         //Reinit game client
-                        _gameClient.Init(Helper.GetLocalIP(),
-                                         AppSettings.Instance["Login"],
-                                         AppSettings.Instance["Password"],
+                        string password = AppSettings.Instance["Password"];
+                        _gameClient.Init(AppSettings.Instance["Login"],
+                                         Helper.DecryptStringByHardwareID(password),
                                          AppSettings.Instance["ClientVersion"],
                                          AppSettings.Instance["ClientVersion2"],
                                          flashPlayer);
@@ -1145,7 +1362,8 @@ Application terminated.",
                                             AppSettings.Instance.GetInt("Port"));
 
                         //Checking reconnect
-                        if (MessageBox.Show(@"Some changes will applied after reconnection to the game server.
+                        if (_networkClient.Connected &&
+                            MessageBox.Show(@"Some changes will applied after reconnection to the game server.
 Reconnect right now?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
                             Reconnect();
@@ -1163,6 +1381,74 @@ Reconnect right now?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Q
         private void BtnSettingsClick(object sender, EventArgs e)
         {
             ChangeSettings(false);
+        }
+
+#endregion
+
+#region Web browser and hyperlinks methods
+
+        private TreeNode SearchNode(string searchText, TreeNode startNode)
+        {
+            TreeNode node = null;
+            while (startNode != null)
+            {
+                if (startNode.Text == searchText && startNode.Tag is GameItem)
+                {
+                    node = startNode;
+                    break;
+                }
+                if (startNode.Nodes.Count != 0)
+                {
+                    node = SearchNode(searchText, startNode.Nodes[0]);
+                    if (node != null)
+                    {
+                        break;
+                    }
+                }
+                startNode = startNode.NextNode;
+            }
+            return node;
+        }
+
+        private TreeNode SearchGameItemNode(string searchText)
+        {
+            foreach (TreeNode node in tvGameItems.Nodes)
+            {
+                TreeNode foundNode = SearchNode(searchText, node);
+                if (foundNode != null)
+                {
+                    return foundNode;
+                }
+            }
+            return null;
+        }
+
+        private void TextBoxLinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            char mark = e.LinkText[0];
+            string value = e.LinkText.Substring(1, e.LinkText.Length - 2);
+            switch (mark)
+            {
+                case LINK_MARKER_NICKNAME:
+                    {
+                        webBrowser.Navigate(string.Format("http://www.timezero.ru/info.pl?{0}", value));
+                        tcMain.SelectedTab = tpWebBrowser;
+                        break;
+                    }
+                case LINK_MARKER_GAMEITEM:
+                    {
+                        TreeNode node = SearchGameItemNode(value);
+                        if (node != null)
+                        {
+                            tvGameItems.SelectedNode = node;
+                            tvGameItems.SelectedNode.EnsureVisible();
+                            tcMain.SelectedTab = tpItems;
+                            pgItems.Select();
+                            pgItems.Focus();
+                        }
+                        break;
+                    }
+            }
         }
 
 #endregion
