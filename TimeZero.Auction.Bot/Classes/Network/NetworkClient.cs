@@ -5,7 +5,6 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using TimeZero.Auction.Bot.Classes.Game.Client;
 using TimeZero.Auction.Bot.Classes.Network.Acitons;
-using TimeZero.Auction.Bot.Classes.Network.Acitons.Game;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.GameSystem;
 using TimeZero.Auction.Bot.Classes.Network.Acitons.Login;
 using TimeZero.Auction.Bot.Classes.Network.ProtoPacket;
@@ -60,9 +59,9 @@ namespace TimeZero.Auction.Bot.Classes.Network
 
         private static readonly IActionStep[] GameSteps = new IActionStep[]
             {
-                 new GameStep_JoinInventory()
-                ,new GameStep_Shopping()
-                ,new GameStep_Selling()
+                // new GameStep_JoinInventory()
+                //,new GameStep_Shopping()
+                //,new GameStep_Selling()
             };
 
         private static readonly IActionStep[][] ActionStepsList = new[]

@@ -1449,5 +1449,40 @@ Reconnect right now?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Q
 
 #endregion
 
+#region Custom commands
+
+        private void BtnCustomCommandToSrvClick(object sender, EventArgs e)
+        {
+            if (_networkClient.Connected)
+            {
+                _networkClient.SendData(tbCustomCommand.Text.Trim());
+            }
+            tbCustomCommand.Focus();
+        }
+
+        private void BtnCustomCommandToChatClick(object sender, EventArgs e)
+        {
+            if (_networkClient.Connected)
+            {
+                _networkClient.SendChatData(tbCustomCommand.Text.Trim());
+            }
+            tbCustomCommand.Focus();
+        }
+
+        private void TbCustomCommandKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Return:
+                    {
+                        BtnCustomCommandToSrvClick(sender, e);
+                        break;
+                    }
+            }
+        }
+
+
+#endregion
+
     }
 }
